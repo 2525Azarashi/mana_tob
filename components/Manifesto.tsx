@@ -32,10 +32,10 @@ const Manifesto: React.FC = () => {
         Vision
       </div>
 
-      {/* 指定された半透過背景画像 */}
+      {/* 指定された半透過背景画像 (差し替え) */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
         <img 
-          src="https://lh3.googleusercontent.com/d/1pCsrB9neAJ5m9oay8VuuL74VSZ8SkZyw" 
+          src="https://lh3.googleusercontent.com/d/11St0QtJeEZ1UzhIYK9sHEANvcW9EeH4H" 
           alt="Philosophy Background" 
           className="w-full h-full object-cover opacity-[0.08] mix-blend-multiply"
         />

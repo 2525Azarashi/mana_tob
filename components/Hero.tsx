@@ -31,11 +31,11 @@ const Hero: React.FC = () => {
     'rgba(34, 211, 238, 0.12)', // Cyan
   ];
 
-  // 指定された画像URL
+  // 指定された画像URL (3枚目を差し替え)
   const images = [
     "https://lh3.googleusercontent.com/d/1gY-_SEjojvO9SxzywBSv8uerfno6jROB",
     "https://lh3.googleusercontent.com/d/1STNihBrECkAcQWXt1emdt21QFvCPfxG7",
-    "https://lh3.googleusercontent.com/d/11St0QtJeEZ1UzhIYK9sHEANvcW9EeH4H"
+    "https://lh3.googleusercontent.com/d/1pCsrB9neAJ5m9oay8VuuL74VSZ8SkZyw"
   ];
 
   // アルバム風の回転角度と配置
