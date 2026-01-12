@@ -123,7 +123,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-10"
           >
-            <div className="space-y-6">
+            <div className="space-y-6 overflow-visible">
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -134,12 +134,12 @@ const Hero: React.FC = () => {
                 Intelligence & Strategy
               </motion.div>
               
-              <div className="flex flex-col">
+              <div className="flex flex-col overflow-visible">
                 <h1 
-                  className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] font-black leading-[1.2] tracking-tighter text-[#0A3D62] whitespace-nowrap py-2"
+                  className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] font-black leading-[1.3] tracking-tighter text-[#0A3D62] whitespace-nowrap py-4 pr-12 overflow-visible"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  学びの<span className="text-transparent bg-clip-text bg-gradient-to-br from-blue-700 via-blue-500 to-cyan-400 italic">扉</span>
+                  学びの<span className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-blue-700 via-blue-500 to-cyan-400 italic pr-2">扉</span>
                 </h1>
               </div>
               
