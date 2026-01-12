@@ -6,9 +6,8 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "h-12 w-auto" }) => {
-  // Google Drive のファイルID: 1Fe55pMYVO3P83BrOEUF-FzP_LEYOczdK
-  // 直接表示用のURLに変換して使用します。
-  const logoUrl = "https://lh3.googleusercontent.com/d/1Fe55pMYVO3P83BrOEUF-FzP_LEYOczdK";
+  // 新しい Google Drive のファイルID: 1iYmtlqdNO7gzaH9OGTdb5EJMtsnXr81Y
+  const logoUrl = "https://lh3.googleusercontent.com/d/1iYmtlqdNO7gzaH9OGTdb5EJMtsnXr81Y";
 
   return (
     <div className={`relative flex items-center ${className}`}>
@@ -17,7 +16,6 @@ const Logo: React.FC<LogoProps> = ({ className = "h-12 w-auto" }) => {
         alt="mntb logo" 
         className="h-full w-auto object-contain"
         onError={(e) => {
-          // 画像が読み込めない場合、SVG版を動的に表示する仕組み
           const target = e.currentTarget;
           target.style.display = 'none';
           const fallback = target.nextElementSibling as HTMLElement;

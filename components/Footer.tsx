@@ -110,7 +110,7 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
                <Logo className="h-8" />
              </div>
              <div className="flex flex-col">
-               <span className="text-white font-black text-sm tracking-tight leading-none">学びの扉</span>
+               <span className="text-white font-black text-sm tracking-tight leading-snug">学びの扉</span>
                <span className="text-[9px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-1">Project mntb</span>
              </div>
            </div>
