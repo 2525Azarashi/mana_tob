@@ -25,7 +25,12 @@ const MaterialsSection: React.FC<MaterialsSectionProps> = ({ onStartQuiz, onView
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-sm font-black tracking-[0.4em] text-blue-600 uppercase mb-4">Lineup</h2>
-          <h3 className="text-5xl font-black text-[#0A3D62] mb-6">学習教材</h3>
+          <h3 
+            className="text-5xl font-black text-[#0A3D62] mb-6 italic"
+            style={{ fontFamily: "'Playfair Display', serif" }}
+          >
+            Learning Resources
+          </h3>
           <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-cyan-400 mx-auto rounded-full"></div>
           <p className="mt-8 text-slate-500 text-xl font-light max-w-2xl mx-auto leading-relaxed">
             共通テストの「核心」を掴むための、戦略的ラインナップ。
@@ -99,11 +104,21 @@ const MaterialsSection: React.FC<MaterialsSectionProps> = ({ onStartQuiz, onView
                  </div>
                  <div>
                     <span className="text-xs font-black text-blue-600 tracking-[0.3em] uppercase block mb-2">{selectedMaterial.tag}</span>
-                    <h2 className="text-4xl font-black text-[#0A3D62] leading-tight">{selectedMaterial.title}</h2>
+                    <h2 
+                      className="text-4xl font-black text-[#0A3D62] leading-tight"
+                      style={{ fontFamily: "'Playfair Display', serif" }}
+                    >
+                      {selectedMaterial.title}
+                    </h2>
                  </div>
               </div>
               <div className="prose prose-blue mb-16">
-                <p className="text-blue-600 font-black text-2xl italic mb-8 tracking-tighter">「核心を掴む」</p>
+                <p 
+                  className="text-blue-600 font-black text-2xl italic mb-8 tracking-tighter"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
+                  "Seize the Core"
+                </p>
                 <p className="text-slate-500 leading-relaxed text-xl font-light">
                   {selectedMaterial.summary}
                 </p>

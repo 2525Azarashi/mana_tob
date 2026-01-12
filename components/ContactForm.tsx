@@ -20,7 +20,7 @@ const ContactForm: React.FC = () => {
     <section className="py-24 bg-[#0A3D62] text-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">お問い合わせ</h2>
+          <h2 className="text-4xl font-black mb-4 font-playfair italic tracking-tight">Contact</h2>
           <p className="text-blue-200">学習に関する質問やフィードバックはこちらから。</p>
         </div>
 

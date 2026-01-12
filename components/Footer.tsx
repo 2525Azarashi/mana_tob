@@ -4,6 +4,7 @@ import { Instagram, Globe, Mail, User } from 'lucide-react';
 import { PageType } from '../types';
 import { CREATORS } from '../constants';
 import { motion } from 'framer-motion';
+import Logo from './Logo';
 
 interface FooterProps {
   setCurrentPage: (page: PageType) => void;
@@ -21,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
           <div>
             <div className="flex items-center space-x-3 mb-10">
               <div className="w-1.5 h-6 bg-blue-600 rounded-full"></div>
-              <h3 className="text-white text-xl font-black tracking-tight">作成者紹介</h3>
+              <h3 className="text-white text-xl font-black tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>作成者紹介</h3>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -105,23 +106,8 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
         {/* フッターボトム */}
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
            <div className="flex items-center space-x-5">
-             <div className="h-10 bg-white px-4 py-2 rounded-xl flex items-center justify-center shadow-2xl">
-               <img 
-                 src="logo.png" 
-                 alt="mntb" 
-                 className="h-full object-contain"
-                 onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent && !parent.querySelector('.logo-text-fallback-footer')) {
-                      const fallback = document.createElement('div');
-                      fallback.className = 'logo-text-fallback-footer font-black italic text-blue-600 text-sm';
-                      fallback.innerText = 'mntb';
-                      parent.appendChild(fallback);
-                    }
-                 }}
-               />
+             <div className="h-10 flex items-center justify-center">
+               <Logo className="h-8" />
              </div>
              <div className="flex flex-col">
                <span className="text-white font-black text-sm tracking-tight leading-none">学びの扉</span>

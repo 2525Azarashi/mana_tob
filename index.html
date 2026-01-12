@@ -6,14 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学びの扉</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand-blue: #0A3D62;
+            --accent-blue: #1976D2;
+        }
         body {
             font-family: 'Noto Sans JP', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
             margin: 0;
             background-color: #ffffff;
+            color: #1e293b;
         }
         .font-playfair {
             font-family: 'Playfair Display', serif;
@@ -32,19 +37,29 @@
             position: absolute;
             background-color: #ffb7c5;
             border-radius: 100% 0 100% 0;
-            opacity: 0.3;
+            opacity: 0.2;
             animation: fall linear infinite;
         }
         @keyframes fall {
             0% { transform: translateY(-10%) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        /* スムーズなフェードインアニメーション */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 <script type="importmap">
@@ -62,7 +77,6 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- index.tsx をエントリーポイントとして読み込み -->
     <script type="module" src="index.tsx"></script>
 </body>
 </html>
