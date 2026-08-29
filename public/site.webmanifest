@@ -1,0 +1,16 @@
+{
+  "name": "学生学修コミュニティ マナトビ",
+  "short_name": "マナトビ",
+  "description": "高校生・受験生のための無料教材と学びの場をつくる学生団体。無料の化学学習サービス Chem-Basis を開発・運営しています。",
+  "lang": "ja",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0A3D62",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
