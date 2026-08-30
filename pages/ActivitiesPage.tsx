@@ -22,10 +22,10 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
     emoji="📚"
     title="活動内容"
     titleEn="Our Activities"
-    lead="「マナトビ」という名前のもとで行っている取り組みを一覧にしています。なお「マナトビ」は3つの活動の総称であり、それぞれ資金・会計・運営を独立して行っています。各取り組みがどの活動に属するのかをタグで示しています。"
+    lead="「学びの扉」という名前のもとで行っている取り組みを一覧にしています。なお「学びの扉」は3つの活動の総称であり、それぞれ資金・会計・運営を独立して行っています。各取り組みがどの活動に属するのかをタグで示しています。"
     setCurrentPage={setCurrentPage}
   >
-    {/* 「マナトビ」が総称であることの明示 */}
+    {/* 「学びの扉」が総称であることの明示 */}
     <section className="mb-16">
       <StructureNote setCurrentPage={setCurrentPage} />
     </section>
@@ -146,8 +146,8 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     <NoteBox title="連携・ご依頼について">
       <p>
-        ご相談の際は、どの活動（マナトビアプリ／学生学修コミュニティ「まなとび」／
-        音楽活動「まなとび」）に関するものかをご明記いただけると、
+        ご相談の際は、どの活動（学びの扉アプリ／学生学修コミュニティ「まなとび」／
+        音楽活動「まなとび。」）に関するものかをご明記いただけると、
         担当への取り次ぎが円滑に進みます。
       </p>
       <p>

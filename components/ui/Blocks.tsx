@@ -159,7 +159,7 @@ export const NoteBox: React.FC<{
   );
 };
 
-/* ---------- CTA（Chem-Basisへの導線などに使用） ---------- */
+/* ---------- CTA（学習アプリへの導線などに使用） ---------- */
 export const CTAButton: React.FC<{
   href?: string;
   onClick?: () => void;

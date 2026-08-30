@@ -3,7 +3,7 @@ import { Instagram, Mail, ExternalLink } from 'lucide-react';
 import { PageType } from '../types';
 import { motion } from 'framer-motion';
 import Logo from './Logo';
-import { MAIN_NAV, LEGAL_NAV, TOOL_NAV, DIVISION_NAV } from '../content/navigation';
+import { MAIN_NAV, LEGAL_NAV, DIVISION_NAV } from '../content/navigation';
 import { ORG } from '../content/site';
 
 interface FooterProps {
@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
                   {ORG.name}
                 </span>
                 <span className="text-[9px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-1">
-                  Manatobi Official Site
+                  Manabi-no-Tobira Official Site
                 </span>
               </div>
             </div>
@@ -38,8 +38,8 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
             <p className="text-[13px] leading-[1.9] text-slate-400 font-light mb-6 max-w-md">
               「{ORG.name}」は、ひとつの団体名ではなく
               <strong className="font-bold text-slate-300">3つの活動の総称</strong>
-              です。学習サービスを開発・運営する「マナトビアプリ」、三重大学で探究に取り組む
-              学生学修コミュニティ「まなとび」、楽曲を制作する音楽活動「まなとび」が
+              です。学習サービスを開発・運営する「学びの扉アプリ」、三重大学で探究に取り組む
+              学生学修コミュニティ「まなとび」、楽曲を制作する音楽活動「まなとび。」が
               それぞれ活動しています。
             </p>
 
@@ -51,9 +51,9 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
               個人を特定できる情報は掲載しておりません。
             </p>
 
-            {/* Chem-Basis 導線 */}
+            {/* 学習アプリ導線 */}
             <a
-              href={ORG.chemBasisUrl}
+              href={ORG.learningAppUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="block p-6 rounded-[1.75rem] bg-gradient-to-br from-blue-700/25 to-cyan-500/10 border border-blue-500/25 hover:border-blue-400/50 transition-all group mb-8"
@@ -61,18 +61,18 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[9px] font-black tracking-[0.3em] text-cyan-400 uppercase mb-2.5">
-                    Developed & Operated by Manatobi App
+                    Developed & Operated by Manabi-no-Tobira App
                   </p>
                   <p className="text-white font-black text-lg mb-2 group-hover:text-cyan-300 transition-colors">
-                    Chem-Basis
+                    学習アプリ
                   </p>
                   <p className="text-[12px] text-slate-300 font-light leading-relaxed">
-                    「マナトビアプリ」が開発・運営する、無料の化学学習サービス。
+                    「学びの扉アプリ」が開発・運営する、無料の化学学習サービス。
                     <br />
                     登録不要・スマホだけで化学基礎の演習ができます。
                   </p>
                   <p className="mt-3 text-[10px] font-bold text-blue-300 tracking-wider">
-                    {ORG.chemBasisUrl.replace('https://', '')}
+                    {ORG.learningAppUrl.replace('https://', '')}
                   </p>
                 </div>
                 <ExternalLink
@@ -157,16 +157,6 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
                     </button>
                   </li>
                 ))}
-                {TOOL_NAV.map((n) => (
-                  <li key={n.page}>
-                    <button
-                      onClick={() => setCurrentPage(n.page)}
-                      className="hover:text-blue-400 transition-colors text-left"
-                    >
-                      {n.label}
-                    </button>
-                  </li>
-                ))}
               </ul>
             </div>
 
@@ -211,7 +201,7 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
             </p>
           </div>
           <p className="text-[9px] font-medium text-slate-600 tracking-wider">
-            学びの扉 ～私たちにできることを～
+            ～私たちにできることを～
           </p>
         </div>
       </div>

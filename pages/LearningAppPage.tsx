@@ -47,13 +47,13 @@ const FEATURES = [
   },
 ];
 
-const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
+const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
-    page="chem-basis"
+    page="learning-app"
     emoji="💻"
-    title="Chem-Basis の紹介"
-    titleEn="Chem-Basis"
-    lead="Chem-Basis（ケムベーシス）は、「マナトビ」の3つの活動のうち「マナトビアプリ」が開発・運営する無料の化学学習サービスです。化学基礎・化学の単元別演習を、登録不要・スマートフォンだけで進められます。"
+    title="学習アプリの紹介"
+    titleEn="Learning App"
+    lead="学習アプリは、「学びの扉」の3つの活動のうち「学びの扉アプリ」が開発・運営する無料の化学学習サービスです。化学基礎・化学の単元別演習を、登録不要・スマートフォンだけで進められます。"
     setCurrentPage={setCurrentPage}
   >
     {/* サービスカード */}
@@ -66,29 +66,29 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
               <Beaker className="w-8 h-8" />
             </div>
             <p className="text-[10px] font-black tracking-[0.35em] text-cyan-300 uppercase mb-4">
-              Developed & Operated by Manatobi
+              Developed & Operated by Manabi-no-Tobira App
             </p>
             <h2
               className="text-3xl sm:text-4xl font-black tracking-tight mb-5"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Chem-Basis
+              化学学習アプリ
             </h2>
             <p className="text-blue-100 font-light leading-relaxed text-[16px] max-w-2xl mb-8">
-              「マナトビアプリ」が開発・運営する、無料の化学学習サービス。
+              「学びの扉アプリ」が開発・運営する、無料の化学学習サービス。
               化学基礎・化学の主要単元を、その場で解説を読みながら演習できます。
             </p>
             <a
-              href={ORG.chemBasisUrl}
+              href={ORG.learningAppUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 px-8 py-4 bg-white text-[#0A3D62] rounded-2xl font-black text-sm hover:bg-blue-50 transition-colors shadow-xl"
             >
-              Chem-Basis を開く
+              学習アプリを開く
               <ExternalLink size={15} />
             </a>
             <p className="mt-5 text-[11px] font-bold text-blue-200 tracking-wider">
-              {ORG.chemBasisUrl.replace('https://', '')}
+              {ORG.learningAppUrl.replace('https://', '')}
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 特徴 */}
     <section className="mb-20">
-      <SectionTitle label="Features">Chem-Basis の特徴</SectionTitle>
+      <SectionTitle label="Features">学習アプリの特徴</SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {FEATURES.map((f, i) => (
           <Card key={i} delay={i * 0.06} className="p-7 flex gap-5">
@@ -117,7 +117,7 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* なぜつくったか */}
     <section className="mb-20">
-      <SectionTitle label="Why We Built It">なぜ Chem-Basis をつくったのか</SectionTitle>
+      <SectionTitle label="Why We Built It">なぜ学習アプリをつくったのか</SectionTitle>
       <Prose>
         <p>
           化学基礎は、mol計算のように「一度つまずくとそこから先がすべて止まる」単元を含んでいます。
@@ -127,7 +127,7 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
         <p>
           紙の教材では、間違えた問題の解説を探すまでに手間がかかり、
           その間に「なぜ間違えたのか」という感覚が薄れてしまいます。
-          間違えた直後に理由を読める状態をつくりたい——それが Chem-Basis を
+          間違えた直後に理由を読める状態をつくりたい——それが、この学習アプリを
           Webサービスとして開発した理由です。
         </p>
         <p>
@@ -165,8 +165,8 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
           ))}
         </div>
         <p className="mt-8 pt-6 border-t border-slate-100 text-xs text-slate-400 font-medium leading-relaxed">
-          ※ 収録単元・問題数は継続的に追加・改訂しています。最新の内容は Chem-Basis
-          本体でご確認ください。
+          ※ 収録単元・問題数は継続的に追加・改訂しています。最新の内容は
+          学習アプリ本体でご確認ください。
         </p>
       </Card>
     </section>
@@ -178,7 +178,7 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
         {[
           {
             n: 1,
-            t: `${ORG.chemBasisUrl.replace('https://', '')} を開く`,
+            t: `${ORG.learningAppUrl.replace('https://', '')} を開く`,
             b: 'ブラウザでアクセスするだけです。アプリのインストールは不要です。',
           },
           {
@@ -212,29 +212,29 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
       </div>
     </section>
 
-    <NoteBox title="Chem-Basis の運営主体について">
+    <NoteBox title="学習アプリの運営主体について">
       <p>
-        Chem-Basis は外部企業のサービスではなく、「マナトビ」の3つの活動のうち
-        <strong className="font-bold">マナトビアプリ</strong>
+        学習アプリは外部企業のサービスではなく、「学びの扉」の3つの活動のうち
+        <strong className="font-bold">学びの扉アプリ</strong>
         が企画・開発・運営しているサービスです。
         教材の内容、問題の作成、解説の執筆、システムの開発と保守は、
-        すべてマナトビアプリのメンバーが担当しています。
+        すべて学びの扉アプリのメンバーが担当しています。
       </p>
       <p>
-        なお「マナトビ」は3つの活動の総称であり、学生学修コミュニティ「まなとび」
-        （三重大学での探究活動）および音楽活動「まなとび」とは、
-        資金・会計・運営を分けています。Chem-Basis の運営に関する責任は
-        マナトビアプリが負います。
+        なお「学びの扉」は3つの活動の総称であり、学生学修コミュニティ「まなとび」
+        （三重大学での探究活動）および音楽活動「まなとび。」とは、
+        資金・会計・運営を分けています。学習アプリの運営に関する責任は
+        学びの扉アプリが負います。
       </p>
       <p>
-        Chem-Basis に関するご質問・不具合のご報告・内容の誤りのご指摘は、
+        学習アプリに関するご質問・不具合のご報告・内容の誤りのご指摘は、
         当サイトのお問い合わせページから承ります。
       </p>
     </NoteBox>
 
     <div className="mt-10 flex flex-col sm:flex-row gap-4">
-      <CTAButton href={ORG.chemBasisUrl} external>
-        Chem-Basis を開く
+      <CTAButton href={ORG.learningAppUrl} external>
+        学習アプリを開く
         <ExternalLink size={15} />
       </CTAButton>
       <CTAButton variant="outline" onClick={() => setCurrentPage('materials')}>
@@ -245,4 +245,4 @@ const ChemBasisPage: React.FC<Props> = ({ setCurrentPage }) => (
   </PageShell>
 );
 
-export default ChemBasisPage;
+export default LearningAppPage;

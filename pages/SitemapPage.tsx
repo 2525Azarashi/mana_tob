@@ -6,7 +6,6 @@ import { SectionTitle, Card } from '../components/ui/Blocks';
 import {
   MAIN_NAV,
   LEGAL_NAV,
-  TOOL_NAV,
   DIVISION_NAV,
   PAGE_META,
 } from '../content/navigation';
@@ -61,7 +60,7 @@ const SitemapPage: React.FC<Props> = ({ setCurrentPage }) => (
     emoji="🗺️"
     title="サイトマップ"
     titleEn="Sitemap"
-    lead="マナトビ公式サイトの全ページ一覧です。「マナトビ」は資金・会計・運営が独立した3つの活動の総称であるため、活動ごとにページを分けています。お探しの情報が見つからない場合は、お問い合わせページからご連絡ください。"
+    lead="学びの扉公式サイトの全ページ一覧です。「学びの扉」は資金・会計・運営が独立した3つの活動の総称であるため、活動ごとにページを分けています。お探しの情報が見つからない場合は、お問い合わせページからご連絡ください。"
     setCurrentPage={setCurrentPage}
   >
     {/* 3つの活動（資金・運営が独立しているため、別ページとして先頭に掲載） */}
@@ -73,16 +72,9 @@ const SitemapPage: React.FC<Props> = ({ setCurrentPage }) => (
     />
 
     <Group
-      title="マナトビ全体について"
+      title="学びの扉全体について"
       label="Main"
       items={MAIN_NAV}
-      setCurrentPage={setCurrentPage}
-    />
-
-    <Group
-      title="学習ツール"
-      label="Tools"
-      items={TOOL_NAV}
       setCurrentPage={setCurrentPage}
     />
 
@@ -99,10 +91,10 @@ const SitemapPage: React.FC<Props> = ({ setCurrentPage }) => (
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
           {
-            href: ORG.chemBasisUrl,
+            href: ORG.learningAppUrl,
             emoji: '💻',
-            label: 'Chem-Basis',
-            desc: '「マナトビアプリ」が開発・運営する無料の化学学習サービス',
+            label: '学習アプリ',
+            desc: '「学びの扉アプリ」が開発・運営する無料の化学学習サービス',
           },
           {
             href: ORG.instagram,
