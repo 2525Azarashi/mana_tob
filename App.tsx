@@ -3,6 +3,7 @@ import { PageType } from './types';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
+import SakuraEffect from './components/SakuraEffect';
 import {
   AboutSection,
   ActivitiesSection,
@@ -257,6 +258,14 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white relative">
+      {/*
+        桜の花びらエフェクト。
+        [重要] サイトの季節感を担う装飾です。削除しないでください。
+          操作の妨げにならないよう pointer-events: none を指定しており、
+          動きを減らす設定（prefers-reduced-motion）の環境では
+          index.html 側の CSS で非表示になります。
+      */}
+      <SakuraEffect />
       <Navbar currentPage={currentPage} setCurrentPage={navigate} />
       <main>{renderContent()}</main>
       <Footer setCurrentPage={navigate} />
