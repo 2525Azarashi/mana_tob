@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { PageType, Material } from './types';
+import { PageType } from './types';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
-import QuizSystem from './components/QuizSystem';
-import PDFViewer from './components/PDFViewer';
-import MaterialsSection from './components/MaterialsSection';
 import {
   AboutSection,
   ActivitiesSection,
-  ChemBasisSection,
+  LearningAppSection,
   PhilosophySection,
   AchievementsSection,
   ReportsSection,
@@ -23,7 +20,7 @@ import ActivitiesPage from './pages/ActivitiesPage';
 import DivisionPage from './pages/DivisionPage';
 import PhilosophyPage from './pages/PhilosophyPage';
 import MaterialsPage from './pages/MaterialsPage';
-import ChemBasisPage from './pages/ChemBasisPage';
+import LearningAppPage from './pages/LearningAppPage';
 import MembersPage from './pages/MembersPage';
 import ReportsPage from './pages/ReportsPage';
 import AchievementsPage from './pages/AchievementsPage';
@@ -45,7 +42,7 @@ const PATHS: Record<string, PageType> = {
   '/music': 'music',
   '/philosophy': 'philosophy',
   '/materials': 'materials',
-  '/chem-basis': 'chem-basis',
+  '/learning-app': 'learning-app',
   '/members': 'members',
   '/reports': 'reports',
   '/achievements': 'achievements',
@@ -53,7 +50,16 @@ const PATHS: Record<string, PageType> = {
   '/privacy': 'privacy',
   '/terms': 'terms',
   '/sitemap': 'sitemap',
-  '/quiz': 'quiz-select',
+};
+
+/**
+ * 旧URL → 現行URLの読み替え表。
+ * 過去に共有されたリンクを 404 にしないためのエイリアスです。
+ * （pageToPath が生成する正規URLは PATHS 側のみ）
+ */
+const LEGACY_PATHS: Record<string, PageType> = {
+  // 旧「Chem-Basis 紹介」ページのURL。現在は「学習アプリ」ページに統合。
+  '/chem-basis': 'learning-app',
 };
 
 const pageToPath = (page: PageType): string => {
@@ -61,7 +67,8 @@ const pageToPath = (page: PageType): string => {
   return found ? found[0] : '/';
 };
 
-const pathToPage = (path: string): PageType => PATHS[path] ?? 'home';
+const pathToPage = (path: string): PageType =>
+  PATHS[path] ?? LEGACY_PATHS[path] ?? 'home';
 
 /**
  * 静的ホスティング（404.html フォールバック）経由でアクセスされた場合、
@@ -73,7 +80,7 @@ const resolveInitialPath = (): string => {
   if (stashed) {
     sessionStorage.removeItem('redirectPath');
     const path = stashed.split('?')[0];
-    if (PATHS[path]) {
+    if (PATHS[path] || LEGACY_PATHS[path]) {
       window.history.replaceState({}, '', stashed);
       return path;
     }
@@ -85,7 +92,6 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>(() =>
     pathToPage(resolveInitialPath())
   );
-  const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null);
 
   /** ページ遷移（履歴を積む） */
   const navigate = useCallback((page: PageType) => {
@@ -111,17 +117,6 @@ const App: React.FC = () => {
   /** ページ別の title / description / canonical / OGP を更新（全ページ共通） */
   usePageSeo(currentPage);
 
-  const handleViewPdf = (material: Material) => {
-    const pdfUrl =
-      material.id === 'ct-strategy'
-        ? 'https://drive.google.com/file/d/1fb9rGxaR5k_MMksbavBBtoFp9KMlmsyj/view?usp=sharing'
-        : '';
-    if (pdfUrl) {
-      setActivePdf({ url: pdfUrl, title: material.title });
-      setCurrentPage('pdf-viewer');
-    }
-  };
-
   const renderContent = () => {
     switch (currentPage) {
       case 'home':
@@ -130,11 +125,7 @@ const App: React.FC = () => {
             <Hero setCurrentPage={navigate} />
             <AboutSection setCurrentPage={navigate} />
             <ActivitiesSection setCurrentPage={navigate} />
-            <ChemBasisSection setCurrentPage={navigate} />
-            <MaterialsSection
-              onStartQuiz={() => navigate('quiz-select')}
-              onViewPdf={handleViewPdf}
-            />
+            <LearningAppSection setCurrentPage={navigate} />
             <PhilosophySection setCurrentPage={navigate} />
             <AchievementsSection setCurrentPage={navigate} />
             <ReportsSection setCurrentPage={navigate} />
@@ -158,8 +149,8 @@ const App: React.FC = () => {
         return <PhilosophyPage setCurrentPage={navigate} />;
       case 'materials':
         return <MaterialsPage setCurrentPage={navigate} />;
-      case 'chem-basis':
-        return <ChemBasisPage setCurrentPage={navigate} />;
+      case 'learning-app':
+        return <LearningAppPage setCurrentPage={navigate} />;
       case 'members':
         return <MembersPage setCurrentPage={navigate} />;
       case 'reports':
@@ -174,22 +165,6 @@ const App: React.FC = () => {
         return <TermsPage setCurrentPage={navigate} />;
       case 'sitemap':
         return <SitemapPage setCurrentPage={navigate} />;
-
-      /* --- 学習ツール --- */
-      case 'quiz-select':
-      case 'quiz':
-      case 'result':
-        return (
-          <QuizSystem onBack={() => navigate('home')} onHome={() => navigate('home')} />
-        );
-      case 'pdf-viewer':
-        return activePdf ? (
-          <PDFViewer
-            pdfUrl={activePdf.url}
-            title={activePdf.title}
-            onBack={() => navigate('home')}
-          />
-        ) : null;
 
       default:
         return (

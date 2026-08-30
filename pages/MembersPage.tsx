@@ -30,7 +30,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
     emoji="👥"
     title="運営体制"
     titleEn="Organization"
-    lead="マナトビは、資金・会計・運営がそれぞれ独立した3つの活動から成り立っています。それぞれの活動が何を担当しているのかを明示しておくことは、私たちの活動に対する責任の所在を示すことでもあると考えています。"
+    lead="学びの扉は、資金・会計・運営がそれぞれ独立した3つの活動から成り立っています。それぞれの活動が何を担当しているのかを明示しておくことは、私たちの活動に対する責任の所在を示すことでもあると考えています。"
     setCurrentPage={setCurrentPage}
   >
     {/* 組織構成 */}
@@ -38,10 +38,10 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
       <SectionTitle label="Structure">組織構成</SectionTitle>
       <Prose className="mb-8">
         <p>
-          「マナトビ」は総称です。その下に、学習サービスを開発・運営する
-          <strong>マナトビアプリ</strong>、三重大学で探究に取り組む
+          「学びの扉」は総称です。その下に、学習サービスを開発・運営する
+          <strong>学びの扉アプリ</strong>、三重大学で探究に取り組む
           <strong>学生学修コミュニティ「まなとび」</strong>、楽曲を制作する
-          <strong>音楽活動「まなとび」</strong>という3つの活動が並列で存在します。
+          <strong>音楽活動「まなとび。」</strong>という3つの活動が並列で存在します。
         </p>
         <p>
           同じ名前を用いていますが、資金の面からもこれらは別の活動として運営しています。
@@ -112,7 +112,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
               メンバーの個人情報について
             </p>
             <p className="text-[14px] text-slate-600 font-light leading-relaxed mb-3">
-              マナトビは学生が主体となって活動しています。メンバーの氏名・所属学部・写真などの
+              学びの扉は学生が主体となって活動しています。メンバーの氏名・所属学部・写真などの
               個人が特定できる情報の公開には、所属大学への確認および本人の同意が必要となるため、
               現時点では掲載しておりません。
             </p>
@@ -134,7 +134,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
           {
             label: '活動区分',
             value:
-              'マナトビアプリ（学習サービスの開発・運営）／学生学修コミュニティ「まなとび」（三重大学での探究活動）／音楽活動「まなとび」（楽曲制作）',
+              '学びの扉アプリ（学習サービスの開発・運営）／学生学修コミュニティ「まなとび」（三重大学での探究活動）／音楽活動「まなとび。」（楽曲制作）',
           },
           { label: '活動開始', value: ORG.founded },
           { label: '活動拠点', value: ORG.base },
@@ -175,13 +175,13 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
     {/* 参加について */}
     <NoteBox title="メンバー募集について">
       <p>
-        マナトビでは、教材制作・プログラム運営・Web開発に関わる学生メンバーを随時募集しています。
+        学びの扉では、教材制作・プログラム運営・Web開発に関わる学生メンバーを随時募集しています。
         教育学部でなくても、教職志望でなくても構いません。
         「地方の高校生の学習環境をなんとかしたい」という問題意識を共有できる方であれば歓迎します。
       </p>
       <p>
         ご関心のある方は、お問い合わせページまたは Instagram（{ORG.instagramHandle}
-        ）のDMからご連絡ください。関心のある活動（マナトビアプリ／学生学修コミュニティ／音楽活動）
+        ）のDMからご連絡ください。関心のある活動（学びの扉アプリ／学生学修コミュニティ／音楽活動）
         をお知らせいただけると助かります。
       </p>
     </NoteBox>
@@ -192,7 +192,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
         <ArrowRight size={15} />
       </CTAButton>
       <CTAButton variant="outline" onClick={() => setCurrentPage('about')}>
-        マナトビとは
+        学びの扉とは
       </CTAButton>
     </div>
   </PageShell>

@@ -62,7 +62,7 @@ const HomeHeading: React.FC<{
 );
 
 /* =========================================================
- * 1. マナトビとは（概要）
+ * 1. 学びの扉とは（概要）
  * ========================================================= */
 export const AboutSection: React.FC<Props> = ({ setCurrentPage }) => (
   <section id="about-section" className="py-24 bg-white">
@@ -70,7 +70,7 @@ export const AboutSection: React.FC<Props> = ({ setCurrentPage }) => (
       <HomeHeading
         label="About Us"
         emoji="🏠"
-        title="マナトビとは"
+        title="学びの扉とは"
         lead={ORG.summary}
       />
 
@@ -82,7 +82,7 @@ export const AboutSection: React.FC<Props> = ({ setCurrentPage }) => (
             「情報を持っている人が有利になる」構造を、当事者として経験してきました。
           </p>
           <p>
-            だからマナトビが公開する教材とWebサービスは、すべて無料です。
+            だから学びの扉が公開する教材とWebサービスは、すべて無料です。
             インターネットにつながる環境さえあれば、住んでいる場所や家庭の状況に関係なく、
             同じ入口に立てる状態をつくりたいと考えています。
           </p>
@@ -90,7 +90,7 @@ export const AboutSection: React.FC<Props> = ({ setCurrentPage }) => (
             onClick={() => setCurrentPage('about')}
             className="inline-flex items-center gap-2.5 mt-2 text-sm font-black text-blue-600 hover:text-blue-800 transition-colors"
           >
-            マナトビについて詳しく
+            学びの扉について詳しく
             <ArrowRight size={15} />
           </button>
         </div>
@@ -140,7 +140,7 @@ export const ActivitiesSection: React.FC<Props> = ({ setCurrentPage }) => (
         label="Activities"
         emoji="📚"
         title="活動内容"
-        lead="マナトビの3つの活動が、それぞれ何を行っているかをご紹介します。各カードにはどの活動によるものかを表示しています。"
+        lead="学びの扉の3つの活動が、それぞれ何を行っているかをご紹介します。各カードにはどの活動によるものかを表示しています。"
         center
       />
 
@@ -202,10 +202,10 @@ export const ActivitiesSection: React.FC<Props> = ({ setCurrentPage }) => (
 );
 
 /* =========================================================
- * 3. Chem-Basis の紹介
+ * 3. 学習アプリの紹介
  * ========================================================= */
-export const ChemBasisSection: React.FC<Props> = ({ setCurrentPage }) => (
-  <section id="chembasis-section" className="py-24 bg-white">
+export const LearningAppSection: React.FC<Props> = ({ setCurrentPage }) => (
+  <section id="learning-app-section" className="py-24 bg-white">
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 28 }}
@@ -231,10 +231,10 @@ export const ChemBasisSection: React.FC<Props> = ({ setCurrentPage }) => (
                 className="text-4xl sm:text-5xl font-black tracking-tight mb-6"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Chem-Basis
+                学習アプリ
               </h2>
               <p className="text-lg font-bold text-cyan-200 mb-6 leading-snug">
-                「マナトビアプリ」が開発・運営する、無料の化学学習サービス
+                「学びの扉アプリ」が開発・運営する、無料の化学学習サービス
               </p>
               <p className="text-blue-100 font-light leading-[1.9] text-[15px] mb-9 max-w-xl">
                 化学基礎・化学の単元別演習を、登録不要・スマートフォンだけで進められます。
@@ -244,16 +244,16 @@ export const ChemBasisSection: React.FC<Props> = ({ setCurrentPage }) => (
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <a
-                  href={ORG.chemBasisUrl}
+                  href={ORG.learningAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-[#0A3D62] rounded-2xl font-black text-sm hover:bg-blue-50 transition-colors shadow-xl"
                 >
-                  Chem-Basis を開く
+                  学習アプリを開く
                   <ExternalLink size={15} />
                 </a>
                 <button
-                  onClick={() => setCurrentPage('chem-basis')}
+                  onClick={() => setCurrentPage('learning-app')}
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-black text-sm border border-white/25 hover:bg-white/15 transition-colors"
                 >
                   サービスについて詳しく
@@ -262,7 +262,7 @@ export const ChemBasisSection: React.FC<Props> = ({ setCurrentPage }) => (
               </div>
 
               <p className="mt-6 text-[11px] font-bold text-blue-200 tracking-wider">
-                {ORG.chemBasisUrl.replace('https://', '')}
+                {ORG.learningAppUrl.replace('https://', '')}
               </p>
             </div>
 
@@ -479,7 +479,7 @@ export const MembersSection: React.FC<Props> = ({ setCurrentPage }) => (
         label="Organization"
         emoji="👥"
         title="運営体制"
-        lead="「マナトビ」は、資金・会計・運営をそれぞれ独立して行っている3つの活動の総称です。どの活動が何を担っているのかを明示しておくことは、責任の所在を示すことでもあると考えています。"
+        lead="「学びの扉」は、資金・会計・運営をそれぞれ独立して行っている3つの活動の総称です。どの活動が何を担っているのかを明示しておくことは、責任の所在を示すことでもあると考えています。"
         center
       />
 

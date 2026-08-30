@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ExternalLink, FileText, Download } from 'lucide-react';
+import { ExternalLink, FileText, Download } from 'lucide-react';
 import { PageType } from '../types';
 import PageShell from '../components/ui/PageShell';
 import {
@@ -16,7 +16,7 @@ interface Props {
   setCurrentPage: (page: PageType) => void;
 }
 
-const SUBJECTS = ['化学基礎・化学', '情報I', '英語リスニング'] as const;
+const SUBJECTS = ['化学基礎・化学', '英語リスニング'] as const;
 
 const statusTone = (s: string) =>
   s === '公開中' ? 'green' : s === '制作中' ? 'amber' : 'slate';
@@ -27,7 +27,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
     emoji="🧑‍🏫"
     title="学習支援・教材"
     titleEn="Learning Materials"
-    lead="マナトビが制作・公開している学習教材の一覧です。化学基礎・化学、共通テスト「情報I」、英語リスニングの3領域を対象に、解説教材と演習問題を用意しています。すべて無料・登録不要でご利用いただけます。"
+    lead="学びの扉が制作・公開している学習教材の一覧です。化学基礎・化学、英語リスニングの2領域を対象に、解説教材と演習問題を用意しています。すべて無料・登録不要でご利用いただけます。"
     setCurrentPage={setCurrentPage}
   >
     {/* 方針 */}
@@ -91,16 +91,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
                           <ExternalLink size={13} />
                         </a>
                       )}
-                      {m.id === 'joho-quiz' && (
-                        <button
-                          onClick={() => setCurrentPage('quiz-select')}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0A3D62] text-white rounded-xl text-xs font-black hover:bg-blue-800 transition-colors"
-                        >
-                          一問一答を始める
-                          <ArrowRight size={13} />
-                        </button>
-                      )}
-                      {(m.id === 'listening-1a' || m.id === 'joho-strategy') && (
+                      {m.id === 'listening-1a' && (
                         <button
                           onClick={() => setCurrentPage('contact')}
                           className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-50 text-[#0A3D62] rounded-xl text-xs font-black hover:bg-slate-100 transition-colors border border-slate-200"
@@ -157,7 +148,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
     <NoteBox title="教材の利用について" tone="amber">
       <p>
         個人の学習目的でのご利用は自由です。学校の授業・課題・塾などでご利用になる場合は、
-        出典（マナトビ／教材名）を明記のうえ、お問い合わせページからご一報ください。
+        出典（学びの扉／教材名）を明記のうえ、お問い合わせページからご一報ください。
         無断での複製・再配布・改変および商用利用はお控えください。
       </p>
       <p>
@@ -167,12 +158,12 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
     </NoteBox>
 
     <div className="mt-10 flex flex-col sm:flex-row gap-4">
-      <CTAButton href={ORG.chemBasisUrl} external>
-        Chem-Basis で化学を演習する
+      <CTAButton href={ORG.learningAppUrl} external>
+        学習アプリで化学を演習する
         <ExternalLink size={15} />
       </CTAButton>
-      <CTAButton variant="outline" onClick={() => setCurrentPage('chem-basis')}>
-        Chem-Basis について詳しく
+      <CTAButton variant="outline" onClick={() => setCurrentPage('learning-app')}>
+        学習アプリについて詳しく
       </CTAButton>
     </div>
   </PageShell>

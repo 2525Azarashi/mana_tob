@@ -23,12 +23,12 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
     emoji="📸"
     title="活動実績"
     titleEn="Achievements"
-    lead="これまでの活動を、数値とあゆみで記録しています。掲載しているのは実際に確認できている事実のみです。なお「マナトビ」は3つの活動の総称です。あゆみの各項目には、どの活動のできごとなのかをタグで示しています。"
+    lead="これまでの活動を、数値とあゆみで記録しています。掲載しているのは実際に確認できている事実のみです。なお「学びの扉」は3つの活動の総称です。あゆみの各項目には、どの活動のできごとなのかをタグで示しています。"
     setCurrentPage={setCurrentPage}
   >
     {/* 数値 */}
     <section className="mb-24">
-      <SectionTitle label="By the Numbers">数字で見るマナトビ</SectionTitle>
+      <SectionTitle label="By the Numbers">数字で見る学びの扉</SectionTitle>
       <p className="text-[13px] text-slate-500 font-light leading-relaxed mb-8 -mt-4">
         ※ 下記は3つの活動を合わせた実績です。活動ごとの内訳は、
         各活動のページおよび活動報告をご覧ください。

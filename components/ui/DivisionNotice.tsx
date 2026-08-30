@@ -4,7 +4,7 @@ import { PageType } from '../../types';
 import { DIVISIONS, Division } from '../../content/site';
 
 /**
- * 「マナトビ」の3つの活動は資金・運営が独立していることを示す共通表示。
+ * 「学びの扉」の3つの活動は資金・運営が独立していることを示す共通表示。
  *
  * ⚠ この注記は、同名の別活動が混同されるのを防ぐために設けています。
  *   各活動ページ・活動報告記事などから必ず参照してください。
@@ -72,8 +72,8 @@ export const IndependenceNote: React.FC<{ division: Division['id'] }> = ({ divis
 };
 
 /**
- * 「マナトビ」という名称が3つの活動の総称であることを説明するボックス。
- * トップページや「マナトビとは」で使用します。
+ * 「学びの扉」という名称が3つの活動の総称であることを説明するボックス。
+ * トップページや「学びの扉とは」で使用します。
  */
 export const StructureNote: React.FC<{
   setCurrentPage?: (page: PageType) => void;
@@ -85,10 +85,10 @@ export const StructureNote: React.FC<{
       </span>
       <div>
         <p className="text-sm font-black text-[#0A3D62] mb-2">
-          「マナトビ」は3つの活動の総称です
+          「学びの扉」は3つの活動の総称です
         </p>
         <p className="text-[14px] text-slate-600 font-light leading-relaxed">
-          同じ「マナトビ／まなとび」という名前を用いていますが、下記の3つは
+          同じ「学びの扉／まなとび」という名前を用いていますが、下記の3つは
           <strong className="font-bold text-slate-700">
             資金・会計・運営をそれぞれ独立して
           </strong>

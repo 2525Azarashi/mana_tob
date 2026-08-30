@@ -17,18 +17,18 @@ interface Props {
 }
 
 /**
- * 「マナトビとは」ページ。
+ * 「学びの扉とは」ページ。
  *
- * ⚠ 最重要: 「マナトビ」は3つの独立した活動の総称であることを、
+ * ⚠ 最重要: 「学びの扉」は3つの独立した活動の総称であることを、
  *   このページで最初に明確に説明します。混同を招く書き方をしないでください。
  */
 const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="about"
     emoji="🏠"
-    title="マナトビとは"
-    titleEn="About Manatobi"
-    lead="「マナトビ」は、ひとつの団体名ではなく、3つの活動の総称です。それぞれ資金・会計・運営を独立して行っているため、当サイトでも活動ごとにページを分けてご紹介しています。"
+    title="学びの扉とは"
+    titleEn="About Us"
+    lead="「学びの扉」は、ひとつの団体名ではなく、3つの活動の総称です。それぞれ資金・会計・運営を独立して行っているため、当サイトでも活動ごとにページを分けてご紹介しています。"
     setCurrentPage={setCurrentPage}
   >
     {/* 組織構成（最初に説明する） */}
@@ -36,7 +36,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
       <SectionTitle label="Structure">3つの活動から成り立っています</SectionTitle>
       <Prose className="mb-8">
         <p>
-          私たちは「マナトビ／まなとび」という名前を共有して活動していますが、
+          私たちは「学びの扉／まなとび」という名前を共有して活動していますが、
           その内実は<strong>互いに独立した3つの活動</strong>です。
           学習サービスを開発・運営する事業活動、三重大学における学生の探究活動、
           そして楽曲を制作する音楽活動。目的も、関わる人も、扱う資金も異なります。
@@ -106,7 +106,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
           「情報を持っている人が有利になる」構造を、当事者として経験してきました。
         </p>
         <p>
-          だからマナトビアプリが公開する教材とWebサービスは、すべて無料です。
+          だから学びの扉アプリが公開する教材とWebサービスは、すべて無料です。
           インターネットにつながる環境さえあれば、住んでいる場所や家庭の状況に関係なく、
           同じ入口に立てる状態をつくりたいと考えています。
         </p>
@@ -126,7 +126,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
           {
             label: '活動区分',
             value:
-              'マナトビアプリ（学習サービスの開発・運営）／学生学修コミュニティ「まなとび」（三重大学での探究活動）／音楽活動「まなとび」（楽曲制作）',
+              '学びの扉アプリ（学習サービスの開発・運営）／学生学修コミュニティ「まなとび」（三重大学での探究活動）／音楽活動「まなとび。」（楽曲制作）',
           },
           {
             label: '会計',
@@ -137,13 +137,13 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
             label: '運営するサービス',
             value: (
               <a
-                href={ORG.chemBasisUrl}
+                href={ORG.learningAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 font-bold hover:text-blue-800 underline decoration-blue-200 underline-offset-4"
               >
-                Chem-Basis（{ORG.chemBasisUrl.replace('https://', '')}）
-                ※マナトビアプリが運営
+                学習アプリ（{ORG.learningAppUrl.replace('https://', '')}）
+                ※学びの扉アプリが運営
               </a>
             ),
           },
@@ -177,10 +177,10 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 名前の由来 */}
     <section className="mb-20">
-      <SectionTitle label="Our Name">「マナトビ」という名前について</SectionTitle>
+      <SectionTitle label="Our Name">「学びの扉」という名前について</SectionTitle>
       <Prose>
         <p>
-          「マナトビ」は、「学びの扉」を意味しています。
+          「学びの扉」は、「学びの扉」を意味しています。
           扉は、開ければ向こう側に進めるけれど、閉じていれば何があるのかもわかりません。
           私たちが向き合いたいのは、まさにこの「閉じている状態」です。
         </p>

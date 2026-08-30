@@ -45,7 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
     'about',
     'activities',
     'materials',
-    'chem-basis',
+    'learning-app',
     'reports',
   ];
 
@@ -65,7 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
               whileHover={{ scale: 1.01 }}
               className="flex items-center cursor-pointer gap-4 sm:gap-5 group shrink-0"
               onClick={() => go('home')}
-              aria-label="マナトビ ホームへ"
+              aria-label="学びの扉 ホームへ"
             >
               <div className="h-11 sm:h-12 flex items-center relative shrink-0">
                 <Logo className="h-10 sm:h-11 w-auto" />
@@ -75,10 +75,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   className="text-lg sm:text-xl font-black tracking-tight leading-tight transition-colors text-orange-600 group-hover:text-orange-500"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  マナトビ
+                  学びの扉
                 </span>
                 <span className="text-[8px] sm:text-[9px] font-bold text-orange-400 tracking-[0.25em] uppercase mt-0.5">
-                  Manatobi Official
+                  Manabi-no-Tobira Official
                 </span>
               </div>
             </motion.button>
@@ -154,7 +154,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   Activities
                 </p>
                 <p className="text-[11px] text-slate-500 font-light mb-5 leading-relaxed">
-                  「マナトビ」は3つの活動の総称です。資金・会計・運営はそれぞれ独立しています。
+                  「学びの扉」は3つの活動の総称です。資金・会計・運営はそれぞれ独立しています。
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-9">
                   {DIVISION_NAV.map((n) => (
@@ -218,32 +218,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                       Service
                     </p>
                     <a
-                      href={ORG.chemBasisUrl}
+                      href={ORG.learningAppUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0A3D62] to-blue-800 text-white hover:from-blue-800 hover:to-blue-700 transition-all"
                     >
                       <span>
                         <span className="block text-sm font-black mb-1">
-                          💻 Chem-Basis
+                          💻 学習アプリ
                         </span>
                         <span className="block text-[11px] text-blue-200 font-light">
-「マナトビアプリ」が開発・運営する無料の化学学習サービス
+「学びの扉アプリ」が開発・運営する無料の化学学習サービス
                         </span>
                       </span>
                       <ExternalLink size={16} className="shrink-0" />
                     </a>
-                    <button
-                      onClick={() => go('quiz-select')}
-                      className="mt-2.5 w-full flex items-center gap-3.5 p-4 rounded-2xl bg-slate-50/70 hover:bg-slate-100 text-left transition-colors"
-                    >
-                      <span className="text-lg" aria-hidden="true">
-                        ✍️
-                      </span>
-                      <span className="text-sm font-black text-[#0A3D62]">
-                        重要用語 一問一答（情報I）
-                      </span>
-                    </button>
                   </div>
 
                   {/* 規約 */}

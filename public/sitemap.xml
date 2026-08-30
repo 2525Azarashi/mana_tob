@@ -17,7 +17,7 @@
   </url>
   <!--
     3つの活動の別ページ。
-    「マナトビ」は資金・会計・運営が独立した3活動の総称のため、
+    「学びの扉」は資金・会計・運営が独立した3活動の総称のため、
     それぞれ独立した URL で掲載しています。
   -->
   <url>
@@ -46,7 +46,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://manatobi.jp/chem-basis</loc>
+    <loc>https://manatobi.jp/learning-app</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -84,10 +84,5 @@
     <loc>https://manatobi.jp/sitemap</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://manatobi.jp/quiz</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
 </urlset>

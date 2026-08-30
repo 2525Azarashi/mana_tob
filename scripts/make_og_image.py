@@ -24,10 +24,11 @@ SANS_BOLD = "/usr/share/fonts/opentype/noto/NotoSansCJK-Black.ttc"
 SANS_MED = "/usr/share/fonts/opentype/noto/NotoSansCJK-Medium.ttc"
 SANS_REG = "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
 
-TITLE = "マナトビ"
-TAGLINE = "学びの扉 ～私たちにできることを～"
+TITLE = "学びの扉"
+TITLE_EN = "Manabi-no-Tobira"
+TAGLINE = "～私たちにできることを～"
 LEAD = "高校生・受験生のための無料教材と学びの場をつくる学生団体"
-FOOTER = "manatobi.jp　｜　Chem-Basis を開発・運営"
+FOOTER = "manatobi.jp　｜　学習アプリを開発・運営"
 
 
 def font(path: str, size: int) -> ImageFont.FreeTypeFont:
@@ -83,7 +84,7 @@ def main() -> None:
 
     # 団体名
     d.text((250, 104), TITLE, font=font(SANS_BOLD, 82), fill=(255, 255, 255))
-    d.text((256, 196), "Manatobi", font=font(SANS_MED, 30), fill=SKY)
+    d.text((256, 196), TITLE_EN, font=font(SANS_MED, 30), fill=SKY)
 
     # アクセントの罫線
     d.rounded_rectangle((90, 288, 330, 296), radius=4, fill=SKY)

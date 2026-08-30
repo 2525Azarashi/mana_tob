@@ -11,7 +11,7 @@ const PAGES = [
   '/', '/about', '/activities',
   // 3つの活動（資金・運営が独立しているため個別ページ）
   '/app', '/community', '/music',
-  '/philosophy', '/materials', '/chem-basis',
+  '/philosophy', '/materials', '/learning-app',
   '/members', '/reports', '/achievements', '/contact', '/privacy', '/terms', '/sitemap',
 ];
 

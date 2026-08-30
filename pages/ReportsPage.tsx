@@ -35,7 +35,7 @@ const formatDate = (iso: string) => {
 
 const ReportsPage: React.FC<Props> = ({ setCurrentPage }) => {
   const [filter, setFilter] = useState<string>('すべて');
-  /** 活動（マナトビアプリ／コミュニティ／音楽）での絞り込み */
+  /** 活動（学びの扉アプリ／コミュニティ／音楽）での絞り込み */
   const [divFilter, setDivFilter] = useState<Division['id'] | 'all'>('all');
 
   const list = REPORTS.filter(
@@ -50,7 +50,7 @@ const ReportsPage: React.FC<Props> = ({ setCurrentPage }) => {
       emoji="📰"
       title="活動報告"
       titleEn="Activity Reports"
-      lead="「マナトビ」の各活動が実際に行ったことを、時系列で記録・公開しています。何を実施し、そこから何がわかったのかまで書き残すことを方針としています。各記事がどの活動のものなのかは、タグで確認できます。"
+      lead="「学びの扉」の各活動が実際に行ったことを、時系列で記録・公開しています。何を実施し、そこから何がわかったのかまで書き残すことを方針としています。各記事がどの活動のものなのかは、タグで確認できます。"
       setCurrentPage={setCurrentPage}
     >
       {/* 活動（部門）での絞り込み。資金・運営が別のため分けて見られるようにしています */}
