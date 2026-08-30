@@ -2,13 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PageType } from '../types';
 import PageShell from '../components/ui/PageShell';
-import {
-  SectionTitle,
-  Prose,
-  Card,
-  DefinitionList,
-  CTAButton,
-} from '../components/ui/Blocks';
+import { resolveIcon, SectionTitle, Prose, Card, DefinitionList, CTAButton } from '../components/ui/Blocks';
 import { StructureNote } from '../components/ui/DivisionNotice';
 import { ORG, DIVISIONS } from '../content/site';
 
@@ -19,13 +13,12 @@ interface Props {
 /**
  * 「学びの扉とは」ページ。
  *
- * ⚠ 最重要: 「学びの扉」は3つの独立した活動の総称であることを、
+ * [重要] 最重要: 「学びの扉」は3つの独立した活動の総称であることを、
  *   このページで最初に明確に説明します。混同を招く書き方をしないでください。
  */
 const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="about"
-    emoji="🏠"
     title="学びの扉とは"
     titleEn="About Us"
     lead="「学びの扉」は、ひとつの団体名ではなく、3つの活動の総称です。それぞれ資金・会計・運営を独立して行っているため、当サイトでも活動ごとにページを分けてご紹介しています。"
@@ -33,7 +26,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
   >
     {/* 組織構成（最初に説明する） */}
     <section className="mb-24">
-      <SectionTitle label="Structure">3つの活動から成り立っています</SectionTitle>
+      <SectionTitle label="組織の構成">3つの活動から成り立っています</SectionTitle>
       <Prose className="mb-8">
         <p>
           私たちは「学びの扉／まなとび」という名前を共有して活動していますが、
@@ -52,7 +45,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 各活動の概要 */}
     <section className="mb-24">
-      <SectionTitle label="Activities">それぞれの活動について</SectionTitle>
+      <SectionTitle label="3つの活動">それぞれの活動について</SectionTitle>
 
       <div className="space-y-6">
         {DIVISIONS.map((d, i) => (
@@ -60,26 +53,26 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
             <div className="flex flex-col sm:flex-row gap-6">
               <span
                 aria-hidden="true"
-                className="text-3xl leading-none shrink-0"
+                className="w-11 h-11 rounded-md border border-line bg-sunken text-ink-strong flex items-center justify-center shrink-0"
               >
-                {d.emoji}
+                {resolveIcon(d.icon, 'w-5 h-5')}
               </span>
               <div className="flex-grow">
-                <p className="text-[10px] font-black tracking-[0.28em] text-blue-500 uppercase mb-2.5">
+                <p className="text-[12px] font-semibold tracking-[0.08em] text-blue-700 mb-2.5">
                   {d.nameEn}
                 </p>
-                <h3 className="text-lg font-black text-[#0A3D62] leading-snug mb-1.5">
+                <h3 className="text-lg font-semibold text-ink-strong leading-snug mb-1.5">
                   {d.name}
                 </h3>
-                <p className="text-[11px] font-bold text-slate-400 mb-4">
+                <p className="text-[12.5px] font-bold text-ink-muted mb-4">
                   {d.kind}
                 </p>
-                <p className="text-[15px] text-slate-600 font-light leading-[1.9] mb-5">
+                <p className="text-[15.5px] text-ink-body leading-[1.9] mb-5">
                   {d.summary}
                 </p>
                 <button
                   onClick={() => setCurrentPage(d.id as PageType)}
-                  className="inline-flex items-center gap-2 text-xs font-black text-blue-600 hover:text-blue-800 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors"
                 >
                   {d.linkLabel}
                   <ArrowRight size={14} />
@@ -93,7 +86,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 共通する出発点 */}
     <section className="mb-24">
-      <SectionTitle label="Our Origin">共通する出発点</SectionTitle>
+      <SectionTitle label="活動のはじまり">共通する出発点</SectionTitle>
       <Prose>
         <p>
           活動としては分かれていますが、「学び」をきっかけに人の可能性を広げたいという
@@ -115,7 +108,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 概要 */}
     <section className="mb-24">
-      <SectionTitle label="Overview">概要</SectionTitle>
+      <SectionTitle label="団体概要">概要</SectionTitle>
       <DefinitionList
         items={[
           { label: '名称', value: `${ORG.name}（3つの活動の総称）` },
@@ -177,7 +170,7 @@ const AboutPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 名前の由来 */}
     <section className="mb-20">
-      <SectionTitle label="Our Name">「学びの扉」という名前について</SectionTitle>
+      <SectionTitle label="名称について">「学びの扉」という名前について</SectionTitle>
       <Prose>
         <p>
           「学びの扉」は、「学びの扉」を意味しています。

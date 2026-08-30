@@ -1,11 +1,10 @@
 import React from 'react';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight, Home, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PageType } from '../../types';
 
 interface PageShellProps {
   page: PageType;
-  emoji: string;
   title: string;
   titleEn: string;
   lead: string;
@@ -16,11 +15,11 @@ interface PageShellProps {
 /**
  * 全下層ページ共通のレイアウト。
  * ・ページヘッダー（パンくず／タイトル／リード文）
- * ・document.title と meta description の更新（SEO）
+ *
+ * [重要] 見出しに絵文字・装飾記号は付けません。
+ *   階層は文字サイズ・ウェイト・罫線だけで表現します。
  */
 const PageShell: React.FC<PageShellProps> = ({
-  page,
-  emoji,
   title,
   titleEn,
   lead,
@@ -33,48 +32,40 @@ const PageShell: React.FC<PageShellProps> = ({
   return (
     <div className="min-h-screen bg-white">
       {/* ページヘッダー */}
-      <header className="relative pt-36 pb-16 overflow-hidden bg-gradient-to-b from-slate-50 via-white to-white border-b border-slate-100">
-        <div className="absolute top-[-30%] right-[-10%] w-[600px] h-[600px] bg-blue-100/40 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-[-40%] left-[-10%] w-[420px] h-[420px] bg-cyan-100/30 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <header className="pt-32 pb-12 bg-sunken/70 border-b border-line">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* パンくず */}
-          <nav aria-label="パンくずリスト" className="mb-8">
-            <ol className="flex items-center flex-wrap gap-2 text-xs font-bold text-slate-400">
+          <nav aria-label="パンくずリスト" className="mb-7">
+            <ol className="flex items-center flex-wrap gap-2 text-[12px] text-ink-muted">
               <li>
                 <button
                   onClick={() => setCurrentPage('home')}
-                  className="flex items-center gap-1.5 hover:text-blue-600 transition-colors"
+                  className="flex items-center gap-1.5 hover:text-ink-strong hover:underline transition-colors"
                 >
-                  <Home size={13} />
+                  <Home size={12} />
                   ホーム
                 </button>
               </li>
-              <li aria-hidden="true">
-                <ChevronRight size={13} />
+              <li aria-hidden="true" className="text-line-strong">
+                <ChevronRight size={12} />
               </li>
-              <li className="text-slate-600" aria-current="page">
+              <li className="text-ink-body" aria-current="page">
                 {title}
               </li>
             </ol>
           </nav>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
           >
-            <p className="text-[10px] font-black tracking-[0.4em] text-blue-600 uppercase mb-5">
-              {titleEn}
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0A3D62] tracking-tight leading-[1.25] mb-7">
-              <span className="mr-3" aria-hidden="true">
-                {emoji}
-              </span>
+            <h1 className="text-[28px] sm:text-[34px] lg:text-[40px] font-bold text-ink-strong tracking-tight leading-[1.4] mb-2.5">
               {title}
             </h1>
-            <div className="h-1.5 w-24 bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full mb-8" />
-            <p className="text-lg sm:text-xl text-slate-600 font-light leading-relaxed max-w-3xl">
+            {/* 英語表記は装飾ではなく補助情報として、見出しの下に控えめに置きます */}
+            <p className="text-[14px] text-ink-muted mb-6">{titleEn}</p>
+            <p className="text-[16px] sm:text-[17px] text-ink-body leading-[1.9] max-w-2xl">
               {lead}
             </p>
           </motion.div>
@@ -82,15 +73,16 @@ const PageShell: React.FC<PageShellProps> = ({
       </header>
 
       {/* 本文 */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">{children}</main>
+      <main className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 py-16">{children}</main>
 
       {/* 下部ナビ */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8 pb-20">
         <button
           onClick={() => setCurrentPage('home')}
-          className="inline-flex items-center gap-3 px-8 py-4 bg-slate-50 text-[#0A3D62] rounded-2xl font-black text-sm hover:bg-slate-100 transition-all border border-slate-200"
+          className="inline-flex items-center gap-2 px-6 py-3 text-ink-strong rounded-md font-semibold text-sm hover:bg-sunken transition-colors border border-line-strong"
         >
-          ← ホームに戻る
+          <ArrowLeft size={15} />
+          ホームに戻る
         </button>
       </div>
     </div>

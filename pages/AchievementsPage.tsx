@@ -20,7 +20,6 @@ interface Props {
 const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="achievements"
-    emoji="📸"
     title="活動実績"
     titleEn="Achievements"
     lead="これまでの活動を、数値とあゆみで記録しています。掲載しているのは実際に確認できている事実のみです。なお「学びの扉」は3つの活動の総称です。あゆみの各項目には、どの活動のできごとなのかをタグで示しています。"
@@ -28,8 +27,8 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
   >
     {/* 数値 */}
     <section className="mb-24">
-      <SectionTitle label="By the Numbers">数字で見る学びの扉</SectionTitle>
-      <p className="text-[13px] text-slate-500 font-light leading-relaxed mb-8 -mt-4">
+      <SectionTitle label="数字で見る活動">数字で見る学びの扉</SectionTitle>
+      <p className="text-[14px] text-ink-muted leading-[1.85] mb-8 -mt-4">
         ※ 下記は3つの活動を合わせた実績です。活動ごとの内訳は、
         各活動のページおよび活動報告をご覧ください。
       </p>
@@ -39,17 +38,17 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
           <Card key={i} delay={i * 0.07} className="p-7 text-center">
             <div className="flex items-baseline justify-center gap-1.5 mb-4">
               <span
-                className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-cyan-400"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                className="text-5xl font-semibold text-ink-strong"
+                
               >
                 {a.value}
               </span>
-              <span className="text-sm font-black text-slate-400">{a.unit}</span>
+              <span className="text-sm font-semibold text-ink-muted">{a.unit}</span>
             </div>
-            <p className="text-[13px] font-black text-[#0A3D62] mb-2 leading-snug">
+            <p className="text-[14px] font-semibold text-ink-strong mb-2 leading-snug">
               {a.label}
             </p>
-            <p className="text-[11px] text-slate-400 font-medium leading-relaxed">
+            <p className="text-[12.5px] text-ink-muted font-medium leading-relaxed">
               {a.note}
             </p>
           </Card>
@@ -59,7 +58,7 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* あゆみ */}
     <section className="mb-24">
-      <SectionTitle label="History">活動のあゆみ</SectionTitle>
+      <SectionTitle>活動のあゆみ</SectionTitle>
 
       <div className="relative pl-8 sm:pl-10">
         {/* 縦線 */}
@@ -79,7 +78,7 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
               <span className="absolute left-[-31px] sm:left-[-39px] top-1.5 w-5 h-5 rounded-full bg-white border-[3px] border-blue-500 shadow-sm" />
 
               <div className="flex flex-wrap items-center gap-3 mb-2.5">
-                <p className="text-xs font-black tracking-[0.2em] text-blue-600 uppercase">
+                <p className="text-xs font-semibold tracking-[0.06em] text-blue-600">
                   {t.date}
                 </p>
                 {/* このできごとがどの活動のものかを明示 */}
@@ -88,10 +87,10 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
                   onClick={() => setCurrentPage(t.division)}
                 />
               </div>
-              <h3 className="text-lg font-black text-[#0A3D62] mb-3 leading-snug">
+              <h3 className="text-lg font-semibold text-ink-strong mb-3 leading-snug">
                 {t.title}
               </h3>
-              <p className="text-[15px] text-slate-600 font-light leading-[1.9]">
+              <p className="text-[15.5px] text-ink-body leading-[1.9]">
                 {t.description}
               </p>
             </motion.div>
@@ -102,7 +101,7 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 成果物 */}
     <section className="mb-24">
-      <SectionTitle label="Publications">発行した記録・教材</SectionTitle>
+      <SectionTitle label="公開している教材">発行した記録・教材</SectionTitle>
       <Prose className="mb-8">
         <p>
           活動ごとに記録を残すことを方針としています。
@@ -133,13 +132,13 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
           },
         ].map((p, i) => (
           <Card key={i} delay={i * 0.06} className="p-7 sm:p-8">
-            <p className="text-[11px] font-black text-blue-500 tracking-wider mb-3">
+            <p className="text-[12.5px] font-semibold text-blue-700 tracking-wider mb-3">
               {p.meta}
             </p>
-            <h3 className="text-base font-black text-[#0A3D62] mb-3 leading-snug">
+            <h3 className="text-base font-semibold text-ink-strong mb-3 leading-snug">
               {p.title}
             </h3>
-            <p className="text-sm text-slate-500 font-light leading-relaxed">{p.body}</p>
+            <p className="text-sm text-ink-muted leading-[1.85]">{p.body}</p>
           </Card>
         ))}
       </div>
@@ -147,13 +146,13 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 活動風景 */}
     <section className="mb-16">
-      <SectionTitle label="Gallery">活動の様子</SectionTitle>
-      <Card className="p-10 sm:p-14 text-center border-dashed border-2 border-slate-200 shadow-none bg-slate-50/50">
-        <ImageIcon className="w-10 h-10 text-slate-300 mx-auto mb-5" />
-        <p className="text-sm font-bold text-slate-500 mb-2">
+      <SectionTitle label="活動の記録">活動の様子</SectionTitle>
+      <Card className="p-10 sm:p-14 text-center border-dashed border border-line-strong shadow-none bg-sunken/50">
+        <ImageIcon className="w-10 h-10 text-line-strong mx-auto mb-5" />
+        <p className="text-sm font-bold text-ink-muted mb-2">
           活動写真の掲載を準備しています
         </p>
-        <p className="text-xs text-slate-400 font-light leading-relaxed max-w-md mx-auto">
+        <p className="text-xs text-ink-muted leading-[1.85] max-w-md mx-auto">
           参加者のプライバシー保護の観点から、掲載にあたっては本人の同意確認および
           必要な画像処理を行っています。準備が整い次第、順次公開します。
         </p>

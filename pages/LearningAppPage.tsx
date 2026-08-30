@@ -50,7 +50,6 @@ const FEATURES = [
 const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="learning-app"
-    emoji="💻"
     title="学習アプリの紹介"
     titleEn="Learning App"
     lead="学習アプリは、「学びの扉」の3つの活動のうち「学びの扉アプリ」が開発・運営する無料の化学学習サービスです。化学基礎・化学の単元別演習を、登録不要・スマートフォンだけで進められます。"
@@ -60,21 +59,20 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
     <section className="mb-20">
       <Card className="overflow-hidden">
         <div className="bg-gradient-to-br from-[#0A3D62] via-blue-800 to-blue-700 p-9 sm:p-12 text-white relative overflow-hidden">
-          <div className="absolute top-[-30%] right-[-10%] w-72 h-72 bg-cyan-400/20 rounded-full blur-[80px]" />
           <div className="relative z-10">
-            <div className="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-7">
+            <div className="w-16 h-16 rounded-md bg-white/15 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-7">
               <Beaker className="w-8 h-8" />
             </div>
-            <p className="text-[10px] font-black tracking-[0.35em] text-cyan-300 uppercase mb-4">
+            <p className="text-[12px] font-semibold tracking-[0.08em] text-cyan-300 mb-4">
               Developed & Operated by Manabi-no-Tobira App
             </p>
             <h2
-              className="text-3xl sm:text-4xl font-black tracking-tight mb-5"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-3xl sm:text-4xl font-bold tracking-tight mb-5 text-white"
+              
             >
               化学学習アプリ
             </h2>
-            <p className="text-blue-100 font-light leading-relaxed text-[16px] max-w-2xl mb-8">
+            <p className="text-blue-100 leading-[1.85] text-[16px] max-w-2xl mb-8">
               「学びの扉アプリ」が開発・運営する、無料の化学学習サービス。
               化学基礎・化学の主要単元を、その場で解説を読みながら演習できます。
             </p>
@@ -82,12 +80,12 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
               href={ORG.learningAppUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-8 py-4 bg-white text-[#0A3D62] rounded-2xl font-black text-sm hover:bg-blue-50 transition-colors shadow-xl"
+              className="inline-flex items-center gap-2.5 px-8 py-4 bg-white text-ink-strong rounded-md font-semibold text-sm hover:bg-blue-50 transition-colors"
             >
               学習アプリを開く
               <ExternalLink size={15} />
             </a>
-            <p className="mt-5 text-[11px] font-bold text-blue-200 tracking-wider">
+            <p className="mt-5 text-[12.5px] font-bold text-blue-200 tracking-wider">
               {ORG.learningAppUrl.replace('https://', '')}
             </p>
           </div>
@@ -97,16 +95,16 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 特徴 */}
     <section className="mb-20">
-      <SectionTitle label="Features">学習アプリの特徴</SectionTitle>
+      <SectionTitle label="サービスの特徴">学習アプリの特徴</SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {FEATURES.map((f, i) => (
           <Card key={i} delay={i * 0.06} className="p-7 flex gap-5">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
               {f.icon}
             </div>
             <div>
-              <h3 className="font-black text-[#0A3D62] mb-2 text-[15px]">{f.title}</h3>
-              <p className="text-sm text-slate-500 font-light leading-relaxed">
+              <h3 className="font-semibold text-ink-strong mb-2 text-[15.5px]">{f.title}</h3>
+              <p className="text-sm text-ink-muted leading-[1.85]">
                 {f.body}
               </p>
             </div>
@@ -117,7 +115,7 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* なぜつくったか */}
     <section className="mb-20">
-      <SectionTitle label="Why We Built It">なぜ学習アプリをつくったのか</SectionTitle>
+      <SectionTitle label="開発のきっかけ">なぜ学習アプリをつくったのか</SectionTitle>
       <Prose>
         <p>
           化学基礎は、mol計算のように「一度つまずくとそこから先がすべて止まる」単元を含んでいます。
@@ -139,7 +137,7 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 収録内容 */}
     <section className="mb-20">
-      <SectionTitle label="Contents">扱っている単元</SectionTitle>
+      <SectionTitle label="収録している内容">扱っている単元</SectionTitle>
       <Card className="p-8 sm:p-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-4">
           {[
@@ -160,11 +158,11 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
               <span className="w-4 h-4 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-1">
                 <Check size={10} strokeWidth={3.5} />
               </span>
-              <span className="text-[15px] text-slate-600 font-light">{u}</span>
+              <span className="text-[15.5px] text-ink-body">{u}</span>
             </div>
           ))}
         </div>
-        <p className="mt-8 pt-6 border-t border-slate-100 text-xs text-slate-400 font-medium leading-relaxed">
+        <p className="mt-8 pt-6 border-t border-line text-xs text-ink-muted font-medium leading-relaxed">
           ※ 収録単元・問題数は継続的に追加・改訂しています。最新の内容は
           学習アプリ本体でご確認ください。
         </p>
@@ -173,7 +171,7 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 使い方 */}
     <section className="mb-20">
-      <SectionTitle label="Getting Started">使いはじめる手順</SectionTitle>
+      <SectionTitle label="使いはじめかた">使いはじめる手順</SectionTitle>
       <div className="space-y-4">
         {[
           {
@@ -198,14 +196,14 @@ const LearningAppPage: React.FC<Props> = ({ setCurrentPage }) => (
           },
         ].map((s, i) => (
           <Card key={i} delay={i * 0.05} className="p-6 flex items-start gap-5">
-            <span className="w-8 h-8 rounded-xl bg-[#0A3D62] text-white text-sm font-black flex items-center justify-center shrink-0">
+            <span className="w-8 h-8 rounded-md bg-brand text-white text-sm font-semibold flex items-center justify-center shrink-0">
               {s.n}
             </span>
             <div>
-              <h4 className="font-black text-[#0A3D62] mb-1.5 text-[15px] break-all">
+              <h4 className="font-semibold text-ink-strong mb-1.5 text-[15.5px] break-all">
                 {s.t}
               </h4>
-              <p className="text-sm text-slate-500 font-light leading-relaxed">{s.b}</p>
+              <p className="text-sm text-ink-muted leading-[1.85]">{s.b}</p>
             </div>
           </Card>
         ))}

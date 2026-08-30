@@ -10,18 +10,18 @@ interface Props {
 
 /** 法務系ページ共通の見出し */
 const H2: React.FC<{ n: string; children: React.ReactNode }> = ({ n, children }) => (
-  <h2 className="text-xl sm:text-2xl font-black text-[#0A3D62] mt-14 mb-6 pb-4 border-b border-slate-100 leading-snug">
-    <span className="text-blue-500 mr-3">{n}</span>
+  <h2 className="text-xl sm:text-2xl font-semibold text-ink-strong mt-14 mb-6 pb-4 border-b border-line leading-snug">
+    <span className="text-blue-700 mr-3">{n}</span>
     {children}
   </h2>
 );
 
 const H3: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <h3 className="text-base font-black text-[#0A3D62] mt-9 mb-4">{children}</h3>
+  <h3 className="text-base font-semibold text-ink-strong mt-9 mb-4">{children}</h3>
 );
 
 const P: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-[16px] text-slate-600 font-light leading-[1.95] mb-5">{children}</p>
+  <p className="text-[16px] text-ink-body leading-[1.95] mb-5">{children}</p>
 );
 
 const UL: React.FC<{ items: React.ReactNode[] }> = ({ items }) => (
@@ -29,7 +29,7 @@ const UL: React.FC<{ items: React.ReactNode[] }> = ({ items }) => (
     {items.map((it, i) => (
       <li key={i} className="flex items-start gap-3.5">
         <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0 mt-[0.7rem]" />
-        <span className="text-[15px] text-slate-600 font-light leading-[1.9]">{it}</span>
+        <span className="text-[15.5px] text-ink-body leading-[1.9]">{it}</span>
       </li>
     ))}
   </ul>
@@ -38,7 +38,6 @@ const UL: React.FC<{ items: React.ReactNode[] }> = ({ items }) => (
 const PrivacyPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="privacy"
-    emoji="🔒"
     title="プライバシーポリシー"
     titleEn="Privacy Policy"
     lead={`当サイトの運営主体である「学びの扉アプリ」（以下「当団体」）は、当団体が運営するウェブサイトおよびサービス（以下あわせて「当サイト」）における個人情報およびそれに準ずる情報の取り扱いについて、以下のとおり定めます。`}
@@ -67,7 +66,7 @@ const PrivacyPage: React.FC<Props> = ({ setCurrentPage }) => (
           <>当サイトの運営主体：学びの扉アプリ</>,
           <>
             責任者：{ORG.representative}
-            <span className="block text-xs text-slate-400 font-light mt-1">
+            <span className="block text-xs text-ink-muted mt-1">
               ※ 学生が主体の活動であり、所属大学への確認および本人の同意が
               必要なため、現在は役職表記のみとしています。法令にもとづく請求および
               公的機関からの照会に対しては、下記メールアドレスより別途ご案内します。
@@ -311,11 +310,11 @@ const PrivacyPage: React.FC<Props> = ({ setCurrentPage }) => (
         ]}
       />
 
-      <div className="mt-16 pt-8 border-t border-slate-100">
-        <p className="text-xs font-bold text-slate-400 tracking-wider">
+      <div className="mt-16 pt-8 border-t border-line">
+        <p className="text-xs font-bold text-ink-muted tracking-wider">
           制定日：2026年8月29日
         </p>
-        <p className="text-xs font-bold text-slate-400 tracking-wider mt-1.5">
+        <p className="text-xs font-bold text-ink-muted tracking-wider mt-1.5">
           最終改定日：2026年8月29日
         </p>
       </div>

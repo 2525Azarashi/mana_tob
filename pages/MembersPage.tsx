@@ -2,14 +2,7 @@ import React from 'react';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { PageType } from '../types';
 import PageShell from '../components/ui/PageShell';
-import {
-  SectionTitle,
-  Prose,
-  Card,
-  DefinitionList,
-  NoteBox,
-  CTAButton,
-} from '../components/ui/Blocks';
+import { resolveIcon, SectionTitle, Prose, Card, DefinitionList, NoteBox, CTAButton } from '../components/ui/Blocks';
 import { StructureNote } from '../components/ui/DivisionNotice';
 import { TEAMS, ORG, DIVISIONS } from '../content/site';
 
@@ -20,14 +13,13 @@ interface Props {
 /**
  * 運営体制ページ。
  *
- * ⚠ 個人が特定できる情報（氏名・所属学部・写真など）は掲載しません。
+ * [重要] 個人が特定できる情報（氏名・所属学部・写真など）は掲載しません。
  *   大学への確認と本人の同意が必要なため、担当している役割のみを公開しています。
  *   許可が取れるまで、この方針を変更しないでください。
  */
 const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="members"
-    emoji="👥"
     title="運営体制"
     titleEn="Organization"
     lead="学びの扉は、資金・会計・運営がそれぞれ独立した3つの活動から成り立っています。それぞれの活動が何を担当しているのかを明示しておくことは、私たちの活動に対する責任の所在を示すことでもあると考えています。"
@@ -35,7 +27,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
   >
     {/* 組織構成 */}
     <section className="mb-16">
-      <SectionTitle label="Structure">組織構成</SectionTitle>
+      <SectionTitle label="組織の構成">組織構成</SectionTitle>
       <Prose className="mb-8">
         <p>
           「学びの扉」は総称です。その下に、学習サービスを開発・運営する
@@ -53,7 +45,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 活動ごとの担当 */}
     <section className="mb-16">
-      <SectionTitle label="Teams">活動ごとの担当</SectionTitle>
+      <SectionTitle label="担当領域">活動ごとの担当</SectionTitle>
 
       {DIVISIONS.map((d) => {
         const teams = TEAMS.filter((t) => t.division === d.id);
@@ -65,31 +57,31 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
               onClick={() => setCurrentPage(d.id as PageType)}
               className="group flex items-center gap-3 mb-6 text-left"
             >
-              <span aria-hidden="true" className="text-xl">
-                {d.emoji}
+              <span aria-hidden="true" className="text-ink-muted group-hover:text-blue-600 transition-colors">
+                {resolveIcon(d.icon, 'w-[18px] h-[18px]')}
               </span>
-              <span className="text-lg font-black text-[#0A3D62] group-hover:text-blue-700 transition-colors">
+              <span className="text-lg font-semibold text-ink-strong group-hover:text-blue-700 transition-colors">
                 {d.name}
               </span>
               <ArrowRight
                 size={15}
-                className="text-slate-300 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all"
+                className="text-line-strong group-hover:text-blue-700 group-hover:translate-x-0.5 transition-all"
               />
             </button>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {teams.map((t, i) => (
                 <Card key={t.role} delay={i * 0.05} className="p-7">
-                  <p className="text-[10px] font-black tracking-[0.28em] text-blue-500 uppercase mb-3">
+                  <p className="text-[12px] font-semibold tracking-[0.08em] text-blue-700 mb-3">
                     {t.roleEn}
                   </p>
-                  <h3 className="text-base font-black text-[#0A3D62] mb-1.5">
+                  <h3 className="text-base font-semibold text-ink-strong mb-1.5">
                     {t.role}
                   </h3>
-                  <p className="text-[11px] text-slate-400 font-bold mb-4">
+                  <p className="text-[12.5px] text-ink-muted font-bold mb-4">
                     {t.scale}
                   </p>
-                  <p className="text-sm text-slate-500 font-light leading-relaxed">
+                  <p className="text-sm text-ink-muted leading-[1.85]">
                     {t.description}
                   </p>
                 </Card>
@@ -102,21 +94,21 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 個人情報の公開方針 */}
     <section className="mb-16">
-      <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-6 sm:p-8">
+      <div className="rounded-md border border-line bg-sunken/80 p-6 sm:p-8">
         <div className="flex items-start gap-3.5">
-          <span className="w-8 h-8 rounded-xl bg-white text-[#0A3D62] flex items-center justify-center shrink-0 border border-slate-200">
+          <span className="w-8 h-8 rounded-md bg-white text-ink-strong flex items-center justify-center shrink-0 border border-line">
             <ShieldCheck size={16} />
           </span>
           <div>
-            <p className="text-sm font-black text-[#0A3D62] mb-2.5">
+            <p className="text-sm font-semibold text-ink-strong mb-2.5">
               メンバーの個人情報について
             </p>
-            <p className="text-[14px] text-slate-600 font-light leading-relaxed mb-3">
+            <p className="text-[14px] text-ink-body leading-[1.85] mb-3">
               学びの扉は学生が主体となって活動しています。メンバーの氏名・所属学部・写真などの
               個人が特定できる情報の公開には、所属大学への確認および本人の同意が必要となるため、
               現時点では掲載しておりません。
             </p>
-            <p className="text-[14px] text-slate-600 font-light leading-relaxed">
+            <p className="text-[14px] text-ink-body leading-[1.85]">
               運営の責任の所在については、上記のとおり活動ごとの担当領域を公開しています。
               団体としての確認が必要な事項については、お問い合わせ窓口より承ります。
             </p>
@@ -127,7 +119,7 @@ const MembersPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 運営情報 */}
     <section className="mb-16">
-      <SectionTitle label="Operation">運営に関する情報</SectionTitle>
+      <SectionTitle label="運営について">運営に関する情報</SectionTitle>
       <DefinitionList
         items={[
           { label: '名称', value: `${ORG.name}（3つの活動の総称）` },

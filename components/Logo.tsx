@@ -6,14 +6,27 @@ interface LogoProps {
 }
 
 const Logo: React.FC<LogoProps> = ({ className = "h-12 w-auto" }) => {
-  // 新しい Google Drive のファイルID: 1iYmtlqdNO7gzaH9OGTdb5EJMtsnXr81Y
-  const logoUrl = "https://lh3.googleusercontent.com/d/1iYmtlqdNO7gzaH9OGTdb5EJMtsnXr81Y";
+  /*
+    [重要] ロゴは public/images/ に置いて自サイトから配信します。
+      以前は Google ドライブの共有URL を直接参照していましたが、
+      配信がブロックされたり共有設定の変更で消えたりする恐れがあるため、
+      リポジトリ管理の静的ファイルに移しました。
+
+    alt は空にしています。
+      ヘッダーもフッターもロゴの隣に「学びの扉」という文字が並んでおり、
+      ロゴに説明を付けると読み上げが二重になるためです（装飾画像として扱う）。
+      ヘッダーのリンク自体には aria-label="学びの扉 ホームへ" が付いています。
+  */
+  const logoUrl = "/images/logo.png";
 
   return (
     <div className={`relative flex items-center ${className}`}>
-      <img 
-        src={logoUrl} 
-        alt="mntb logo" 
+      <img
+        src={logoUrl}
+        alt=""
+        width={600}
+        height={215}
+        decoding="async"
         className="h-full w-auto object-contain"
         onError={(e) => {
           const target = e.currentTarget;

@@ -24,7 +24,6 @@ const statusTone = (s: string) =>
 const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="materials"
-    emoji="🧑‍🏫"
     title="学習支援・教材"
     titleEn="Learning Materials"
     lead="学びの扉が制作・公開している学習教材の一覧です。化学基礎・化学、英語リスニングの2領域を対象に、解説教材と演習問題を用意しています。すべて無料・登録不要でご利用いただけます。"
@@ -32,7 +31,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
   >
     {/* 方針 */}
     <section className="mb-20">
-      <SectionTitle label="Policy">教材の考え方</SectionTitle>
+      <SectionTitle label="教材づくりの方針">教材の考え方</SectionTitle>
       <Prose>
         <p>
           私たちの教材は、網羅性よりも「つまずく場所を通過できること」を優先しています。
@@ -54,28 +53,28 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
 
       return (
         <section key={subject} className="mb-20">
-          <SectionTitle label="Lineup">{subject}</SectionTitle>
+          <SectionTitle label="教材のラインナップ">{subject}</SectionTitle>
 
           <div className="space-y-5">
             {items.map((m, i) => (
               <Card key={m.id} delay={i * 0.06} className="p-7 sm:p-8">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-6">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
                     <FileText className="w-6 h-6" />
                   </div>
 
                   <div className="flex-grow">
                     <div className="flex flex-wrap items-center gap-3 mb-4">
                       <Badge tone={statusTone(m.status) as any}>{m.status}</Badge>
-                      <span className="text-[11px] font-bold text-slate-400">
+                      <span className="text-[12.5px] font-bold text-ink-muted">
                         {m.format}
                       </span>
                     </div>
 
-                    <h3 className="text-lg font-black text-[#0A3D62] mb-3 leading-snug">
+                    <h3 className="text-lg font-semibold text-ink-strong mb-3 leading-snug">
                       {m.title}
                     </h3>
-                    <p className="text-[15px] text-slate-500 font-light leading-relaxed">
+                    <p className="text-[15.5px] text-ink-muted leading-[1.85]">
                       {m.description}
                     </p>
 
@@ -85,7 +84,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
                           href={m.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0A3D62] text-white rounded-xl text-xs font-black hover:bg-blue-800 transition-colors"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand text-white rounded-md text-xs font-semibold hover:bg-brand-hover transition-colors"
                         >
                           利用する
                           <ExternalLink size={13} />
@@ -94,7 +93,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
                       {m.id === 'listening-1a' && (
                         <button
                           onClick={() => setCurrentPage('contact')}
-                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-50 text-[#0A3D62] rounded-xl text-xs font-black hover:bg-slate-100 transition-colors border border-slate-200"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 bg-sunken text-ink-strong rounded-md text-xs font-semibold hover:bg-slate-100 transition-colors border border-line"
                         >
                           <Download size={13} />
                           配布についてお問い合わせ
@@ -112,7 +111,7 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 使い方 */}
     <section className="mb-16">
-      <SectionTitle label="How to Use">おすすめの使い方</SectionTitle>
+      <SectionTitle label="使い方">おすすめの使い方</SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {[
           {
@@ -131,15 +130,13 @@ const MaterialsPage: React.FC<Props> = ({ setCurrentPage }) => (
             b: '一度で仕上げようとせず、数日空けて同じ単元をもう一度解いてください。定着の確認になります。',
           },
         ].map((s, i) => (
-          <Card key={i} delay={i * 0.06} className="p-7">
-            <span
-              className="text-3xl font-black text-blue-200 italic"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
+          <Card key={i} delay={i * 0.06} interactive className="p-7">
+            {/* 手順番号。白背景では blue-200 が薄すぎるため、枠付きの濃色で示します */}
+            <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-brand-accent text-[15px] font-bold tabular-nums">
               {s.n}
             </span>
-            <h4 className="font-black text-[#0A3D62] mt-4 mb-3 text-[15px]">{s.t}</h4>
-            <p className="text-sm text-slate-500 font-light leading-relaxed">{s.b}</p>
+            <h4 className="font-bold text-ink-strong mt-4 mb-3 text-[16px]">{s.t}</h4>
+            <p className="text-[14.5px] text-ink-body leading-[1.85]">{s.b}</p>
           </Card>
         ))}
       </div>

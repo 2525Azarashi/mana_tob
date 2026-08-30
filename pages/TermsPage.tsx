@@ -9,24 +9,24 @@ interface Props {
 }
 
 const H2: React.FC<{ n: string; children: React.ReactNode }> = ({ n, children }) => (
-  <h2 className="text-xl sm:text-2xl font-black text-[#0A3D62] mt-14 mb-6 pb-4 border-b border-slate-100 leading-snug">
-    <span className="text-blue-500 mr-3">{n}</span>
+  <h2 className="text-xl sm:text-2xl font-semibold text-ink-strong mt-14 mb-6 pb-4 border-b border-line leading-snug">
+    <span className="text-blue-700 mr-3">{n}</span>
     {children}
   </h2>
 );
 
 const P: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <p className="text-[16px] text-slate-600 font-light leading-[1.95] mb-5">{children}</p>
+  <p className="text-[16px] text-ink-body leading-[1.95] mb-5">{children}</p>
 );
 
 const OL: React.FC<{ items: React.ReactNode[] }> = ({ items }) => (
   <ol className="space-y-3.5 mb-6">
     {items.map((it, i) => (
       <li key={i} className="flex items-start gap-4">
-        <span className="w-6 h-6 rounded-lg bg-slate-100 text-slate-500 text-[11px] font-black flex items-center justify-center shrink-0 mt-0.5">
+        <span className="w-6 h-6 rounded-lg bg-slate-100 text-ink-muted text-[12.5px] font-semibold flex items-center justify-center shrink-0 mt-0.5">
           {i + 1}
         </span>
-        <span className="text-[15px] text-slate-600 font-light leading-[1.9]">{it}</span>
+        <span className="text-[15.5px] text-ink-body leading-[1.9]">{it}</span>
       </li>
     ))}
   </ol>
@@ -35,7 +35,6 @@ const OL: React.FC<{ items: React.ReactNode[] }> = ({ items }) => (
 const TermsPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="terms"
-    emoji="📜"
     title="利用規約"
     titleEn="Terms of Use"
     lead={`本規約は、「学びの扉」の3つの活動のうち「学びの扉アプリ」（以下「当団体」）が運営するウェブサイトおよび提供する教材・サービス（以下あわせて「本サービス」）の利用条件を定めるものです。本サービスをご利用いただく際は、本規約に同意いただいたものとみなします。`}
@@ -209,11 +208,11 @@ const TermsPage: React.FC<Props> = ({ setCurrentPage }) => (
         よりご連絡ください。
       </P>
 
-      <div className="mt-16 pt-8 border-t border-slate-100">
-        <p className="text-xs font-bold text-slate-400 tracking-wider">
+      <div className="mt-16 pt-8 border-t border-line">
+        <p className="text-xs font-bold text-ink-muted tracking-wider">
           制定日：2026年8月29日
         </p>
-        <p className="text-xs font-bold text-slate-400 tracking-wider mt-1.5">
+        <p className="text-xs font-bold text-ink-muted tracking-wider mt-1.5">
           最終改定日：2026年8月29日
         </p>
       </div>

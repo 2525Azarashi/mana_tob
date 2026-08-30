@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Instagram, Menu, X, ExternalLink } from 'lucide-react';
+import { resolveIcon } from './ui/Blocks';
 import { PageType } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
@@ -52,10 +53,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
           scrolled || open
-            ? 'bg-white/95 backdrop-blur-md border-b border-slate-100 py-3 shadow-sm'
-            : 'bg-white/80 backdrop-blur-sm py-4'
+            ? 'bg-white/90 backdrop-blur-xl border-b border-line py-2.5 shadow-md'
+            : 'bg-white/70 backdrop-blur-md py-4 border-b border-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,37 +71,50 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
               <div className="h-11 sm:h-12 flex items-center relative shrink-0">
                 <Logo className="h-10 sm:h-11 w-auto" />
               </div>
-              <div className="flex flex-col border-l-2 border-orange-400 pl-4 sm:pl-5 py-0.5 shrink-0 text-left">
-                <span
-                  className="text-lg sm:text-xl font-black tracking-tight leading-tight transition-colors text-orange-600 group-hover:text-orange-500"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
-                >
+              <div className="flex flex-col border-l border-line pl-4 sm:pl-5 py-0.5 shrink-0 text-left">
+                <span className="text-lg sm:text-xl font-bold tracking-tight leading-tight text-ink-strong">
                   学びの扉
                 </span>
-                <span className="text-[8px] sm:text-[9px] font-bold text-orange-400 tracking-[0.25em] uppercase mt-0.5">
-                  Manabi-no-Tobira Official
+                <span className="text-[12px] text-ink-muted mt-0.5">
+                  Manabi-no-Tobira
                 </span>
               </div>
             </motion.button>
 
             {/* デスクトップナビ */}
             <div className="hidden lg:flex items-center gap-1">
-              {MAIN_NAV.filter((n) => desktopNav.includes(n.page)).map((n) => (
-                <button
-                  key={n.page}
-                  onClick={() => go(n.page)}
-                  className={`px-3.5 py-2.5 rounded-xl text-[13px] font-black transition-all whitespace-nowrap ${
-                    currentPage === n.page
-                      ? 'text-blue-700 bg-blue-50'
-                      : 'text-slate-600 hover:text-blue-600 hover:bg-slate-50'
-                  }`}
-                >
-                  {n.label}
-                </button>
-              ))}
+              {MAIN_NAV.filter((n) => desktopNav.includes(n.page)).map((n) => {
+                const active = currentPage === n.page;
+                return (
+                  <button
+                    key={n.page}
+                    onClick={() => go(n.page)}
+                    aria-current={active ? 'page' : undefined}
+                    className={`relative px-3.5 py-2.5 rounded-lg text-[14.5px] font-bold transition-colors whitespace-nowrap ${
+                      active
+                        ? 'text-brand'
+                        : 'text-ink-body hover:text-brand hover:bg-sunken'
+                    }`}
+                  >
+                    {n.label}
+                    {/*
+                      現在地は色だけでなく下線でも示します
+                      （色覚特性のある方にも伝わるようにするため）。
+                    */}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-active"
+                        aria-hidden="true"
+                        className="absolute left-3 right-3 -bottom-0.5 h-[3px] rounded-full bg-brand-accent"
+                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
               <button
                 onClick={() => go('contact')}
-                className="ml-2 px-5 py-2.5 rounded-xl text-[13px] font-black bg-[#0A3D62] text-white hover:bg-blue-800 transition-colors whitespace-nowrap"
+                className="ml-2.5 px-5 py-2.5 rounded-lg text-[14.5px] font-bold bg-brand text-white shadow-sm hover:bg-brand-hover hover:shadow-md transition-all duration-200 active:translate-y-px whitespace-nowrap"
               >
                 お問い合わせ
               </button>
@@ -113,7 +127,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="hidden sm:flex text-slate-400 hover:text-pink-600 transition-all p-2.5 bg-slate-50 rounded-xl"
+                className="hidden sm:flex text-ink-muted hover:text-pink-600 transition-all p-2.5 bg-sunken rounded-md"
               >
                 <Instagram size={18} />
               </a>
@@ -121,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                 onClick={() => setOpen(!open)}
                 aria-label={open ? 'メニューを閉じる' : 'メニューを開く'}
                 aria-expanded={open}
-                className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl text-[#0A3D62] transition-colors"
+                className="p-2.5 bg-sunken hover:bg-slate-100 rounded-md text-ink-strong transition-colors"
               >
                 {open ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -146,14 +160,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-[76px] left-0 right-0 z-[99] max-h-[calc(100vh-90px)] overflow-y-auto bg-white border-b border-slate-200 shadow-2xl"
+              className="fixed top-[76px] left-0 right-0 z-[99] max-h-[calc(100vh-90px)] overflow-y-auto bg-white border-b border-line shadow-lg"
             >
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-9">
                 {/* 3つの活動（資金・運営が独立しているため別ページ） */}
-                <p className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-2">
-                  Activities
+                <p className="text-[12.5px] font-semibold text-ink-muted mb-2">
+                  3つの活動
                 </p>
-                <p className="text-[11px] text-slate-500 font-light mb-5 leading-relaxed">
+                <p className="text-[12px] text-ink-muted mb-5 leading-relaxed">
                   「学びの扉」は3つの活動の総称です。資金・会計・運営はそれぞれ独立しています。
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-9">
@@ -161,20 +175,20 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                     <button
                       key={n.page}
                       onClick={() => go(n.page)}
-                      className={`flex items-start gap-3.5 p-4 rounded-2xl text-left transition-all border ${
+                      className={`flex items-start gap-3.5 p-4 rounded-md text-left transition-all border ${
                         currentPage === n.page
                           ? 'bg-blue-50 border-blue-200'
-                          : 'bg-white border-slate-200 hover:border-blue-300 hover:bg-blue-50/40'
+                          : 'bg-white border-line hover:border-blue-300 hover:bg-blue-50/40'
                       }`}
                     >
-                      <span className="text-lg shrink-0" aria-hidden="true">
-                        {n.emoji}
+                      <span className="text-ink-muted shrink-0 mt-0.5" aria-hidden="true">
+                        {resolveIcon(n.icon, 'w-4 h-4')}
                       </span>
                       <span>
-                        <span className="block text-[13px] font-black text-[#0A3D62] leading-snug">
+                        <span className="block text-[14px] font-semibold text-ink-strong leading-snug">
                           {n.label}
                         </span>
-                        <span className="block text-[9px] font-bold text-slate-400 tracking-[0.15em] uppercase mt-1">
+                        <span className="block text-[12px] text-ink-muted mt-1">
                           {n.labelEn}
                         </span>
                       </span>
@@ -182,28 +196,28 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   ))}
                 </div>
 
-                <p className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-5">
-                  Menu
+                <p className="text-[12.5px] font-semibold text-ink-muted mb-5">
+                  サイト内のページ
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 mb-9">
                   {MAIN_NAV.map((n) => (
                     <button
                       key={n.page}
                       onClick={() => go(n.page)}
-                      className={`flex items-center gap-3.5 p-4 rounded-2xl text-left transition-all border ${
+                      className={`flex items-center gap-3.5 p-4 rounded-md text-left transition-all border ${
                         currentPage === n.page
                           ? 'bg-blue-50 border-blue-200'
-                          : 'bg-slate-50/70 border-transparent hover:bg-slate-100 hover:border-slate-200'
+                          : 'bg-sunken/70 border-transparent hover:bg-slate-100 hover:border-line'
                       }`}
                     >
-                      <span className="text-lg shrink-0" aria-hidden="true">
-                        {n.emoji}
+                      <span className="text-ink-muted shrink-0 mt-0.5" aria-hidden="true">
+                        {resolveIcon(n.icon, 'w-4 h-4')}
                       </span>
                       <span>
-                        <span className="block text-sm font-black text-[#0A3D62]">
+                        <span className="block text-sm font-semibold text-ink-strong">
                           {n.label}
                         </span>
-                        <span className="block text-[9px] font-bold text-slate-400 tracking-[0.15em] uppercase mt-0.5">
+                        <span className="block text-[12px] text-ink-muted mt-0.5">
                           {n.labelEn}
                         </span>
                       </span>
@@ -211,23 +225,23 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 pt-8 border-t border-slate-100">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-9 pt-8 border-t border-line">
                   {/* サービス */}
                   <div>
-                    <p className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-5">
-                      Service
+                    <p className="text-[12.5px] font-semibold text-ink-muted mb-5">
+                      学習サービス
                     </p>
                     <a
                       href={ORG.learningAppUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-br from-[#0A3D62] to-blue-800 text-white hover:from-blue-800 hover:to-blue-700 transition-all"
+                      className="flex items-center justify-between gap-4 p-5 rounded-md bg-brand text-white hover:bg-brand-hover transition-colors"
                     >
                       <span>
-                        <span className="block text-sm font-black mb-1">
-                          💻 学習アプリ
+                        <span className="block text-sm font-semibold mb-1">
+                          学習アプリ
                         </span>
-                        <span className="block text-[11px] text-blue-200 font-light">
+                        <span className="block text-[12.5px] text-blue-100">
 「学びの扉アプリ」が開発・運営する無料の化学学習サービス
                         </span>
                       </span>
@@ -237,20 +251,20 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setCurrentPage }) => {
 
                   {/* 規約 */}
                   <div>
-                    <p className="text-[10px] font-black tracking-[0.3em] text-slate-400 uppercase mb-5">
-                      Legal
+                    <p className="text-[12.5px] font-semibold text-ink-muted mb-5">
+                      規約・ポリシー
                     </p>
                     <div className="space-y-2.5">
                       {LEGAL_NAV.map((n) => (
                         <button
                           key={n.page}
                           onClick={() => go(n.page)}
-                          className="w-full flex items-center gap-3.5 p-4 rounded-2xl bg-slate-50/70 hover:bg-slate-100 text-left transition-colors"
+                          className="w-full flex items-center gap-3.5 p-4 rounded-lg bg-sunken/70 hover:bg-slate-100 text-left transition-colors"
                         >
-                          <span className="text-base" aria-hidden="true">
-                            {n.emoji}
+                          <span className="text-ink-muted" aria-hidden="true">
+                            {resolveIcon(n.icon, 'w-4 h-4')}
                           </span>
-                          <span className="text-sm font-black text-[#0A3D62]">
+                          <span className="text-sm font-semibold text-ink-strong">
                             {n.label}
                           </span>
                         </button>

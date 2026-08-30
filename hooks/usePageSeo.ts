@@ -18,6 +18,30 @@ export const pageUrl = (page: PageType): string =>
   page === 'home' ? ORG.siteUrl : `${ORG.siteUrl}/${page}`;
 
 /**
+ * 検索エンジンへの登録可否を指定する robots メタタグを更新します。
+ *
+ * [重要] 「見つかりません」画面では必ず noindex を出します。
+ *   存在しないURLは無数に作れてしまうため、
+ *   これを検索結果に載せると同じ内容のページが大量に登録され、
+ *   重複コンテンツとして評価を落とします。
+ *   また canonical も出しません（正規URLが存在しないため）。
+ */
+const setRobots = (noindex: boolean) => {
+  const selector = 'meta[name="robots"]';
+  const existing = document.head.querySelector(selector);
+  if (!noindex) {
+    // 通常ページでは robots タグを残さない（前のページの指定を引き継がせない）
+    existing?.remove();
+    return;
+  }
+  const tag =
+    existing ?? document.head.appendChild(
+      Object.assign(document.createElement('meta'), { name: 'robots' })
+    );
+  tag.setAttribute('content', 'noindex, follow');
+};
+
+/**
  * ページ別の SEO タグ（title / description / canonical / OGP / Twitter）を更新します。
  *
  * SPA では head が初期HTMLのまま残るため、ページ遷移のたびにここで書き換えます。
@@ -27,6 +51,10 @@ export const usePageSeo = (page: PageType) => {
   useEffect(() => {
     const meta = PAGE_META[page];
     if (!meta) return;
+
+    // 「見つかりません」画面は検索エンジンに登録させない
+    const isNotFound = page === 'notFound';
+    setRobots(isNotFound);
 
     const url = pageUrl(page);
     document.title = meta.title;
@@ -38,12 +66,18 @@ export const usePageSeo = (page: PageType) => {
       meta.description
     );
 
-    setMeta(
-      'link[rel="canonical"]',
-      () => Object.assign(document.createElement('link'), { rel: 'canonical' }),
-      'href',
-      url
-    );
+    // canonical（正規URL）。
+    // 「見つかりません」画面には正規URLが存在しないため、既存のタグを消して出しません。
+    if (isNotFound) {
+      document.head.querySelector('link[rel="canonical"]')?.remove();
+    } else {
+      setMeta(
+        'link[rel="canonical"]',
+        () => Object.assign(document.createElement('link'), { rel: 'canonical' }),
+        'href',
+        url
+      );
+    }
 
     // OGP（property 属性を使う点に注意）
     const og: Array<[string, string]> = [
