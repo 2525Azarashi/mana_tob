@@ -47,7 +47,7 @@
     <!-- ===== 構造化データ（団体情報） ===== -->
     <!--
       構造化データ。
-      ⚠ 「学びの扉」は3つの活動（学びの扉アプリ／学生学修コミュニティ／音楽活動）の総称で、
+      [重要] 「学びの扉」は3つの活動（学びの扉アプリ／学生学修コミュニティ／音楽活動）の総称で、
         それぞれ資金・会計・運営が独立しています。したがって単一組織として表現せず、
         @graph で総称（Organization）＋独立した3活動を並列に記述しています。
         混同する記述に戻さないでください。
@@ -176,45 +176,127 @@
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <!--
+      Tailwind 拡張。
+      [重要] ink.* は文字色用、line.* は罫線用です。
+        文字に line.* を使うとコントラスト不足（WCAG AA 未達）になります。
+    -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { DEFAULT: '#0A3D62', hover: '#0d4d7a', accent: '#1565C0' },
+              ink: { strong: '#0F2A3D', body: '#3F4B5B', muted: '#5A6675' },
+              line: { DEFAULT: '#E3E8EF', strong: '#CBD5E1' },
+              sunken: '#F7F9FC',
+            },
+            boxShadow: {
+              sm: '0 1px 2px rgba(15,42,61,0.04), 0 1px 3px rgba(15,42,61,0.06)',
+              md: '0 2px 4px rgba(15,42,61,0.04), 0 4px 12px rgba(15,42,61,0.07)',
+              lg: '0 4px 8px rgba(15,42,61,0.05), 0 12px 28px rgba(15,42,61,0.09)',
+            },
+          },
+        },
+      };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <!--
+      フォント。
+      [重要] Playfair Display は廃止済みのため読み込みません。
+        ウェイトは実際に使う 400/500/700 のみに絞っています（300/900 は未使用）。
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /*
+          ===== デザイントークン =====
+          [重要] 本文に使う色は WCAG AA（4.5:1）以上を満たすものだけを定義しています。
+            --text-faint は「文字」ではなく罫線・非テキストのアイコン専用です。
+            文字色として --text-faint を使わないでください。
+        */
         :root {
-            --brand-blue: #0A3D62;
-            --accent-blue: #1976D2;
+            --brand-blue: #0A3D62;   /* 対白 11.3:1 */
+            --brand-hover: #0d4d7a;
+            --accent-blue: #1565C0;  /* 対白  5.6:1 */
+            --text-strong: #0F2A3D;  /* 見出し */
+            --text-body: #3F4B5B;    /* 本文   対白 8.6:1 */
+            --text-muted: #5A6675;   /* 補助   対白 6.0:1 */
+            --text-faint: #94a3b8;   /* 非テキスト専用（罫線・装飾アイコン） */
+            --surface: #ffffff;
+            --surface-sunken: #F7F9FC;
+            --border: #E3E8EF;
+            --border-strong: #CBD5E1;
+
+            /* 影：ごく浅い多層シャドウで「浮き」を作る（大きなぼかしは使わない） */
+            --shadow-sm: 0 1px 2px rgba(15, 42, 61, 0.04), 0 1px 3px rgba(15, 42, 61, 0.06);
+            --shadow-md: 0 2px 4px rgba(15, 42, 61, 0.04), 0 4px 12px rgba(15, 42, 61, 0.07);
+            --shadow-lg: 0 4px 8px rgba(15, 42, 61, 0.05), 0 12px 28px rgba(15, 42, 61, 0.09);
         }
         body {
             font-family: 'Noto Sans JP', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
             margin: 0;
-            background-color: #ffffff;
-            color: #1e293b;
+            background-color: var(--surface);
+            color: var(--text-body);
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* 日本語の可読性：約物を詰めすぎない */
+            font-feature-settings: 'palt' 1;
+            text-rendering: optimizeLegibility;
         }
-        .font-playfair {
-            font-family: 'Playfair Display', serif;
+        /*
+          見出しは字面を締める。
+          [重要] color はここで指定しません。
+            濃色背景の上に置いた見出し（text-white 等）を打ち消してしまい、
+            暗い文字が暗い背景に乗る不具合が起きるためです。
+            見出しの色は各コンポーネント側で text-ink-strong / text-white を明示してください。
+        */
+        h1, h2, h3, h4 {
+            letter-spacing: 0.01em;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        /* 数値は等幅にして桁を揃える */
+        .tabular-nums { font-variant-numeric: tabular-nums; }
+
+        /* 立体感ユーティリティ */
+        .elev-sm { box-shadow: var(--shadow-sm); }
+        .elev-md { box-shadow: var(--shadow-md); }
+        .elev-lg { box-shadow: var(--shadow-lg); }
+        /* カードのホバー：1px 浮かせるだけ。派手に動かさない */
+        .lift {
+            transition: box-shadow .25s cubic-bezier(0.16,1,0.3,1),
+                        transform .25s cubic-bezier(0.16,1,0.3,1),
+                        border-color .25s ease;
+            will-change: transform;
         }
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        @media (hover: hover) {
+            .lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        /* リンクの下線を文字にぶつけない */
+        .link-underline {
+            text-decoration: underline;
+            text-decoration-color: rgba(21, 101, 192, .35);
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1.5px;
+            transition: text-decoration-color .2s ease;
         }
+        .link-underline:hover { text-decoration-color: rgba(21, 101, 192, .9); }
+
         /* フォーカスリング（アクセシビリティ） */
         :focus-visible {
-            outline: 3px solid #1976D2;
+            outline: 3px solid var(--accent-blue);
             outline-offset: 2px;
             border-radius: 4px;
+        }
+        /* 動きを減らす設定を尊重する */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .001ms !important;
+                transition-duration: .001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .lift:hover { transform: none; }
         }
     </style>
 <script type="importmap">

@@ -31,7 +31,7 @@ import SitemapPage from './pages/SitemapPage';
 
 import { usePageSeo } from './hooks/usePageSeo';
 
-/** ページ ⇄ URLパス の対応（ブラウザの戻る/進むとURL共有に対応） */
+/** ページと URL パスの対応（ブラウザの戻る/進むとURL共有に対応） */
 const PATHS: Record<string, PageType> = {
   '/': 'home',
   '/about': 'about',
@@ -53,7 +53,7 @@ const PATHS: Record<string, PageType> = {
 };
 
 /**
- * 旧URL → 現行URLの読み替え表。
+ * 旧URLから現行URLへの読み替え表。
  * 過去に共有されたリンクを 404 にしないためのエイリアスです。
  * （pageToPath が生成する正規URLは PATHS 側のみ）
  */
@@ -67,8 +67,27 @@ const pageToPath = (page: PageType): string => {
   return found ? found[0] : '/';
 };
 
-const pathToPage = (path: string): PageType =>
-  PATHS[path] ?? LEGACY_PATHS[path] ?? 'home';
+/**
+ * URL のパスから表示すべきページを決めます。
+ *
+ * [重要] 未知のパスは 'notFound' を返します。'home' にしてはいけません。
+ *   以前は `?? 'home'` としていたため、/no-such-page のような
+ *   存在しないURLでもトップページの内容がそのまま表示されていました。
+ *   これは「ソフト404」と呼ばれる状態で、
+ *     ・検索エンジンに重複コンテンツと判断される
+ *     ・AdSense の審査で「価値の低いコンテンツ」とみなされる恐れがある
+ *     ・利用者が誤字に気づけない
+ *   という問題があります。
+ *
+ *   末尾スラッシュ（/about/）は同じページとして扱います。
+ *   別URLとして扱うと、同じ内容が2つのURLで見えてしまうためです。
+ */
+const pathToPage = (path: string): PageType => {
+  // '/' 以外の末尾スラッシュを取り除いて正規化する
+  const normalized =
+    path.length > 1 && path.endsWith('/') ? path.replace(/\/+$/, '') : path;
+  return PATHS[normalized] ?? LEGACY_PATHS[normalized] ?? 'notFound';
+};
 
 /**
  * 静的ホスティング（404.html フォールバック）経由でアクセスされた場合、
@@ -80,13 +99,32 @@ const resolveInitialPath = (): string => {
   if (stashed) {
     sessionStorage.removeItem('redirectPath');
     const path = stashed.split('?')[0];
-    if (PATHS[path] || LEGACY_PATHS[path]) {
-      window.history.replaceState({}, '', stashed);
-      return path;
-    }
+    /*
+      [重要] 有効なパスかどうかに関わらず、URL を元のパスに戻します。
+        以前は有効なパスのときだけ戻していたため、
+        存在しないURLでアクセスすると 404.html が '/' に転送したまま
+        トップページが表示されていました（ソフト404）。
+        無効なパスでも元のURLを保ったうえで
+        「見つかりません」画面を出すのが正しい挙動です。
+    */
+    window.history.replaceState({}, '', stashed);
+    return path;
   }
   return window.location.pathname;
 };
+
+/**
+ * 「ページが見つかりません」画面に並べる主要ページの導線。
+ * 利用者が目的のページを探し直せるようにするためのものです。
+ */
+const NOT_FOUND_LINKS: Array<{ page: PageType; label: string; note: string }> = [
+  { page: 'about', label: '学びの扉とは', note: '3つの活動と組織構成' },
+  { page: 'materials', label: '学習支援・教材', note: '化学基礎・化学／英語リスニング' },
+  { page: 'learning-app', label: '学習アプリ', note: '登録不要・無料の化学学習サービス' },
+  { page: 'reports', label: '活動報告', note: 'これまでの活動の記録' },
+  { page: 'contact', label: 'お問い合わせ', note: 'ご質問・ご相談はこちら' },
+  { page: 'sitemap', label: 'サイトマップ', note: '全ページの一覧' },
+];
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>(() =>
@@ -166,20 +204,51 @@ const App: React.FC = () => {
       case 'sitemap':
         return <SitemapPage setCurrentPage={navigate} />;
 
+      /*
+        存在しないURLの場合。
+        [重要] ここでトップページの内容を返してはいけません（ソフト404になります）。
+          また、行き止まりにしないため主要ページへの導線を必ず置きます。
+          「ホームに戻る」ボタンだけだと、利用者が目的のページを
+          探し直す手掛かりがなく離脱してしまいます。
+      */
+      case 'notFound':
       default:
         return (
-          <div className="pt-40 pb-24 px-4 max-w-3xl mx-auto min-h-screen text-center">
-            <h1 className="text-4xl font-black text-[#0A3D62] mb-6">
+          <div className="pt-40 pb-28 px-4 max-w-3xl mx-auto">
+            <p className="text-sm font-bold tracking-[0.2em] text-ink-muted mb-4">
+              404 NOT FOUND
+            </p>
+            <h1 className="text-[30px] md:text-[34px] font-bold text-ink-strong mb-5">
               ページが見つかりません
             </h1>
-            <p className="text-slate-500 font-light mb-10">
-              お探しのページは移動または削除された可能性があります。
+            <p className="text-[17px] text-ink-body leading-[1.9] mb-10">
+              お探しのページは、URLが変更されたか削除された可能性があります。
+              アドレスの入力に誤りがないかご確認ください。
+              下記のページから、目的の内容をお探しいただけます。
             </p>
+
+            <div className="grid sm:grid-cols-2 gap-3 mb-10">
+              {NOT_FOUND_LINKS.map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => navigate(item.page)}
+                  className="text-left px-5 py-4 border border-line rounded-lg hover:border-line-strong hover:bg-sunken transition-colors"
+                >
+                  <span className="block text-[15px] font-bold text-ink-strong">
+                    {item.label}
+                  </span>
+                  <span className="block text-[13px] text-ink-muted mt-1">
+                    {item.note}
+                  </span>
+                </button>
+              ))}
+            </div>
+
             <button
               onClick={() => navigate('home')}
-              className="px-8 py-4 bg-[#0A3D62] text-white rounded-2xl font-black text-sm"
+              className="px-7 py-3.5 bg-brand text-white rounded-md font-semibold text-sm hover:bg-brand-hover transition-colors"
             >
-              ホームに戻る
+              トップページに戻る
             </button>
           </div>
         );

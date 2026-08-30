@@ -19,7 +19,6 @@ interface Props {
 const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="activities"
-    emoji="📚"
     title="活動内容"
     titleEn="Our Activities"
     lead="「学びの扉」という名前のもとで行っている取り組みを一覧にしています。なお「学びの扉」は3つの活動の総称であり、それぞれ資金・会計・運営を独立して行っています。各取り組みがどの活動に属するのかをタグで示しています。"
@@ -36,22 +35,25 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
           {/* ヘッダー */}
           <div className="bg-gradient-to-br from-[#0A3D62] to-blue-800 p-8 sm:p-10 text-white">
             <div className="flex items-start gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shrink-0 border border-white/20">
+              <div className="w-14 h-14 rounded-md bg-white/15 backdrop-blur-sm flex items-center justify-center shrink-0 border border-white/20">
                 {resolveIcon(a.icon, 'w-7 h-7')}
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-3 mb-2.5">
-                  <span className="text-[10px] font-black tracking-[0.3em] text-cyan-300 uppercase">
+                  <span className="text-[12px] font-semibold tracking-[0.08em] text-cyan-300">
                     {String(idx + 1).padStart(2, '0')} / {a.label}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 text-[10px] font-black px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-white">
+                  <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-white">
                     <span aria-hidden="true">
-                      {DIVISIONS.find((d) => d.id === a.division)?.emoji}
+                      {resolveIcon(
+                        DIVISIONS.find((d) => d.id === a.division)?.icon ?? 'Layers',
+                        'w-3 h-3',
+                      )}
                     </span>
                     {DIVISIONS.find((d) => d.id === a.division)?.shortName}
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black leading-snug">
+                <h2 className="text-xl sm:text-2xl font-bold leading-snug text-white">
                   {a.title}
                 </h2>
               </div>
@@ -60,11 +62,11 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
 
           {/* 本文 */}
           <div className="p-8 sm:p-10">
-            <p className="text-[17px] text-slate-600 font-light leading-[1.9] mb-8">
+            <p className="text-[17px] text-ink-body leading-[1.9] mb-8">
               {a.summary}
             </p>
 
-            <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-5">
+            <p className="text-xs font-semibold text-ink-muted tracking-[0.06em] mb-5">
               具体的な取り組み
             </p>
             <ul className="space-y-4 mb-8">
@@ -73,7 +75,7 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
                   <span className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mt-0.5">
                     <Check size={12} strokeWidth={3} />
                   </span>
-                  <span className="text-[15px] text-slate-600 font-light leading-relaxed">
+                  <span className="text-[15.5px] text-ink-body leading-[1.85]">
                     {d}
                   </span>
                 </li>
@@ -84,7 +86,7 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
               {a.linkTo && (
                 <button
                   onClick={() => setCurrentPage(a.linkTo as PageType)}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-50 hover:bg-blue-50 text-[#0A3D62] hover:text-blue-700 rounded-xl text-xs font-black transition-all border border-slate-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-sunken hover:bg-blue-50 text-ink-strong hover:text-blue-700 rounded-md text-xs font-semibold transition-all border border-line"
                 >
                   {a.linkLabel}
                   <ArrowRight size={14} />
@@ -103,7 +105,7 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 活動の進め方 */}
     <section className="mb-20">
-      <SectionTitle label="How We Work">活動の進め方</SectionTitle>
+      <SectionTitle>活動の進め方</SectionTitle>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {[
           {
@@ -132,11 +134,11 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
           },
         ].map((s, i) => (
           <Card key={i} delay={i * 0.06} className="p-7">
-            <p className="text-[10px] font-black tracking-[0.3em] text-blue-500 uppercase mb-3">
+            <p className="text-[12px] font-semibold tracking-[0.08em] text-blue-700 mb-3">
               {s.step}
             </p>
-            <h3 className="text-base font-black text-[#0A3D62] mb-3">{s.title}</h3>
-            <p className="text-sm text-slate-500 font-light leading-relaxed">
+            <h3 className="text-base font-semibold text-ink-strong mb-3">{s.title}</h3>
+            <p className="text-sm text-ink-muted leading-[1.85]">
               {s.body}
             </p>
           </Card>

@@ -12,7 +12,6 @@ interface Props {
 const PhilosophyPage: React.FC<Props> = ({ setCurrentPage }) => (
   <PageShell
     page="philosophy"
-    emoji="💡"
     title="教育への考え方"
     titleEn="Our Philosophy"
     lead="どんな教材をつくるか、どんな場をつくるかは、結局「教育をどう捉えているか」に規定されます。私たちが活動の判断基準にしている4つの考え方を、はっきり言葉にしておきます。"
@@ -22,12 +21,12 @@ const PhilosophyPage: React.FC<Props> = ({ setCurrentPage }) => (
     <section className="mb-20">
       <Card className="p-9 sm:p-12 bg-gradient-to-br from-slate-50 to-blue-50/40 border-blue-100">
         <Quote className="w-9 h-9 text-blue-300 mb-6" />
-        <p className="text-xl sm:text-2xl font-black text-[#0A3D62] leading-[1.7] tracking-tight mb-6">
+        <p className="text-xl sm:text-2xl font-semibold text-ink-strong leading-[1.7] tracking-tight mb-6">
           学びの機会は、生まれた場所や家庭の状況によって
           <br className="hidden sm:block" />
           あらかじめ分けられてよいものではない。
         </p>
-        <p className="text-[15px] text-slate-500 font-light leading-relaxed">
+        <p className="text-[15.5px] text-ink-muted leading-[1.85]">
           私たちは、そう考えています。その考えを実現する手段として、
           無料の教材とサービスを自分たちの手でつくり、対話の場を運営しています。
         </p>
@@ -36,7 +35,7 @@ const PhilosophyPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 4つの考え方 */}
     <section className="mb-24">
-      <SectionTitle label="Our Values">私たちが大切にしている4つのこと</SectionTitle>
+      <SectionTitle label="大切にしている考え方">私たちが大切にしている4つのこと</SectionTitle>
 
       <div className="space-y-8">
         {VALUES.map((v, i) => (
@@ -45,22 +44,22 @@ const PhilosophyPage: React.FC<Props> = ({ setCurrentPage }) => (
               {/* 番号 */}
               <div className="shrink-0">
                 <span
-                  className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-cyan-400 italic"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
+                  className="text-5xl font-semibold text-ink-strong"
+                  
                 >
                   {v.no}
                 </span>
               </div>
 
               <div className="flex-grow">
-                <h3 className="text-xl sm:text-2xl font-black text-[#0A3D62] leading-snug mb-4 tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-semibold text-ink-strong leading-snug mb-4 tracking-tight">
                   {v.title}
                 </h3>
-                <p className="text-[15px] font-bold text-blue-600 mb-6 leading-relaxed">
+                <p className="text-[15.5px] font-bold text-blue-600 mb-6 leading-relaxed">
                   {v.lead}
                 </p>
                 <div className="h-px bg-slate-100 mb-6" />
-                <p className="text-[16px] text-slate-600 font-light leading-[1.95]">
+                <p className="text-[16px] text-ink-body leading-[1.95]">
                   {v.body}
                 </p>
               </div>
@@ -72,7 +71,7 @@ const PhilosophyPage: React.FC<Props> = ({ setCurrentPage }) => (
 
     {/* 教材制作の方針 */}
     <section className="mb-24">
-      <SectionTitle label="Editorial Policy">教材づくりで守っていること</SectionTitle>
+      <SectionTitle label="教材づくりの基準">教材づくりで守っていること</SectionTitle>
       <Prose>
         <p>
           考え方を掲げるだけでは意味がないので、教材制作の実務ルールとして落とし込んでいます。
@@ -109,12 +108,12 @@ const PhilosophyPage: React.FC<Props> = ({ setCurrentPage }) => (
           },
         ].map((r, i) => (
           <Card key={i} delay={i * 0.05} className="p-7 flex gap-5">
-            <span className="w-7 h-7 rounded-lg bg-[#0A3D62] text-white text-xs font-black flex items-center justify-center shrink-0">
+            <span className="w-7 h-7 rounded-lg bg-brand text-white text-xs font-semibold flex items-center justify-center shrink-0">
               {i + 1}
             </span>
             <div>
-              <h4 className="font-black text-[#0A3D62] mb-2 text-[15px]">{r.title}</h4>
-              <p className="text-sm text-slate-500 font-light leading-relaxed">
+              <h4 className="font-semibold text-ink-strong mb-2 text-[15.5px]">{r.title}</h4>
+              <p className="text-sm text-ink-muted leading-[1.85]">
                 {r.body}
               </p>
             </div>

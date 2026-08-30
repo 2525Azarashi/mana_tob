@@ -5,31 +5,31 @@ import { NavItem } from '../types';
  * ここに追記すれば、ヘッダー・フッター・サイトマップに自動反映されます。
  */
 export const MAIN_NAV: NavItem[] = [
-  { page: 'about', emoji: '🏠', label: '学びの扉とは', labelEn: 'About', primary: true },
-  { page: 'activities', emoji: '📚', label: '活動内容', labelEn: 'Activities', primary: true },
-  { page: 'philosophy', emoji: '💡', label: '教育への考え方', labelEn: 'Philosophy', primary: true },
-  { page: 'materials', emoji: '🧑‍🏫', label: '学習支援・教材', labelEn: 'Materials', primary: true },
-  { page: 'learning-app', emoji: '💻', label: '学習アプリ', labelEn: 'Learning App', primary: true },
-  { page: 'members', emoji: '👥', label: '運営体制', labelEn: 'Organization', primary: true },
-  { page: 'reports', emoji: '📰', label: '活動報告', labelEn: 'Reports', primary: true },
-  { page: 'achievements', emoji: '📸', label: '活動実績', labelEn: 'Achievements', primary: true },
-  { page: 'contact', emoji: '📩', label: 'お問い合わせ', labelEn: 'Contact', primary: true },
+  { page: 'about', icon: 'Home', label: '学びの扉とは', labelEn: 'About', primary: true },
+  { page: 'activities', icon: 'BookOpen', label: '活動内容', labelEn: 'Activities', primary: true },
+  { page: 'philosophy', icon: 'Lightbulb', label: '教育への考え方', labelEn: 'Philosophy', primary: true },
+  { page: 'materials', icon: 'FileText', label: '学習支援・教材', labelEn: 'Materials', primary: true },
+  { page: 'learning-app', icon: 'Beaker', label: '学習アプリ', labelEn: 'Learning App', primary: true },
+  { page: 'members', icon: 'Users', label: '運営体制', labelEn: 'Organization', primary: true },
+  { page: 'reports', icon: 'Newspaper', label: '活動報告', labelEn: 'Reports', primary: true },
+  { page: 'achievements', icon: 'BarChart3', label: '活動実績', labelEn: 'Achievements', primary: true },
+  { page: 'contact', icon: 'Mail', label: 'お問い合わせ', labelEn: 'Contact', primary: true },
 ];
 
 /**
  * 3つの活動（部門）のナビゲーション。
- * ⚠ それぞれ資金・運営が独立しているため、必ず別ページとして扱います。
+ * [重要] それぞれ資金・運営が独立しているため、必ず別ページとして扱います。
  */
 export const DIVISION_NAV: NavItem[] = [
-  { page: 'app', emoji: '💻', label: '学びの扉アプリ', labelEn: 'Learning App Division' },
-  { page: 'community', emoji: '🎓', label: '学生学修コミュニティ「まなとび」', labelEn: 'Student Community' },
-  { page: 'music', emoji: '🎵', label: '音楽活動「まなとび。」', labelEn: 'Manatobi.' },
+  { page: 'app', icon: 'Beaker', label: '学びの扉アプリ', labelEn: 'Learning App Division' },
+  { page: 'community', icon: 'GraduationCap', label: '学生学修コミュニティ「まなとび」', labelEn: 'Student Community' },
+  { page: 'music', icon: 'Music', label: '音楽活動「まなとび。」', labelEn: 'Manatobi.' },
 ];
 
 export const LEGAL_NAV: NavItem[] = [
-  { page: 'privacy', emoji: '🔒', label: 'プライバシーポリシー', labelEn: 'Privacy Policy' },
-  { page: 'terms', emoji: '📜', label: '利用規約', labelEn: 'Terms of Use' },
-  { page: 'sitemap', emoji: '🗺️', label: 'サイトマップ', labelEn: 'Sitemap' },
+  { page: 'privacy', icon: 'ShieldCheck', label: 'プライバシーポリシー', labelEn: 'Privacy Policy' },
+  { page: 'terms', icon: 'Scale', label: '利用規約', labelEn: 'Terms of Use' },
+  { page: 'sitemap', icon: 'Map', label: 'サイトマップ', labelEn: 'Sitemap' },
 ];
 
 /** ページごとの meta 情報（title / description） */
@@ -111,6 +111,17 @@ export const PAGE_META: Record<string, { title: string; description: string }> =
   },
   sitemap: {
     title: 'サイトマップ｜学びの扉公式サイト',
-    description: '学びの扉公式サイトの全ページ一覧です。',
+    description:
+      '学びの扉公式サイトの全ページ一覧です。学びの扉とは、活動内容、3つの活動の各ページ、学習支援・教材、学習アプリ、運営体制、活動報告、活動実績、お問い合わせ、プライバシーポリシー、利用規約へのリンクをまとめています。',
+  },
+  /**
+   * 存在しないURLにアクセスされたときの meta。
+   * [重要] このページは usePageSeo 側で noindex を付け、canonical を出しません。
+   *   無効なURLは無数に作れるため、検索結果に載せてはいけません。
+   */
+  notFound: {
+    title: 'ページが見つかりません｜学びの扉公式サイト',
+    description:
+      'お探しのページは見つかりませんでした。URLが変更または削除された可能性があります。学びの扉公式サイトのトップページまたはサイトマップから、目的のページをお探しください。',
   },
 };
