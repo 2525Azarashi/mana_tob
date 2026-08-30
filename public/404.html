@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>マナトビ</title>
+  <script>
+    // GitHub Pages 等の静的ホスティングで直接URLアクセスされた場合、
+    // SPA のルーティングに引き渡すためのフォールバック。
+    sessionStorage.setItem('redirectPath', location.pathname + location.search);
+    location.replace('/');
+  </script>
+</head>
+<body></body>
+</html>

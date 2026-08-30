@@ -1,11 +1,141 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学びの扉</title>
+
+    <!-- ===== 基本 SEO ===== -->
+    <title>マナトビ｜学びの扉 ～私たちにできることを～</title>
+    <meta name="description" content="「マナトビ」は、学習サービスを開発・運営する「マナトビアプリ」、三重大学で探究に取り組む学生学修コミュニティ「まなとび」、楽曲を制作する音楽活動「まなとび」という、資金・運営がそれぞれ独立した3つの活動の総称です。">
+    <meta name="author" content="マナトビ">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://manatobi.jp">
+
+    <!-- ===== ファビコン / アプリアイコン ===== -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0A3D62">
+
+    <!-- ===== OGP / Twitter ===== -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="マナトビ公式サイト">
+    <meta property="og:title" content="マナトビ｜学びの扉 ～私たちにできることを～">
+    <meta property="og:description" content="「マナトビ」は資金・運営が独立した3つの活動の総称です。マナトビアプリ（Chem-Basis の開発・運営）、学生学修コミュニティ「まなとび」（三重大学での探究活動）、音楽活動「まなとび」。">
+    <meta property="og:url" content="https://manatobi.jp">
+    <meta property="og:locale" content="ja_JP">
+    <meta property="og:image" content="https://manatobi.jp/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="マナトビ｜学びの扉 ～私たちにできることを～">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="マナトビ｜学びの扉 ～私たちにできることを～">
+    <meta name="twitter:description" content="「マナトビ」は資金・運営が独立した3つの活動の総称です。マナトビアプリ（Chem-Basis の開発・運営）、学生学修コミュニティ「まなとび」（三重大学での探究活動）、音楽活動「まなとび」。">
+    <meta name="twitter:image" content="https://manatobi.jp/og-image.png">
+
+    <!--
+      ===== Google AdSense =====
+      審査通過後、下記のコメントを解除し ca-pub-XXXXXXXXXXXXXXXX を
+      ご自身のパブリッシャーIDに差し替えてください。
+    -->
+    <!--
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            crossorigin="anonymous"></script>
+    -->
+
+    <!-- ===== 構造化データ（団体情報） ===== -->
+    <!--
+      構造化データ。
+      ⚠ 「マナトビ」は3つの活動（マナトビアプリ／学生学修コミュニティ／音楽活動）の総称で、
+        それぞれ資金・会計・運営が独立しています。したがって単一組織として表現せず、
+        @graph で総称（Organization）＋独立した3活動を並列に記述しています。
+        混同する記述に戻さないでください。
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://manatobi.jp/#website",
+          "url": "https://manatobi.jp",
+          "name": "マナトビ 公式サイト",
+          "inLanguage": "ja",
+          "publisher": { "@id": "https://manatobi.jp/#manatobi" }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://manatobi.jp/#manatobi",
+          "name": "マナトビ",
+          "alternateName": ["まなとび", "Manatobi"],
+          "url": "https://manatobi.jp",
+          "logo": "https://manatobi.jp/icon-512.png",
+          "image": "https://manatobi.jp/og-image.png",
+          "description": "「マナトビ」は、学習サービスを開発・運営する「マナトビアプリ」、三重大学で探究に取り組む学生学修コミュニティ「まなとび」、楽曲を制作する音楽活動「まなとび」という、資金・会計・運営がそれぞれ独立した3つの活動の総称です。",
+          "areaServed": "日本",
+          "email": "manatobi.official@gmail.com",
+          "sameAs": ["https://www.instagram.com/mana_tob1"],
+          "subjectOf": {
+            "@type": "CreativeWork",
+            "name": "組織構成に関する注記",
+            "text": "「マナトビ」は単一の団体ではなく3つの活動の総称です。各活動は資金・会計・運営を独立して行っており、一方の活動が他方の債務や責任を負うものではありません。"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://manatobi.jp/#app",
+          "name": "マナトビアプリ",
+          "alternateName": "Manatobi App",
+          "url": "https://manatobi.jp/app",
+          "description": "高校生・受験生が使える学習サービスを開発・運営している活動です。無料の化学学習サービス「Chem-Basis」を提供しています。会計・運営は他の活動から独立しています。",
+          "email": "manatobi.official@gmail.com",
+          "owns": { "@id": "https://chembasis.manatobi.jp/#chembasis" }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://chembasis.manatobi.jp/#chembasis",
+          "name": "Chem-Basis",
+          "url": "https://chembasis.manatobi.jp",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "Web",
+          "description": "「マナトビアプリ」が開発・運営する無料の化学学習サービス。化学基礎・化学の単元別演習をブラウザ上で行えます。",
+          "provider": { "@id": "https://manatobi.jp/#app" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY"
+          }
+        },
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://manatobi.jp/#community",
+          "name": "学生学修コミュニティ「まなとび」",
+          "alternateName": "Manatobi Student Community",
+          "url": "https://manatobi.jp/community",
+          "description": "三重大学を拠点に、学生が主体となって探究に取り組む学生学修コミュニティです。教職や教育をテーマにした対話の場づくりを行っています。会計・運営はマナトビアプリ（事業）から独立しています。",
+          "areaServed": "三重県"
+        },
+        {
+          "@type": "MusicGroup",
+          "@id": "https://manatobi.jp/#music",
+          "name": "まなとび",
+          "alternateName": "Manatobi Music",
+          "url": "https://manatobi.jp/music",
+          "description": "「まなとび」名義での音楽活動です。会計・運営は他の活動から独立しています。",
+          "track": {
+            "@type": "MusicRecording",
+            "name": "誕生",
+            "byArtist": { "@id": "https://manatobi.jp/#music" }
+          }
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -19,39 +149,16 @@
             margin: 0;
             background-color: #ffffff;
             color: #1e293b;
+            -webkit-font-smoothing: antialiased;
         }
         .font-playfair {
             font-family: 'Playfair Display', serif;
-        }
-        .sakura-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-        .sakura {
-            position: absolute;
-            background-color: #ffb7c5;
-            border-radius: 100% 0 100% 0;
-            opacity: 0.2;
-            animation: fall linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-10%) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        /* スムーズなフェードインアニメーション */
         .reveal {
             opacity: 0;
             transform: translateY(20px);
@@ -60,6 +167,12 @@
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+        }
+        /* フォーカスリング（アクセシビリティ） */
+        :focus-visible {
+            outline: 3px solid #1976D2;
+            outline-offset: 2px;
+            border-radius: 4px;
         }
     </style>
 <script type="importmap">

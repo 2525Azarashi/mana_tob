@@ -1,20 +1,218 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# マナトビ 公式サイト
 
-# Run and deploy your AI Studio app
+**マナトビ** の公式サイトです。
 
-This contains everything you need to run your app locally.
+React 19 + TypeScript + Vite + Tailwind CSS（CDN）+ framer-motion 構成。
 
-View your app in AI Studio: https://ai.studio/apps/drive/1dd22EMh6SLzi88YAaPGQNQwLmYcqOLBQ
+---
 
-## Run Locally
+## ⚠ 最重要：組織構造（3つの活動）
 
-**Prerequisites:**  Node.js
+**「マナトビ」はひとつの団体名ではなく、3つの活動の総称です。**
+3つは **資金・会計・運営をそれぞれ独立して** 行っており、
+一方の活動が他方の債務や責任を負うものではありません。
+そのため **サイト上でもページを分けて** 記載しています。
 
+| ID | 活動 | 種別 | ページ |
+|---|---|---|---|
+| `app` | 💻 マナトビアプリ | 学習サービスの開発・運営（事業） | `/app` |
+| `community` | 🎓 学生学修コミュニティ「まなとび」 | 三重大学での探究活動 | `/community` |
+| `music` | 🎵 音楽活動「まなとび」 | 楽曲制作（「誕生」リリース） | `/music` |
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 実装上のルール
+
+- `content/site.ts` の `DIVISIONS` が3活動の唯一の定義元です。
+- `ACTIVITIES` / `REPORTS` / `TIMELINE` / `TEAMS` は必ず
+  `division: 'app' | 'community' | 'music'` を持ちます。
+  **新しいデータを追加するときは必ず `division` を指定してください。**
+- 3活動をまとめて「マナトビという団体」と書かないでください。
+  総称であること、会計が別であることが伝わる書き方にします。
+- `components/ui/DivisionNotice.tsx` の
+  `DivisionTag` / `IndependenceNote` / `StructureNote` を使って、
+  この分離を各ページで一貫して表示します。
+- Chem-Basis の運営主体は **マナトビアプリ** です。
+  「マナトビが開発・運営」ではなく「マナトビアプリが開発・運営」と書きます。
+- 利用規約・プライバシーポリシーの「当団体」は
+  **マナトビアプリのみ** を指します（他の2活動は当事者ではありません）。
+
+---
+
+## 🔒 最重要：個人情報の掲載方針
+
+**大学の許可が必要なため、個人を特定できる情報は掲載しません。**
+
+- ❌ 掲載しない：氏名、所属学部、顔写真、その他個人が特定できる情報
+- ✅ 掲載する：役割（担当領域）、人数規模など個人が特定されない範囲の情報
+
+このため、旧 `MEMBERS`（個人名つき）は削除され、
+役割のみを持つ **`TEAMS`** に置き換えられています。
+`ORG.representative` も役職表記（`'マナトビ 運営代表'`）のみです。
+
+**許可が取れるまで、この方針を変更しないでください。**
+
+---
+
+## ページ構成
+
+| パス | ページ | 内容 |
+|---|---|---|
+| `/` | 🏠 ホーム | 各セクションの要約と全ページへの導線 |
+| `/about` | 🏠 マナトビとは | 設立の背景・活動目的・団体概要・名前の由来 |
+| `/activities` | 📚 活動内容 | 取り組み一覧（各項目に活動タグ付き）と活動の進め方 |
+| `/app` | 💻 マナトビアプリ | 【独立した活動】学習サービスの開発・運営（事業） |
+| `/community` | 🎓 学生学修コミュニティ | 【独立した活動】三重大学での探究活動 |
+| `/music` | 🎵 音楽活動「まなとび」 | 【独立した活動】楽曲制作・「誕生」リリース |
+| `/philosophy` | 💡 教育への考え方 | 大切にしている4つのこと・教材制作の実務ルール |
+| `/materials` | 🧑‍🏫 学習支援・教材 | 教科別の教材ラインナップ・使い方・利用条件 |
+| `/chem-basis` | 💻 Chem-Basisの紹介 | サービス特徴・開発理由・扱う単元・利用手順 |
+| `/members` | 👥 運営体制 | 活動ごとの役割（個人名は非掲載）・個人情報の方針 |
+| `/reports` | 📰 活動報告 | 活動記録（活動別・カテゴリ別の絞り込み対応） |
+| `/achievements` | 📸 活動実績 | 数値実績・活動のあゆみ・発行した記録 |
+| `/contact` | 📩 お問い合わせ | 連絡先・問い合わせフォーム・FAQ |
+| `/privacy` | 🔒 プライバシーポリシー | Cookie・AdSense・アクセス解析を明記 |
+| `/terms` | 📜 利用規約 | 全13条 |
+| `/sitemap` | 🗺️ サイトマップ | 全ページ一覧 |
+| `/quiz` | ✍️ 一問一答 | 共通テスト「情報I」重要用語の演習 |
+
+---
+
+## ⭐ コンテンツの編集方法
+
+**サイト本文のほとんどは `content/site.ts` に集約されています。**
+このファイルを編集するだけで、全ページに自動で反映されます。
+
+| 編集したいもの | 編集する定数 |
+|---|---|
+| **3つの活動の定義・独立性の注記** | **`DIVISIONS`** |
+| 総称としての名称・メール・URL 等 | `ORG` |
+| 教育への考え方（4項目） | `VALUES` |
+| 活動内容（取り組み一覧・要 `division`） | `ACTIVITIES` |
+| 教材ラインナップ | `MATERIAL_ITEMS` |
+| 運営体制（役割のみ・要 `division`） | `TEAMS` |
+| 活動報告（記事・要 `division`） | `REPORTS` |
+| 活動実績の数値 | `ACHIEVEMENTS` |
+| 活動のあゆみ（年表・要 `division`） | `TIMELINE` |
+| 音楽活動のリリース楽曲 | `MUSIC_RELEASES` |
+| よくあるご質問 | `FAQS` |
+
+> ⚠ `MEMBERS` は **削除済み** です（個人情報の掲載方針のため）。
+> 運営体制は役割のみを持つ `TEAMS` を使ってください。
+
+ナビゲーションとページごとの `<title>` / `description` は
+`content/navigation.ts`（`MAIN_NAV` / `DIVISION_NAV` / `PAGE_META`）で管理しています。
+
+### 活動報告を追加する
+
+`content/site.ts` の `REPORTS` 配列の **先頭** に追記してください。
+
+```ts
+{
+  id: 'unique-id',
+  date: '2026-09-15',            // YYYY-MM-DD
+  category: '教師塾',            // 教師塾 | 教材開発 | サービス開発 | お知らせ
+  title: '〇〇を開催しました',
+  lead: '一文の要約。',
+  body: ['本文段落1。', '本文段落2。'],
+  facts: [{ label: '実施日', value: '2026年9月15日' }],  // 任意
+}
+```
+
+---
+
+## 🚨 公開前に必ず差し替える項目
+
+`content/site.ts` 内に `TODO:` コメントが付いています。
+**実際の情報に差し替えてください。** 事実でない内容は絶対に記載しないでください。
+
+- `ORG.email` — **実際に受信できるメールアドレス**（AdSense 審査で重要）
+- `ORG.founded` — 実際の各活動の開始年月
+- `ACHIEVEMENTS` / `TIMELINE` — 確認できている事実のみ
+- `DIVISIONS[*].independence` — 実際の会計・運営の実態と合っているか確認
+- `MUSIC_RELEASES` — 配信先 URL 等が確定したら追記
+
+### 大学の許可が取れてから対応する項目
+
+以下は **大学への確認と本人の同意が取れるまで着手しないでください。**
+
+- `ORG.representative` — 現在は役職表記のみ（`'マナトビ 運営代表'`）
+- `TEAMS` — 現在は役割のみ。氏名・所属を追加する場合は
+  所属大学への確認と本人の同意を取得したうえで判断
+- 学生学修コミュニティ「まなとび」に関する大学名の表記範囲
+
+---
+
+## Google AdSense の設定手順
+
+1. `content/site.ts` の `TODO:` 項目をすべて実際の情報に差し替える
+2. `/privacy`（プライバシーポリシー）と `/terms`（利用規約）の内容を確認
+   - 広告配信・Cookie・アクセス解析の記載は既に整備済みです
+3. AdSense に申請し、承認後 `index.html` の
+   `===== Google AdSense =====` コメントブロックを解除
+4. `ca-pub-XXXXXXXXXXXXXXXX` を自身のパブリッシャーIDに差し替え
+
+### 審査に向けて整備済みの項目
+
+- ✅ 団体の実在性が伝わる情報（何の団体か / 誰が運営しているか / 何をしているか）
+- ✅ 独自性のある十分な分量のコンテンツ（13ページ）
+- ✅ プライバシーポリシー（Cookie・第三者配信広告・アクセス解析を明記）
+- ✅ 利用規約（全13条）
+- ✅ 連絡が取れるお問い合わせ手段
+- ✅ 実際の活動実績と活動報告
+- ✅ 全ページからアクセスできる明確なナビゲーション
+- ✅ 構造化データ（`EducationalOrganization`）・OGP・canonical
+- ✅ `robots.txt` / `sitemap.xml`
+
+---
+
+## 開発
+
+**必要環境:** Node.js 18 以上
+
+```bash
+npm install     # 依存関係のインストール
+npm run dev     # 開発サーバー起動（http://localhost:3000）
+npm run build   # 本番ビルド（dist/ に出力）
+npm run preview # ビルド結果の確認
+```
+
+### ディレクトリ構成
+
+```
+├── content/
+│   ├── site.ts            ⭐ サイト全体のコンテンツ（唯一の情報源）
+│   └── navigation.ts         ナビゲーション定義・ページ meta 情報
+├── pages/                    下層ページ（13ページ）
+├── components/
+│   ├── ui/
+│   │   ├── PageShell.tsx     下層ページ共通レイアウト（パンくず・SEO）
+│   │   └── Blocks.tsx        共通UIパーツ
+│   ├── HomeSections.tsx      ホームの各セクション
+│   ├── Navbar.tsx            ヘッダー（全ページ導線オーバーレイ付き）
+│   ├── Footer.tsx            フッター（Chem-Basis 導線・運営者情報）
+│   ├── Hero.tsx              ホームのヒーロー
+│   ├── QuizSystem.tsx        一問一答
+│   └── ...
+├── public/
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── _redirects            SPA フォールバック（Netlify/Cloudflare）
+│   └── 404.html              SPA フォールバック（GitHub Pages 等）
+├── App.tsx                   ルーティング（History API）
+└── types.ts                  型定義
+```
+
+### ルーティングについて
+
+`react-router` は使用せず、History API による軽量ルーティングを実装しています
+（`App.tsx` の `PATHS`）。ブラウザの戻る/進む、URL の直接共有に対応します。
+
+静的ホスティングでサブパスを直接開けるようにするため、
+`public/_redirects`（Netlify / Cloudflare Pages）と
+`public/404.html`（GitHub Pages 等）を同梱しています。
+
+---
+
+## ライセンス / 権利
+
+サイト内の教材・文章・デザインの権利はマナトビに帰属します。
+詳細は `/terms`（利用規約）をご確認ください。

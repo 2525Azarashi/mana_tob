@@ -2,14 +2,15 @@
 import React from 'react';
 import { Zap, Activity, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { PageType } from '../types';
 
-const Hero: React.FC = () => {
-  const scrollToMaterials = () => {
-    document.getElementById('materials-section')?.scrollIntoView({ behavior: 'smooth' });
-  };
+interface HeroProps {
+  setCurrentPage: (page: PageType) => void;
+}
 
-  const scrollToManifesto = () => {
-    document.getElementById('manifesto-section')?.scrollIntoView({ behavior: 'smooth' });
+const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
+  const scrollToAbout = () => {
+    document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   // 六角形のエフェクト用データ
@@ -131,7 +132,7 @@ const Hero: React.FC = () => {
                 className="inline-flex items-center px-4 py-1 bg-blue-50/90 backdrop-blur-sm border border-blue-100 rounded-full text-blue-800 text-[10px] font-black tracking-[0.4em] uppercase"
               >
                 <Activity size={12} className="mr-3 text-blue-500" />
-                Intelligence & Strategy
+                学生学修コミュニティ 公式サイト
               </motion.div>
               
               <div className="flex flex-col overflow-visible">
@@ -139,20 +140,28 @@ const Hero: React.FC = () => {
                   className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] font-black leading-[1.3] tracking-tighter text-[#0A3D62] whitespace-nowrap py-4 pr-12 overflow-visible"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  学びの<span className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-blue-700 via-blue-500 to-cyan-400 italic pr-2">扉</span>
+                  マナ<span className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-blue-700 via-blue-500 to-cyan-400 italic pr-2">トビ</span>
                 </h1>
               </div>
               
               <div className="space-y-4">
                 <p className="text-xl lg:text-2xl xl:text-3xl text-blue-600 font-black italic tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  ～私たちにできることを～
+                  学びの扉 ～私たちにできることを～
                 </p>
                 <div className="h-1 w-20 bg-gradient-to-r from-blue-600 to-transparent rounded-full"></div>
               </div>
               
               <p className="text-lg md:text-xl lg:text-2xl text-slate-600 leading-snug max-w-2xl font-medium tracking-tight">
-                参考書では届かない「核心」を。<br className="hidden md:block" />
-                最短ルートで合格へ導く、知恵の拠点。
+                「マナトビ」は、学びをきっかけに<br className="hidden md:block" />
+                人の可能性を広げる3つの活動の総称です。
+              </p>
+              <p className="text-sm md:text-base text-slate-500 font-light leading-relaxed max-w-xl">
+                💻 マナトビアプリ ― 無料の化学学習サービス「Chem-Basis」や教材の開発・運営。<br />
+                🎓 学生学修コミュニティ「まなとび」 ― 三重大学での探究活動。<br />
+                🎵 音楽活動「まなとび」 ― 楽曲「誕生」をリリース。
+              </p>
+              <p className="text-xs md:text-sm text-slate-400 font-light leading-relaxed max-w-xl">
+                ※ 上記3つの活動は、資金・会計・運営をそれぞれ独立して行っています。
               </p>
             </div>
             
@@ -160,19 +169,19 @@ const Hero: React.FC = () => {
               <motion.button 
                 whileHover={{ scale: 1.05, y: -4 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={scrollToMaterials}
-                className="px-12 py-5 bg-[#0A3D62] text-white rounded-2xl font-black transition-all flex items-center justify-center text-lg shadow-[0_20px_40px_rgba(10,61,98,0.2)] hover:shadow-[0_25px_60px_rgba(10,61,98,0.3)]"
+                onClick={() => setCurrentPage('about')}
+                className="px-10 py-5 bg-[#0A3D62] text-white rounded-2xl font-black transition-all flex items-center justify-center text-base shadow-[0_20px_40px_rgba(10,61,98,0.2)] hover:shadow-[0_25px_60px_rgba(10,61,98,0.3)]"
               >
-                教材を見る
-                <Zap size={20} className="ml-3 text-cyan-300 fill-cyan-300" />
+                🏠 マナトビとは
+                <Zap size={18} className="ml-3 text-cyan-300 fill-cyan-300" />
               </motion.button>
               <motion.button 
                 whileHover={{ scale: 1.05, y: -4, backgroundColor: "#f8fafc" }}
                 whileTap={{ scale: 0.98 }}
-                onClick={scrollToManifesto}
-                className="px-12 py-5 bg-white border border-slate-200 text-[#0A3D62] rounded-2xl font-bold transition-all flex items-center justify-center text-lg shadow-sm"
+                onClick={() => setCurrentPage('chem-basis')}
+                className="px-10 py-5 bg-white border border-slate-200 text-[#0A3D62] rounded-2xl font-bold transition-all flex items-center justify-center text-base shadow-sm"
               >
-                詳しく知る
+                💻 Chem-Basis を見る
               </motion.button>
             </div>
           </motion.div>
@@ -221,9 +230,9 @@ const Hero: React.FC = () => {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2.5, repeat: Infinity }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center cursor-pointer opacity-30 hover:opacity-100 transition-opacity"
-        onClick={scrollToManifesto}
+        onClick={scrollToAbout}
       >
-        <span className="text-[8px] font-black text-[#0A3D62] tracking-[0.5em] uppercase mb-2">Discovery</span>
+        <span className="text-[8px] font-black text-[#0A3D62] tracking-[0.5em] uppercase mb-2">Scroll</span>
         <ChevronDown size={20} className="text-[#0A3D62]" />
       </motion.div>
     </section>
