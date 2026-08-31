@@ -1,7 +1,7 @@
 {
-  "name": "学生学修コミュニティ マナトビ",
-  "short_name": "マナトビ",
-  "description": "高校生・受験生のための無料教材と学びの場をつくる学生団体。無料の化学学習サービス Chem-Basis を開発・運営しています。",
+  "name": "学びの扉",
+  "short_name": "学びの扉",
+  "description": "高校生・受験生のための無料教材と学びの場をつくる学生団体「学びの扉」。無料の化学学習アプリを開発・運営しています。",
   "lang": "ja",
   "start_url": "/",
   "scope": "/",
@@ -9,8 +9,26 @@
   "background_color": "#ffffff",
   "theme_color": "#0A3D62",
   "icons": [
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

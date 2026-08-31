@@ -56,8 +56,13 @@ export const ORG = {
   base: '三重県',
   /** 主な対象 */
   audience: '高校生・受験生・教育に関心のある方',
-  /** 連絡先メール — TODO: 実際に受信できるアドレスに差し替え */
-  email: 'manatobi.official@gmail.com',
+  /**
+   * 連絡先メール。
+   * [重要] ここを変えたら index.html の構造化データ（application/ld+json）内の
+   *   "email" も同じ値に揃えてください（2か所あります）。
+   *   構造化データは JSON なので、この TS からは自動で反映されません。
+   */
+  email: 'mntobira@gmail.com',
   /** 公式サイト URL */
   siteUrl: 'https://manatobi.jp',
   /** 学習アプリの URL */

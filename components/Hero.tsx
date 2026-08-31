@@ -266,34 +266,45 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
 
             {/*
               サイトの看板。
-              [重要] このブランド表現（ブランド青＋「扉」のグラデーション＋
-                Playfair Display）はサイトの第一印象を決める要素です。
-                プレーンな黒文字に戻さないでください。
+              [重要] サイトの第一印象を決める最重要要素です。
+                プレーンな黒文字や、ただの太字ゴシックに戻さないでください。
+
+              書体について:
+                和文の看板書体 Zen Old Mincho（900）を使います。
+                [重要] 以前は Playfair Display を指定していましたが、
+                  Playfair には和文グリフが無いため「学びの扉」は
+                  本文と同じゴシック体で描かれてしまい、
+                  見出しがまったく引き立っていませんでした。
+                  和文書体を必ず先に指定してください
+                  （実体は index.html の .hero-title にあります）。
+
+              「扉」を主役にしている理由:
+                [重要] 「扉」は団体名の核なので、まわりの「学びの」より
+                  淡く見えてはいけません。以前はグラデーションの上端を
+                  明るい青（#2E6FE0）にしていたため、主役が一番弱いという
+                  逆転が起きていました。いまは濃い青のまま明暗差をつけ、
+                  さらに 1.08em で少し大きく組んで主役にしています。
 
               可読性について:
-                グラデーションの色は「大きな文字」の基準（3:1）を
-                すべて満たす範囲に収めています。
-                  #0A3D62 ブランド青 11.3:1
-                  #1E4FD8 →           5.9:1
-                  #1565C0 →           5.6:1
-                  #0E7490 シアン寄り   4.0:1
+                「扉」のグラデーションは、白背景で「大きな文字」の基準（3:1）を
+                すべて満たす色域に収めています。
+                  #0A3D62 → 11.3:1
+                  #10528F → 8.0:1
+                  #062A47 → 14.2:1
                 明るい cyan-400（#22d3ee）は白背景で 1.8:1 しかなく
                 読めないため使いません。
-                また bg-clip-text は文字を透明にする手法なので、
+                また background-clip: text は文字を透明にする手法なので、
                 非対応ブラウザで文字が消えないよう
-                フォールバックの色を color で先に指定しています。
+                フォールバックの色を color で指定しています。
             */}
-            <h1 className="font-brand text-[44px] sm:text-[58px] lg:text-[68px] font-bold tracking-[-0.01em] leading-[1.2] text-brand mb-4">
+            <h1 className="hero-title text-[52px] sm:text-[72px] lg:text-[88px] leading-[1.16] text-brand mb-4">
               学びの
-              <span
-                className="italic bg-gradient-to-br from-[#1E4FD8] via-[#1565C0] to-[#0E7490] bg-clip-text"
-                style={{ color: '#1565C0', WebkitTextFillColor: 'transparent' }}
-              >
+              <span className="hero-title-accent" style={{ color: '#0A3D62' }}>
                 扉
               </span>
             </h1>
 
-            <p className="font-brand text-[18px] sm:text-[21px] font-bold italic tracking-tight text-brand-accent mb-2">
+            <p className="font-brand-tagline text-[17px] sm:text-[20px] text-brand-accent mb-2">
               ～私たちにできることを～
             </p>
             {/* 見出し下のアクセント罫線（ブランド青から透明へ） */}
