@@ -3,7 +3,7 @@ import { ArrowRight, Check, ExternalLink } from 'lucide-react';
 import { PageType } from '../types';
 import PageShell from '../components/ui/PageShell';
 import { resolveIcon, SectionTitle, Card, CTAButton, DefinitionList } from '../components/ui/Blocks';
-import { IndependenceNote, DivisionTag } from '../components/ui/DivisionNotice';
+import { IndependenceNote } from '../components/ui/DivisionNotice';
 import {
   DIVISIONS,
   Division,
@@ -283,11 +283,15 @@ const DivisionPage: React.FC<Props> = ({ division, setCurrentPage }) => {
           <div className="space-y-4">
             {reports.map((r, i) => (
               <Card key={r.id} delay={i * 0.06} className="p-7">
-                <div className="flex items-center gap-3 mb-3 flex-wrap">
+                {/*
+                  [重要] ここにあった DivisionTag は不要とのご指示で削除しました。
+                    このページはそもそも特定の活動のページなので、
+                    どの活動かはページ自体から明らかです。
+                */}
+                <div className="mb-3">
                   <time className="text-[12.5px] font-semibold text-ink-muted">
                     {r.date}
                   </time>
-                  <DivisionTag division={r.division} />
                 </div>
                 <h3 className="text-base font-semibold text-ink-strong mb-2.5 leading-snug">
                   {r.title}

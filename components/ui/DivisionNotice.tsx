@@ -11,42 +11,12 @@ import { DIVISIONS, Division } from '../../content/site';
  *   各活動ページ・活動報告記事などから必ず参照してください。
  */
 
-/** 活動（部門）を示す小さなタグ。記事やカードの見出し横に置きます。 */
-export const DivisionTag: React.FC<{
-  division: Division['id'];
-  onClick?: () => void;
-}> = ({ division, onClick }) => {
-  const d = DIVISIONS.find((x) => x.id === division);
-  if (!d) return null;
-
-  const base =
-    'inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-2.5 py-1 rounded border transition-colors';
-  const tone: Record<Division['id'], string> = {
-    app: 'bg-blue-50 text-blue-700 border-blue-100',
-    community: 'bg-emerald-50 text-emerald-700 border-emerald-100',
-    music: 'bg-purple-50 text-purple-700 border-purple-100',
-  };
-
-  const content = (
-    <>
-      <span aria-hidden="true">{resolveIcon(d.icon, 'w-3 h-3')}</span>
-      {d.shortName}
-    </>
-  );
-
-  if (onClick) {
-    return (
-      <button
-        onClick={onClick}
-        className={`${base} ${tone[division]} hover:brightness-95`}
-        title={`${d.name} の活動`}
-      >
-        {content}
-      </button>
-    );
-  }
-  return <span className={`${base} ${tone[division]}`}>{content}</span>;
-};
+/*
+  [重要] かつてここに DivisionTag（活動を示す小さな色付きタグ）がありましたが、
+    不要とのご指示によりサイト全体から削除しました。復活させないでください。
+    「どの活動に属するか」は、下の StructureNote と各ページの本文、
+    および活動ごとの専用ページで伝える方針です。
+*/
 
 /** 個別の活動ページ内で、その活動の独立性を明示するボックス。 */
 export const IndependenceNote: React.FC<{ division: Division['id'] }> = ({ division }) => {

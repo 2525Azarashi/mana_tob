@@ -3,7 +3,6 @@ import { Calendar, ArrowRight } from 'lucide-react';
 import { PageType } from '../types';
 import PageShell from '../components/ui/PageShell';
 import { resolveIcon, Card, Badge, NoteBox, CTAButton } from '../components/ui/Blocks';
-import { DivisionTag } from '../components/ui/DivisionNotice';
 import { REPORTS, ORG, DIVISIONS, Division } from '../content/site';
 
 interface Props {
@@ -116,12 +115,11 @@ const ReportsPage: React.FC<Props> = ({ setCurrentPage }) => {
             <article>
               {/* 記事ヘッダー */}
               <div className="p-8 sm:p-10 border-b border-line bg-sunken/50">
+                {/*
+                  [重要] ここにあった DivisionTag（どの活動の記事かを示すタグ）は
+                    不要とのご指示で削除しました。復活させないでください。
+                */}
                 <div className="flex flex-wrap items-center gap-4 mb-5">
-                  {/* どの活動の記事かを明示 */}
-                  <DivisionTag
-                    division={r.division}
-                    onClick={() => setCurrentPage(r.division)}
-                  />
                   <Badge tone={categoryTone(r.category) as any}>{r.category}</Badge>
                   <time
                     dateTime={r.date}

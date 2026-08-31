@@ -9,7 +9,7 @@ import {
 import { motion } from 'framer-motion';
 import { PageType } from '../types';
 import { resolveIcon, Card, Badge } from './ui/Blocks';
-import { DivisionTag, StructureNote } from './ui/DivisionNotice';
+import { StructureNote } from './ui/DivisionNotice';
 import {
   ORG,
   ACTIVITIES,
@@ -150,9 +150,10 @@ export const ActivitiesSection: React.FC<Props> = ({ setCurrentPage }) => (
             <div className="w-12 h-12 rounded-xl bg-brand text-white flex items-center justify-center mb-6 shadow-sm">
               {resolveIcon(a.icon, 'w-7 h-7')}
             </div>
-            <div className="mb-3">
-              <DivisionTag division={a.division} />
-            </div>
+            {/*
+              [重要] ここにあった DivisionTag（どの活動かを示すタグ）は
+                不要とのご指示で削除しました。復活させないでください。
+            */}
             <h3 className="text-lg font-semibold text-ink-strong leading-snug mb-4">
               {a.title}
             </h3>
@@ -471,11 +472,14 @@ export const MembersSection: React.FC<Props> = ({ setCurrentPage }) => (
           const d = DIVISIONS.find((x) => x.id === t.division);
           return (
             <Card key={`${t.division}-${t.role}`} delay={i * 0.05} className="p-7">
-              <div className="flex items-center justify-between gap-3 mb-5">
+              {/*
+                [重要] ここにあった DivisionTag（活動ページへのタグ）は
+                  不要とのご指示で削除しました。復活させないでください。
+              */}
+              <div className="flex items-center gap-3 mb-5">
                 <span className="w-10 h-10 rounded-lg bg-sunken border border-line text-ink-strong flex items-center justify-center">
                   <span aria-hidden="true">{resolveIcon(d?.icon ?? 'Layers', 'w-[18px] h-[18px]')}</span>
                 </span>
-                <DivisionTag division={t.division} onClick={() => setCurrentPage(t.division)} />
               </div>
 
               <p className="text-[12.5px] text-ink-muted mb-2">

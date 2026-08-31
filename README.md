@@ -32,7 +32,7 @@ React 19 + TypeScript + Vite + Tailwind CSS（CDN）+ framer-motion 構成。
 
 ## 廃止した名称・機能（復活させないでください）
 
-| 廃止したもの | 現在の扱い | |---|---| | 旧組織名 **マナトビ** | 組織の総称は **学びの扉** です | | 旧製品名 **Chem-Basis** | サイト上では **学習アプリ** と表記します | | 共通テスト **「情報I」** の教材 | 提供終了。`MATERIAL_ITEMS` から削除済み | | **一問一答（クイズ）機能** | 機能ごと削除（`/quiz` ルート・`QuizSystem.tsx` を撤去） |
+| 廃止したもの | 現在の扱い | |---|---| | 旧組織名 **マナトビ** | 組織の総称は **学びの扉** です | | 旧製品名 **Chem-Basis** | サイト上では **学習アプリ** と表記します | | 共通テスト **「情報I」** の教材 | 提供終了。`MATERIAL_ITEMS` から削除済み | | **一問一答（クイズ）機能** | 機能ごと削除（`/quiz` ルート・`QuizSystem.tsx` を撤去） | | **活動別タグ（DivisionTag）** | 不要とのご指示によりサイト全体から削除。`components/ui/DivisionNotice.tsx` から実装も撤去済み |
 
 ### 旧URLの扱い
 
@@ -63,8 +63,11 @@ React 19 + TypeScript + Vite + Tailwind CSS（CDN）+ framer-motion 構成。
 - 3活動をまとめて「学びの扉という団体」と書かないでください。
   総称であること、会計が別であることが伝わる書き方にします。
 - `components/ui/DivisionNotice.tsx` の
-  `DivisionTag` / `IndependenceNote` / `StructureNote` を使って、
+  `IndependenceNote` / `StructureNote` を使って、
   この分離を各ページで一貫して表示します。
+  なお `division` は表示用のタグではなく、データの分類・
+  活動別ページへの振り分けのために保持しています
+  （画面に色付きタグとして出す `DivisionTag` は削除済みです）。
 - 学習アプリの運営主体は **学びの扉アプリ** です。
   「学びの扉が開発・運営」ではなく「学びの扉アプリが開発・運営」と書きます。
 - 利用規約・プライバシーポリシーの「当団体」は
@@ -129,7 +132,6 @@ React 19 + TypeScript + Vite + Tailwind CSS（CDN）+ framer-motion 構成。
 `content/site.ts` 内に `TODO:` コメントが付いています。
 **実際の情報に差し替えてください。** 事実でない内容は絶対に記載しないでください。
 
-- `ORG.founded` — 実際の各活動の開始年月
 - `ACHIEVEMENTS` / `TIMELINE` — 確認できている事実のみ
 - `DIVISIONS[*].independence` — 実際の会計・運営の実態と合っているか確認
 - `MUSIC_RELEASES` — 配信先 URL 等が確定したら追記
@@ -191,10 +193,12 @@ google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
 - [済] `robots.txt` / `sitemap.xml`（16URL・ルーティング定義と一致）
 - [済] 存在しないURLは 404 画面＋`noindex` を返す（ソフト404の回避）
 - [済] `ORG.email` を実際に受信できるアドレスにする（`mntobira@gmail.com`）
+- [済] `ORG.founded` を実際の開始年月にする（**2026年4月**）
+      `index.html` の JSON-LD `foundingDate: "2026-04"` と対応させています。
+      片方だけ直すと検索結果と画面表示が食い違うため、必ず両方直してください。
 
 ### 未対応（公開前に必要）
 
-- [要] `ORG.founded` を実際の開始年月にする
 - [要] `public/ads.txt`（パブリッシャーID発行後）
 
 ---
