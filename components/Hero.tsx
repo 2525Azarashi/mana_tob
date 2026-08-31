@@ -36,24 +36,63 @@ const WAVE_COLORS = [
 ];
 
 /*
-  曲線の座標。
-  [重要] viewBox="0 0 1000 1000" の内側に収まる値にしてください。
-    元のコードは y が -200〜1250 の範囲で、
-    preserveAspectRatio="none" と組み合わせると
-    線の大部分が表示領域の外に出てしまい、ほとんど見えませんでした。
-    ここでは 0〜1000 の範囲で、画面を斜めに横切るようにしています。
+  曲線の構図。
+
+  [重要] すべての線は 1 点（CONVERGE）で交わります。
+    「扉（とびら）」の向こう側へ視線が抜けていく遠近感を出すための構図です。
+    線がばらばらの方向へ流れる形（＝ただ横に流れる縞）には戻さないでください。
+
+  収束点は「画面の内側」に置きます。
+    [重要] 画面外（x が 1000 超）に置くと、数値上は 1 点で交わっていても
+      交点が見えず、ただの斜めの縞にしか見えません（実際にその状態を出しました）。
+      必ず viewBox の内側に収めてください。
+    右上の余白（見出しの右、写真の上）を選んでいます。
+    本文・写真と重ならないので、交点の線が密集しても可読性に影響しません。
+
+  [重要] viewBox="0 0 1000 1000" ＋ preserveAspectRatio="none" のため、
+    座標は「幅・高さに対する千分率」として引き伸ばされます。
+    この変形は点を点に移すので、画面上でも交点は 1 点のままです。
 */
-const WAVES = Array.from({ length: 16 }, (_, i) => {
-  const y0 = 120 + i * 52; // 左端の高さ
-  const y1 = 40 + i * 48; // 右端の高さ
+const CONVERGE = { x: 880, y: 132 };
+const START_X = -80;
+
+/**
+ * 始点 (START_X, y0) から収束点までを結ぶ 3 次ベジェを組み立てます。
+ * 直線だと定規のようになってしまうため、
+ * 線分の法線方向へ off だけ膨らませて弧を描かせます。
+ */
+const bowedPath = (y0: number, off: number) => {
+  const dx = CONVERGE.x - START_X;
+  const dy = CONVERGE.y - y0;
+  const len = Math.hypot(dx, dy) || 1;
+  // 線分に直交する向きの単位ベクトル
+  const nx = -dy / len;
+  const ny = dx / len;
+  // 始点から t の位置を、法線方向へ o ずらした制御点
+  const ctrl = (t: number, o: number) =>
+    `${(START_X + dx * t + nx * o).toFixed(1)} ${(y0 + dy * t + ny * o).toFixed(1)}`;
+  // 収束点に近づくほど膨らみを小さくし、1 点にきれいに収めます
+  return `M ${START_X} ${y0} C ${ctrl(0.34, off)} ${ctrl(0.72, off * 0.4)} ${CONVERGE.x} ${CONVERGE.y}`;
+};
+
+const WAVE_COUNT = 18;
+
+const WAVES = Array.from({ length: WAVE_COUNT }, (_, i) => {
+  // 左端の高さ。上下に広く散らして、収束点へ向かう扇形にします
+  const y0 = -160 + (i * 1320) / (WAVE_COUNT - 1);
+  // 収束点から遠い（＝傾きが急な）線ほど大きく弧を描かせます
+  const base = ((y0 - CONVERGE.y) / 900) * 110;
+  // ゆらぎ幅。隣の線と逆位相にして、束が一斉に動かないようにします
+  const sway = 30 * (i % 2 === 0 ? 1 : -1);
   return {
     color: WAVE_COLORS[i % WAVE_COLORS.length],
-    width: 1.1 + (i % 4) * 0.5,
-    d: [
-      `M -50 ${y0} C 250 ${y0 - 90} 600 ${y1 + 110} 1050 ${y1}`,
-      `M -50 ${y0 + 26} C 260 ${y0 - 30} 620 ${y1 + 40} 1050 ${y1 - 24}`,
-      `M -50 ${y0} C 250 ${y0 - 90} 600 ${y1 + 110} 1050 ${y1}`,
-    ],
+    width: 1.1 + (i % 4) * 0.45,
+    /*
+      [重要] 始点と収束点は動かしません。
+        ここを動かすと「1 点で交わる」構図が崩れます。
+        往復させるのは中間の制御点（膨らみ）だけです。
+    */
+    d: [bowedPath(y0, base), bowedPath(y0, base + sway), bowedPath(y0, base)],
   };
 });
 
@@ -119,8 +158,9 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
     <section className="relative pt-32 sm:pt-36 pb-20 sm:pb-24 border-b border-line overflow-hidden">
       {/*
         背景の雰囲気づくり。
-        [重要] この背景エフェクト（青のぼかし光＋流れる曲線＋薄いグリッド）は
+        [重要] この背景エフェクト（青のぼかし光＋1点に収束する曲線＋薄いグリッド）は
           サイトの世界観を担う要素です。単色の白背景に戻さないでください。
+          曲線は画面右外の 1 点で交わる構図です（詳しくは上の CONVERGE の説明）。
 
         可読性への配慮:
           ・すべて aria-hidden + pointer-events-none の純粋な装飾です
@@ -158,11 +198,27 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
           transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
         />
 
-        {/* 流れる曲線。ゆらぎを与えて静止画に見えないようにします */}
+        {/*
+          1 点に収束する曲線。ゆらぎを与えて静止画に見えないようにします。
+          preserveAspectRatio="none" で縦横が別々に引き伸ばされますが、
+          この変形は「点を点に移す」ため、収束点は画面上でも 1 点のままです。
+
+          [重要] mask で「文字がある左側を薄く、収束点のある右側を濃く」しています。
+            収束点へ向かう線は束になるため、そのままでは見出し
+            「学びの扉」の上を何本もの線が横切って読みにくくなります。
+            この mask は可読性のためのものなので外さないでください。
+            （線を消すのではなく、左側だけ淡くして奥行きは残しています）
+        */}
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 1000 1000"
           preserveAspectRatio="none"
+          style={{
+            maskImage:
+              'linear-gradient(to right, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.5) 55%, #000 72%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.5) 55%, #000 72%)',
+          }}
         >
           {/*
             [重要] ここで pathLength や opacity を repeat: Infinity の
@@ -200,41 +256,55 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
           >
-            <p className="inline-flex items-center gap-2 text-[13px] font-bold text-brand-accent mb-6 py-1.5 px-3 rounded-full bg-blue-50 border border-blue-100">
-              <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
-              3つの活動の総称・公式サイト
-            </p>
+            {/*
+              [重要] ここに「3つの活動の総称・公式サイト」のような
+                丸いバッジ（ピル型のラベル）を置かないでください。
+                いかにもテンプレート的で不要と判断して外したものです。
+                同じ内容は下のリード文で本文として述べているため、
+                情報としても欠けていません。
+            */}
 
             {/*
               サイトの看板。
-              [重要] このブランド表現（ブランド青＋「扉」のグラデーション＋
-                Playfair Display）はサイトの第一印象を決める要素です。
-                プレーンな黒文字に戻さないでください。
+              [重要] サイトの第一印象を決める最重要要素です。
+                プレーンな黒文字や、ただの太字ゴシックに戻さないでください。
+
+              書体について:
+                和文の看板書体 Zen Old Mincho（900）を使います。
+                [重要] 以前は Playfair Display を指定していましたが、
+                  Playfair には和文グリフが無いため「学びの扉」は
+                  本文と同じゴシック体で描かれてしまい、
+                  見出しがまったく引き立っていませんでした。
+                  和文書体を必ず先に指定してください
+                  （実体は index.html の .hero-title にあります）。
+
+              「扉」を主役にしている理由:
+                [重要] 「扉」は団体名の核なので、まわりの「学びの」より
+                  淡く見えてはいけません。以前はグラデーションの上端を
+                  明るい青（#2E6FE0）にしていたため、主役が一番弱いという
+                  逆転が起きていました。いまは濃い青のまま明暗差をつけ、
+                  さらに 1.08em で少し大きく組んで主役にしています。
 
               可読性について:
-                グラデーションの色は「大きな文字」の基準（3:1）を
-                すべて満たす範囲に収めています。
-                  #0A3D62 ブランド青 11.3:1
-                  #1E4FD8 →           5.9:1
-                  #1565C0 →           5.6:1
-                  #0E7490 シアン寄り   4.0:1
+                「扉」のグラデーションは、白背景で「大きな文字」の基準（3:1）を
+                すべて満たす色域に収めています。
+                  #0A3D62 → 11.3:1
+                  #10528F → 8.0:1
+                  #062A47 → 14.2:1
                 明るい cyan-400（#22d3ee）は白背景で 1.8:1 しかなく
                 読めないため使いません。
-                また bg-clip-text は文字を透明にする手法なので、
+                また background-clip: text は文字を透明にする手法なので、
                 非対応ブラウザで文字が消えないよう
-                フォールバックの色を color で先に指定しています。
+                フォールバックの色を color で指定しています。
             */}
-            <h1 className="font-brand text-[44px] sm:text-[58px] lg:text-[68px] font-bold tracking-[-0.01em] leading-[1.2] text-brand mb-4">
+            <h1 className="hero-title text-[52px] sm:text-[72px] lg:text-[88px] leading-[1.16] text-brand mb-4">
               学びの
-              <span
-                className="italic bg-gradient-to-br from-[#1E4FD8] via-[#1565C0] to-[#0E7490] bg-clip-text"
-                style={{ color: '#1565C0', WebkitTextFillColor: 'transparent' }}
-              >
+              <span className="hero-title-accent" style={{ color: '#0A3D62' }}>
                 扉
               </span>
             </h1>
 
-            <p className="font-brand text-[18px] sm:text-[21px] font-bold italic tracking-tight text-brand-accent mb-2">
+            <p className="font-brand-tagline text-[17px] sm:text-[20px] text-brand-accent mb-2">
               ～私たちにできることを～
             </p>
             {/* 見出し下のアクセント罫線（ブランド青から透明へ） */}
