@@ -221,22 +221,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!--
       フォント。
-      [重要] 看板（ヒーローの「学びの扉」とキャッチコピー）の書体は
-        サイトの第一印象を決める要素です。削除しないでください。
+      [重要] この読み込み指定は「当初のサイト」と同じものに戻しています。
+        ウェイトを削る目的で書き換えないでください。
 
-        ・Zen Old Mincho … 和文の看板書体。「学びの扉」の日本語部分に使います。
-          [重要] これが本命です。以前は Playfair Display だけを指定していましたが、
-            Playfair には和文グリフが無いため「学びの扉」は
-            本文と同じ Noto Sans JP で描かれてしまい、
-            見出しがまったく引き立っていませんでした。
-            和文の看板書体を必ず先に指定してください。
-        ・Playfair Display … 欧文（Manabi-no-Tobira 等）用。
-        ・Noto Sans JP … 本文用。
+        ・Noto Sans JP（300;400;500;700;900）… 本文用。
+        ・Playfair Display（ital,wght@0,700;0,900;1,700;1,900）… 欧文用。
+          [重要] italic（ital = 1）は必須です。ヒーローの「扉」と
+            キャッチコピーが italic 指定のため、
+            斜体の実体が無いとブラウザが傾ける合成斜体になります。
 
-        ウェイトは実際に使うものだけに絞っています
-        （Zen Old Mincho は 700/900、Playfair は 700 のみ）。
+      [重要] ヒーロー見出しの和文の書体について（実測済みの申し送り）
+        Hero.tsx の h1 は当初のデザインどおり
+        fontFamily: "'Playfair Display', serif" を指定しています。
+        Playfair Display には和文グリフが無いため、
+        「学びの扉」の 4 文字は指定の末尾にある
+        総称ファミリ serif ＝ 閲覧者の OS の既定明朝体で描かれます
+        （Windows なら游明朝／Mac ならヒラギノ明朝など）。
+        つまり看板の和文の見え方は OS によって変わります。
+        これは当初からの挙動なので、そのまま維持しています。
+        [重要] Web フォントで固定したい場合は必ずご相談ください。
+          「不具合だと思って」和文書体を勝手に足さないでください
+          （実際に Zen Old Mincho を足して差し戻しになりました）。
+
+        注記: 一時的に和文の明朝体 Zen Old Mincho を看板に使っていましたが、
+          見出しを当初のデザインに戻すご指示により使用箇所が無くなったため、
+          読み込みから外しています。
     -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Old+Mincho:wght@700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
     <style>
         /*
           ===== デザイントークン =====
@@ -319,120 +330,21 @@
             border-radius: 4px;
         }
         /*
-          ===== ブランド書体（看板用） =====
-          [重要] ヒーローの「学びの扉」とキャッチコピーに使う書体です。
+          ===== ブランド書体（欧文の看板用） =====
+          [重要] ヒーロー以外の場所（section の英字見出しなど）で使う書体です。
             サイトの第一印象を決める要素なので削除しないでください。
-            本文には使いません（長文で読みにくくなるため）。
 
-          [重要] 和文書体（Zen Old Mincho）を必ず Playfair より先に書きます。
-            Playfair Display には和文グリフが無いため、先に書いてしまうと
-            「学びの扉」が本文と同じゴシック体で描かれ、
-            見出しがまったく引き立ちません（実際にその状態でした）。
+          [重要] ヒーローの見出し「学びの扉」はこのクラスを使いません。
+            当初のデザインどおり Hero.tsx 側の
+            style={ fontFamily: "'Playfair Display', serif" } で直接指定し、
+            和文はフォールバックの Noto Sans JP（900）が描きます。
+            一度こちらの判断で明朝体（Zen Old Mincho）の
+            .hero-title / .hero-title-accent / .font-brand-tagline を
+            用意しましたが、当初のものに戻すご指示をいただいたため
+            それらは削除しました。復活させないでください。
         */
         .font-brand {
-            font-family: 'Zen Old Mincho', 'Playfair Display', 'Noto Serif JP', serif;
-        }
-
-        /*
-          ===== サイトの看板「学びの扉」 =====
-          [重要] ここは「インパクトがあり、かつ感動的」であることを狙った演出です。
-            単なる太字に戻さないでください。内訳は次の3つです。
-
-            1. 明朝体の縦画と横画のコントラスト（Zen Old Mincho / 900）
-               … 毛筆に近い抑揚が出て、ゴシック体より格調が生まれます
-            2. 字間を詰める（tracking）
-               … 大きな見出しは既定の字間だと間延びして締まりません
-            3. 縦方向のグラデーション＋淡い発光
-               … 「扉の向こうから光が差す」印象をつくります
-
-          可読性について:
-            発光（text-shadow）はごく淡い青のみで、文字色そのものは
-            変えていません。コントラスト比は下の色指定で担保しています。
-        */
-        .hero-title {
-            font-family: 'Zen Old Mincho', 'Noto Serif JP', serif;
-            font-weight: 900;
-            letter-spacing: 0.02em;
-            /*
-              ごく淡い発光。数値を上げすぎると文字が滲んで読みにくくなるため、
-              ぼかしは大きく・不透明度は低くしています。
-            */
-            text-shadow:
-                0 1px 0 rgba(255, 255, 255, .6),
-                0 10px 30px rgba(21, 101, 192, .15),
-                0 2px 6px rgba(10, 61, 98, .10);
-        }
-        /*
-          ===== 「扉」の一文字（看板の主役） =====
-          [重要] この一文字が団体名の核なので、まわりの「学びの」より
-            "弱く" 見えてはいけません。以前は上端を明るい青
-            (#2E6FE0) にしていたため、主役が一番淡いという逆転が
-            起きていました。いまは次の3点で主役に見えるようにしています。
-
-            1. 少しだけ大きく組む（font-size: 1.08em）
-               … 明朝体の一文字強調は日本語組版の定石です
-            2. 周囲の「学びの」（#0A3D62）より必ず「濃い」グラデーション
-               … [重要] 上端を周囲と同色から始め、下へ向かって
-                 さらに深い藍に落とします。上端を明るくすると
-                 主役が一番淡く見えてしまうので、絶対に明るくしないこと。
-                 明暗差は中間に置いた僅かな照り（#10528F）だけで出します。
-            3. 背後に淡い光のにじみ（::before の放射グラデーション）
-               … 「開いた扉の向こうから光が差す」情景をつくります
-                 文字自体を明るくせず、背後の光で感動的に見せる狙いです
-
-          [重要] background-clip: text は文字を透明にする手法なので、
-            非対応ブラウザで文字が消えないよう
-            必ず color でフォールバックの色を指定してください
-            （JSX 側の style で #0A3D62 を渡しています）。
-        */
-        .hero-title-accent {
-            position: relative;
-            display: inline-block;
-            font-size: 1.08em;
-            line-height: 1;
-            background-image: linear-gradient(172deg, #0A3D62 0%, #10528F 38%, #062A47 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            /*
-              [重要] text-shadow: none は必須です。消さないでください。
-                background-clip: text は「背景」を文字型に切り抜く手法で、
-                その背景は text-shadow より下に描かれます。
-                そのため親の .hero-title から白い text-shadow を
-                継承すると、白い影がグラデーションの上に乗って
-                「扉」だけが色あせて見えます
-                （実測: 平均輝度 94.9 対 他の文字 60.6 まで薄くなっていました）。
-                光の演出は下の ::before（文字の背面）だけで行います。
-            */
-            text-shadow: none;
-        }
-        /*
-          扉の背後の光。文字の可読性を落とさないよう、
-          不透明度は低く・ぼかし（グラデーションの裾）は広くしています。
-          [重要] z-index: -1 で文字の背面に置いています。
-            親の .hero-title-accent から position: relative を外すと
-            光が別の場所に飛ぶので、セットで扱ってください。
-        */
-        .hero-title-accent::before {
-            content: '';
-            position: absolute;
-            z-index: -1;
-            left: 50%;
-            top: 50%;
-            width: 210%;
-            height: 165%;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(closest-side,
-                rgba(126, 199, 255, .40) 0%,
-                rgba(126, 199, 255, .18) 45%,
-                rgba(126, 199, 255, 0) 72%);
-            pointer-events: none;
-        }
-        /* 和文の明朝体はイタリック体を持たないため、キャッチコピーは正体で組みます */
-        .font-brand-tagline {
-            font-family: 'Zen Old Mincho', 'Noto Serif JP', serif;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+            font-family: 'Playfair Display', 'Noto Sans JP', serif;
         }
         /*
           ===== 桜の花びらエフェクト =====
