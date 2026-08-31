@@ -259,55 +259,61 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
             */}
 
             {/*
-              ===== サイトの看板「学びの扉」（当初のデザイン） =====
+              ===== サイトの看板「学びの扉」 =====
 
-              [重要] これは当初のサイトの見出しそのものです。作り変えないでください。
-                一度こちらの判断で明朝体（Zen Old Mincho）の看板見出しに
-                差し替えましたが、当初のものに戻すご指示をいただいています。
-                「もっと立派な書体に」といった理由で再度差し替えないでください。
+              [重要] 書体・グラデーションはご本人のご指示で決まっています。
+                「もっと上品に」「明朝の方が合う」等のこちらの美観判断で
+                作り変えないでください。過去に 2 回差し戻しになっています。
 
-              書体の実体（実測済み）:
-                fontFamily は 'Playfair Display', serif ですが、
-                Playfair Display には和文グリフがありません。
-                そのため「学びの扉」の 4 文字は指定の末尾にある
-                総称ファミリ serif ＝ 閲覧者の OS の既定明朝体で描かれます
-                （Windows なら游明朝、Mac ならヒラギノ明朝など）。
-                つまり看板の和文の見え方は OS によって変わります。
-                [重要] これは不具合ではなく、当初からの挙動です。
-                  「和文の Web フォントが抜けている」と判断して
-                  ここに書体を足さないでください
-                  （実際に Zen Old Mincho を足して差し戻しになりました）。
-                  Web フォントで固定したい場合は必ずご相談ください。
-                font-black（900）は和文側では実体のあるウェイトが無いことが多く、
-                多くの環境でブラウザの合成ボールドになります。これも当初どおりです。
+              経緯:
+                1. 当初は 'Playfair Display', serif（和文は OS 依存の明朝体）。
+                2. 私の判断で明朝体（Zen Old Mincho）に差し替え → 差し戻し。
+                3. 当初の指定に復元。
+                4. 今回ご指示「扉のグラデーションは濃く、フォントも特徴的に」
+                   → 書体を Dela Gothic One、グラデーションを濃色系に変更。
+
+              書体（Dela Gothic One）:
+                和文グリフが実在する極太ディスプレイ書体です。
+                以前の "'Playfair Display', serif" と違い、
+                和文が閲覧者の OS の既定明朝体に落ちる問題は解消しました。
+                [重要] ウェイトは 400 のみ存在します。
+                  そのため font-black（900）ではなく font-normal を使い、
+                  Tailwind の font-* を付けずに fontWeight 400 のままにしています。
+                  700/900 を指定すると実体が無く、ブラウザの合成ボールドで
+                  極太の輪郭がつぶれて汚くなります。上げないでください。
+                [重要] 本文には使わないでください。看板の 1 か所専用です。
+
+              グラデーション（濃色化）:
+                旧: from-blue-700 via-blue-500 to-cyan-400
+                  → 終端の cyan-400(#22d3ee) が白背景で 1.81:1 しかなく、
+                    「扉」の 34.1% のピクセルが 3:1 未満という実測値でした。
+                新: from-blue-900 via-blue-700 to-cyan-700
+                  → 実測コントラスト（白背景）
+                     blue-900 #1e3a8a = 10.36:1
+                     blue-700 #1d4ed8 =  6.70:1
+                     cyan-700 #0e7490 =  5.36:1
+                  最も淡い終端でも 5.36:1 で、WCAG AA の本文基準 4.5:1 すら
+                  上回ります。青→シアンの色相変化は残しつつ濃くしました。
+                [重要] to-cyan-400 / to-cyan-300 など明るい終端に戻すと
+                  可読性が基準未達に戻ります。薄くしないでください。
 
               はみ出しについて:
                 whitespace-nowrap + overflow-visible + py-4 pr-12 は
                 「4 文字を絶対に折り返さず、斜体の右肩と発光を切らせない」ための
                 当初からの指定です。外すと「扉」の右側が切れます。
 
-              可読性の注意（実測値つきの申し送り）:
-                [重要] グラデーションの終端 cyan-400（#22d3ee）は白背景で
-                  1.8:1 しかなく、WCAG の「大きな文字」の基準 3:1 を満たしません。
-                  実測では「扉」一文字の描画ピクセルのうち 34.1% が 3:1 未満、
-                  最も淡い部分は rgb(93,210,244) = 1.75:1 でした
-                  （h1 全体では 12.3%。中央値は 3.37:1）。
-
-                  これは「当初のデザインに戻す」というご指示を優先して
-                  意図的にそのまま残している既知の未達点です。
-                  勝手に色を変えないでください。ただし、
-                  自動のコントラスト検査では検出できない点に注意してください:
-                  この span は text-transparent（＝ color が透明）なので、
-                  計算上の文字色を見る検査は素通りします。
+              自動検査の限界（申し送り）:
+                [重要] この span は text-transparent（＝ color が透明）なので、
+                  計算上の文字色を見る自動コントラスト検査は素通りします。
                   検査結果が「0 件」でも未達が無い証明にはなりません。
-                  色を調整する場合は必ずご相談のうえで行ってください。
+                  色を変えた際は必ずピクセル実測で確認してください。
             */}
             <h1
-              className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] font-black leading-[1.3] tracking-tighter text-[#0A3D62] whitespace-nowrap py-4 pr-12 overflow-visible"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] leading-[1.3] tracking-tighter text-[#0A3D62] whitespace-nowrap py-4 pr-12 overflow-visible"
+              style={{ fontFamily: "'Dela Gothic One', 'Noto Sans JP', sans-serif", fontWeight: 400 }}
             >
               学びの
-              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-blue-700 via-blue-500 to-cyan-400 italic pr-2">
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-blue-900 via-blue-700 to-cyan-700 pr-2">
                 扉
               </span>
             </h1>

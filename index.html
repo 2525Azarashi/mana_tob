@@ -92,7 +92,7 @@
           "description": "「学びの扉」は、学習サービスを開発・運営する「学びの扉アプリ」、三重大学で探究に取り組む学生学修コミュニティ「まなとび」、楽曲を制作する音楽活動「まなとび。」という、資金・会計・運営がそれぞれ独立した3つの活動の総称です。",
           "areaServed": "日本",
           "email": "mntobira@gmail.com",
-          "foundingDate": "2026-04",
+          "foundingDate": "2025-03",
           "sameAs": ["https://www.instagram.com/mana_tob1"],
           "subjectOf": {
             "@type": "CreativeWork",
@@ -231,24 +231,31 @@
             キャッチコピーが italic 指定のため、
             斜体の実体が無いとブラウザが傾ける合成斜体になります。
 
-      [重要] ヒーロー見出しの和文の書体について（実測済みの申し送り）
-        Hero.tsx の h1 は当初のデザインどおり
-        fontFamily: "'Playfair Display', serif" を指定しています。
-        Playfair Display には和文グリフが無いため、
-        「学びの扉」の 4 文字は指定の末尾にある
-        総称ファミリ serif ＝ 閲覧者の OS の既定明朝体で描かれます
-        （Windows なら游明朝／Mac ならヒラギノ明朝など）。
-        つまり看板の和文の見え方は OS によって変わります。
-        これは当初からの挙動なので、そのまま維持しています。
-        [重要] Web フォントで固定したい場合は必ずご相談ください。
-          「不具合だと思って」和文書体を勝手に足さないでください
-          （実際に Zen Old Mincho を足して差し戻しになりました）。
+        ・Dela Gothic One（400・単一ウェイト）… ヒーロー見出し「学びの扉」専用。
+          [重要] 「フォントも特徴的に」とのご指示で追加した和文の
+            極太ディスプレイ書体です。この 1 か所だけで使います。
+            本文には絶対に使わないでください（長文では全く読めません）。
+            ウェイトは 400 のみ存在します。font-weight を 700/900 に
+            すると実体が無くブラウザの合成ボールドで輪郭が濁ります。
 
-        注記: 一時的に和文の明朝体 Zen Old Mincho を看板に使っていましたが、
-          見出しを当初のデザインに戻すご指示により使用箇所が無くなったため、
-          読み込みから外しています。
+      [重要] ヒーロー見出しの和文の書体について（経緯つきの申し送り）
+        現在: Hero.tsx の h1 は 'Dela Gothic One' を使っています。
+          ご指示「扉のグラデーションは濃く、フォントも特徴的に」に対応した
+          ものです。この書体には和文グリフが実在するため、
+          以前のような OS 依存（游明朝／ヒラギノ明朝で見え方が変わる）は
+          解消しています。
+
+        経緯（同じ失敗を繰り返さないために）:
+          1. 当初は "'Playfair Display', serif" 指定でした。Playfair Display に
+             和文グリフが無いため、和文 4 文字は末尾の総称ファミリ serif
+             ＝ 閲覧者の OS の既定明朝体で描かれていました（OS 依存）。
+          2. 私の判断で明朝体 Zen Old Mincho に差し替え → 差し戻しのご指示。
+          3. 当初の Playfair Display 指定に復元。
+          4. 今回、ご本人のご指示で Dela Gothic One に変更。
+          [重要] つまり書体はご本人の指示で決まっています。
+            「明朝の方が上品だ」等の判断で勝手に変えないでください。
     -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
     <style>
         /*
           ===== デザイントークン =====

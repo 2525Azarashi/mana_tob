@@ -32,7 +32,7 @@ React 19 + TypeScript + Vite + Tailwind CSS（CDN）+ framer-motion 構成。
 
 ## 廃止した名称・機能（復活させないでください）
 
-| 廃止したもの | 現在の扱い | |---|---| | 旧組織名 **マナトビ** | 組織の総称は **学びの扉** です | | 旧製品名 **Chem-Basis** | サイト上では **学習アプリ** と表記します | | 共通テスト **「情報I」** の教材 | 提供終了。`MATERIAL_ITEMS` から削除済み | | **一問一答（クイズ）機能** | 機能ごと削除（`/quiz` ルート・`QuizSystem.tsx` を撤去） | | **活動別タグ（DivisionTag）** | 不要とのご指示によりサイト全体から削除。`components/ui/DivisionNotice.tsx` から実装も撤去済み |
+| 廃止したもの | 現在の扱い | |---|---| | 旧組織名 **マナトビ** | 組織の総称は **学びの扉** です | | 旧製品名 **Chem-Basis** | サイト上では **学習アプリ** と表記します | | 共通テスト **「情報I」** の教材 | 提供終了。`MATERIAL_ITEMS` から削除済み | | **一問一答（クイズ）機能** | 機能ごと削除（`/quiz` ルート・`QuizSystem.tsx` を撤去） | | **活動別タグ（DivisionTag）** | 不要とのご指示によりサイト全体から削除。`components/ui/DivisionNotice.tsx` から実装も撤去済み | | **見出しの明朝体（Zen Old Mincho）** | ヒーロー見出しをこちらの判断で明朝体にしたところ差し戻しのご指示。現在はご指示により **Dela Gothic One**（極太ディスプレイ体）を使用しています |
 
 ### 旧URLの扱い
 
@@ -193,9 +193,11 @@ google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
 - [済] `robots.txt` / `sitemap.xml`（16URL・ルーティング定義と一致）
 - [済] 存在しないURLは 404 画面＋`noindex` を返す（ソフト404の回避）
 - [済] `ORG.email` を実際に受信できるアドレスにする（`mntobira@gmail.com`）
-- [済] `ORG.founded` を実際の開始年月にする（**2026年4月**）
-      `index.html` の JSON-LD `foundingDate: "2026-04"` と対応させています。
-      片方だけ直すと検索結果と画面表示が食い違うため、必ず両方直してください。
+- [済] `ORG.founded` を実際の開始年月にする（**2025年3月**）
+      年月は **3か所** に散っています。片方だけ直すと食い違うため必ず全部直してください。
+      1. `content/site.ts` の `ORG.founded`（`'2025年3月'`）… 画面表示
+      2. `index.html` の JSON-LD `foundingDate`（`"2025-03"`）… 検索エンジン向け
+      3. `content/site.ts` の `TIMELINE` 先頭項目の `date`（`'2025年3月'`）… 沿革の起点
 
 ### 未対応（公開前に必要）
 
