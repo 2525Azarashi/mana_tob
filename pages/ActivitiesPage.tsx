@@ -9,8 +9,8 @@ import {
   CTAButton,
   resolveIcon,
 } from '../components/ui/Blocks';
-import { DivisionTag, StructureNote } from '../components/ui/DivisionNotice';
-import { ACTIVITIES, DIVISIONS } from '../content/site';
+import { StructureNote } from '../components/ui/DivisionNotice';
+import { ACTIVITIES } from '../content/site';
 
 interface Props {
   setCurrentPage: (page: PageType) => void;
@@ -21,7 +21,7 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
     page="activities"
     title="活動内容"
     titleEn="Our Activities"
-    lead="「学びの扉」という名前のもとで行っている取り組みを一覧にしています。なお「学びの扉」は3つの活動の総称であり、それぞれ資金・会計・運営を独立して行っています。各取り組みがどの活動に属するのかをタグで示しています。"
+    lead="「学びの扉」という名前のもとで行っている取り組みを一覧にしています。なお「学びの扉」は3つの活動の総称であり、それぞれ資金・会計・運営を独立して行っています。"
     setCurrentPage={setCurrentPage}
   >
     {/* 「学びの扉」が総称であることの明示 */}
@@ -39,18 +39,15 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
                 {resolveIcon(a.icon, 'w-7 h-7')}
               </div>
               <div>
-                <div className="flex flex-wrap items-center gap-3 mb-2.5">
+                {/*
+                  [重要] ここに「どの活動か」を示す丸いタグを置かないでください。
+                    不要とのご指示で削除しました（サイト全体で統一しています）。
+                    どの活動に属するかは、この見出しの下の本文と
+                    ページ冒頭の StructureNote で伝わります。
+                */}
+                <div className="mb-2.5">
                   <span className="text-[12px] font-semibold tracking-[0.08em] text-cyan-300">
                     {String(idx + 1).padStart(2, '0')} / {a.label}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-2.5 py-1 rounded-full bg-white/15 border border-white/25 text-white">
-                    <span aria-hidden="true">
-                      {resolveIcon(
-                        DIVISIONS.find((d) => d.id === a.division)?.icon ?? 'Layers',
-                        'w-3 h-3',
-                      )}
-                    </span>
-                    {DIVISIONS.find((d) => d.id === a.division)?.shortName}
                   </span>
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold leading-snug text-white">
@@ -82,6 +79,10 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
               ))}
             </ul>
 
+            {/*
+              [重要] ここにあった DivisionTag（活動ページへのタグ）は
+                不要とのご指示で削除しました。復活させないでください。
+            */}
             <div className="flex flex-wrap items-center gap-3">
               {a.linkTo && (
                 <button
@@ -92,11 +93,6 @@ const ActivitiesPage: React.FC<Props> = ({ setCurrentPage }) => (
                   <ArrowRight size={14} />
                 </button>
               )}
-              {/* この取り組みを行っている活動のページへ */}
-              <DivisionTag
-                division={a.division}
-                onClick={() => setCurrentPage(a.division)}
-              />
             </div>
           </div>
         </Card>

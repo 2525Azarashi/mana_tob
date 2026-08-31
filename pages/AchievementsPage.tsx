@@ -10,7 +10,6 @@ import {
   NoteBox,
   CTAButton,
 } from '../components/ui/Blocks';
-import { DivisionTag } from '../components/ui/DivisionNotice';
 import { ACHIEVEMENTS, TIMELINE, ORG } from '../content/site';
 
 interface Props {
@@ -77,15 +76,14 @@ const AchievementsPage: React.FC<Props> = ({ setCurrentPage }) => (
               {/* ドット */}
               <span className="absolute left-[-31px] sm:left-[-39px] top-1.5 w-5 h-5 rounded-full bg-white border-[3px] border-blue-500 shadow-sm" />
 
-              <div className="flex flex-wrap items-center gap-3 mb-2.5">
+              {/*
+                [重要] ここにあった DivisionTag（どの活動のできごとかを示すタグ）は
+                  不要とのご指示で削除しました。復活させないでください。
+              */}
+              <div className="mb-2.5">
                 <p className="text-xs font-semibold tracking-[0.06em] text-blue-600">
                   {t.date}
                 </p>
-                {/* このできごとがどの活動のものかを明示 */}
-                <DivisionTag
-                  division={t.division}
-                  onClick={() => setCurrentPage(t.division)}
-                />
               </div>
               <h3 className="text-lg font-semibold text-ink-strong mb-3 leading-snug">
                 {t.title}

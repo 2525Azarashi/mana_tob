@@ -24,77 +24,57 @@ interface HeroProps {
  */
 
 /**
- * 背景に流れる曲線。
- * d を配列で渡すと framer-motion が形状の間を往復して、ゆらぎになります。
- * 色は薄い青系のみ（背面の装飾なので彩度・不透明度を抑えています）。
+ * 背景に流れる曲線の色。
+ * 背面の装飾なので彩度・不透明度を抑えた青系のみです。
+ * [重要] これは当初のサイトで使っていた配色そのものです。変えないでください。
  */
 const WAVE_COLORS = [
-  'rgba(10, 61, 98, 0.42)',
-  'rgba(21, 101, 192, 0.34)',
-  'rgba(14, 165, 233, 0.26)',
-  'rgba(34, 211, 238, 0.22)',
+  'rgba(10, 61, 98, 0.25)', // Deep Blue
+  'rgba(25, 118, 210, 0.18)', // Primary Blue
+  'rgba(14, 165, 233, 0.15)', // Sky Blue
+  'rgba(34, 211, 238, 0.12)', // Cyan
 ];
 
 /*
-  曲線の構図。
+  ===== 背景の曲線（当初のデザイン） =====
 
-  [重要] すべての線は 1 点（CONVERGE）で交わります。
-    「扉（とびら）」の向こう側へ視線が抜けていく遠近感を出すための構図です。
-    線がばらばらの方向へ流れる形（＝ただ横に流れる縞）には戻さないでください。
+  [重要] この構図は「当初のサイトのもの」です。作り直さないでください。
+    32 本の 2 次ベジェが viewBox の中心 (500 500) を共有し、
+    そこで一点に絞られて、砂時計のようにくびれた形になります。
+    「学びの扉」の向こう側へ視線が吸い込まれていく情景を作る要素です。
 
-  収束点は「画面の内側」に置きます。
-    [重要] 画面外（x が 1000 超）に置くと、数値上は 1 点で交わっていても
-      交点が見えず、ただの斜めの縞にしか見えません（実際にその状態を出しました）。
-      必ず viewBox の内側に収めてください。
-    右上の余白（見出しの右、写真の上）を選んでいます。
-    本文・写真と重ならないので、交点の線が密集しても可読性に影響しません。
+  [重要] 「定規で引いたような直線を扇状に集める」形には戻さないでください。
+    数値の上ではどちらも一点で交わりますが、直線の束は
+    有機的なうねりが無く、縞模様のように見えて不快でした
+    （実際にその状態を出してご指摘をいただいています）。
+    やわらかさは Q（2 次ベジェ）の制御点が生む「たわみ」から来ています。
+
+  パスの読み方:
+    M -200 y            … 画面左外から始める（端が切れているように見せる）
+    Q cx cy 500 500     … 制御点 (cx, cy) でたわませ、中心 (500 500) で終える
+    T 1200 y2           … T は「直前の制御点を反転」して滑らかに続ける短縮記法。
+                          中心を通り抜けて画面右外へ抜けていきます
+    [重要] 終点 500 500 が全 32 本で共通であることが「一点に交わる」の実体です。
+      ここの数値を線ごとに変えると収束が崩れます。
 
   [重要] viewBox="0 0 1000 1000" ＋ preserveAspectRatio="none" のため、
-    座標は「幅・高さに対する千分率」として引き伸ばされます。
+    座標は幅・高さに対する千分率として引き伸ばされます。
     この変形は点を点に移すので、画面上でも交点は 1 点のままです。
 */
-const CONVERGE = { x: 880, y: 132 };
-const START_X = -80;
+const WAVE_COUNT = 32;
 
-/**
- * 始点 (START_X, y0) から収束点までを結ぶ 3 次ベジェを組み立てます。
- * 直線だと定規のようになってしまうため、
- * 線分の法線方向へ off だけ膨らませて弧を描かせます。
- */
-const bowedPath = (y0: number, off: number) => {
-  const dx = CONVERGE.x - START_X;
-  const dy = CONVERGE.y - y0;
-  const len = Math.hypot(dx, dy) || 1;
-  // 線分に直交する向きの単位ベクトル
-  const nx = -dy / len;
-  const ny = dx / len;
-  // 始点から t の位置を、法線方向へ o ずらした制御点
-  const ctrl = (t: number, o: number) =>
-    `${(START_X + dx * t + nx * o).toFixed(1)} ${(y0 + dy * t + ny * o).toFixed(1)}`;
-  // 収束点に近づくほど膨らみを小さくし、1 点にきれいに収めます
-  return `M ${START_X} ${y0} C ${ctrl(0.34, off)} ${ctrl(0.72, off * 0.4)} ${CONVERGE.x} ${CONVERGE.y}`;
-};
+/** i 番目の曲線の形。phase 0 が基本形、1 がゆらぎの折り返し地点です。 */
+const wavePath = (i: number, phase: 0 | 1) =>
+  phase === 0
+    ? `M -200 ${1200 - i * 20} Q ${300 + i * 10} ${700 - i * 15} 500 500 T 1200 ${-200 + i * 20}`
+    : `M -150 ${1250 - i * 20} Q ${350 + i * 10} ${650 - i * 15} 550 450 T 1250 ${-150 + i * 20}`;
 
-const WAVE_COUNT = 18;
-
-const WAVES = Array.from({ length: WAVE_COUNT }, (_, i) => {
-  // 左端の高さ。上下に広く散らして、収束点へ向かう扇形にします
-  const y0 = -160 + (i * 1320) / (WAVE_COUNT - 1);
-  // 収束点から遠い（＝傾きが急な）線ほど大きく弧を描かせます
-  const base = ((y0 - CONVERGE.y) / 900) * 110;
-  // ゆらぎ幅。隣の線と逆位相にして、束が一斉に動かないようにします
-  const sway = 30 * (i % 2 === 0 ? 1 : -1);
-  return {
-    color: WAVE_COLORS[i % WAVE_COLORS.length],
-    width: 1.1 + (i % 4) * 0.45,
-    /*
-      [重要] 始点と収束点は動かしません。
-        ここを動かすと「1 点で交わる」構図が崩れます。
-        往復させるのは中間の制御点（膨らみ）だけです。
-    */
-    d: [bowedPath(y0, base), bowedPath(y0, base + sway), bowedPath(y0, base)],
-  };
-});
+const WAVES = Array.from({ length: WAVE_COUNT }, (_, i) => ({
+  color: WAVE_COLORS[i % WAVE_COLORS.length],
+  width: 1.2 + (i % 6) * 0.8,
+  // d を配列で渡すと framer-motion が形状の間を往復して、ゆらぎになります
+  d: [wavePath(i, 0), wavePath(i, 1), wavePath(i, 0)],
+}));
 
 const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
   const scrollToAbout = () => {
@@ -158,15 +138,18 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
     <section className="relative pt-32 sm:pt-36 pb-20 sm:pb-24 border-b border-line overflow-hidden">
       {/*
         背景の雰囲気づくり。
-        [重要] この背景エフェクト（青のぼかし光＋1点に収束する曲線＋薄いグリッド）は
+        [重要] この背景エフェクト（青のぼかし光＋中心で一点に交わる曲線＋薄いグリッド）は
           サイトの世界観を担う要素です。単色の白背景に戻さないでください。
-          曲線は画面右外の 1 点で交わる構図です（詳しくは上の CONVERGE の説明）。
+          曲線は viewBox の中心 (500 500) で一点に絞られる構図です
+          （詳しくは上の WAVES の説明）。
 
         可読性への配慮:
           ・すべて aria-hidden + pointer-events-none の純粋な装飾です
           ・曲線は本文より背面（この div = z-0、本文ラッパー = relative z-10）に置き、
-            文字の上に重ねません（以前は前面 z-20 に重ねていたため
-            見出しの上に線が走っていました）
+            文字の上に重ねません。
+            [重要] 当初のコードでは曲線が z-20（本文の前面）にありましたが、
+              見出し「学びの扉」の上を何本もの線が横切って読みにくかったため、
+              重ね順だけは背面のまま維持しています。前面に戻さないでください。
           ・[重要] ここを -z-10 にすると祖先の白背景より後ろへ回り込み、
             背景がまるごと見えなくなります。z-0 のままにしてください。
           ・不透明度を低く抑え、文字とのコントラストを損ないません
@@ -199,30 +182,35 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
         />
 
         {/*
-          1 点に収束する曲線。ゆらぎを与えて静止画に見えないようにします。
+          中心で一点に交わる曲線（当初のデザイン）。
+          ゆらぎを与えて静止画に見えないようにします。
           preserveAspectRatio="none" で縦横が別々に引き伸ばされますが、
           この変形は「点を点に移す」ため、収束点は画面上でも 1 点のままです。
 
-          [重要] mask で「文字がある左側を薄く、収束点のある右側を濃く」しています。
-            収束点へ向かう線は束になるため、そのままでは見出し
+          [重要] mask で「見出しがある左側だけ」を淡くしています。
+            32 本の線は中心へ向かって束になるため、そのままでは見出し
             「学びの扉」の上を何本もの線が横切って読みにくくなります。
             この mask は可読性のためのものなので外さないでください。
-            （線を消すのではなく、左側だけ淡くして奥行きは残しています）
+            （線を消すのではなく、左側だけ淡くして奥行きは残しています。
+              当初の配色は不透明度 0.12〜0.25 と元々淡いので、
+              当初のコードにあった opacity-60 の重ねがけはしていません。
+              両方かけると線がほとんど見えなくなります。）
         */}
         <svg
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full overflow-visible"
           viewBox="0 0 1000 1000"
           preserveAspectRatio="none"
           style={{
             maskImage:
-              'linear-gradient(to right, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.5) 55%, #000 72%)',
+              'linear-gradient(to right, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 34%, rgba(0,0,0,0.8) 58%, #000 78%)',
             WebkitMaskImage:
-              'linear-gradient(to right, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.22) 34%, rgba(0,0,0,0.5) 55%, #000 72%)',
+              'linear-gradient(to right, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 34%, rgba(0,0,0,0.8) 58%, #000 78%)',
           }}
         >
           {/*
             [重要] ここで pathLength や opacity を repeat: Infinity の
               animate に混ぜないでください。
+              当初のコードはそうなっていましたが、
               線が延々と「0から描き直し」を繰り返す状態になり、
               strokeDasharray がごく小さい値のまま固定されて
               ほとんど見えなくなります（実際にその不具合を出しました）。
@@ -237,10 +225,10 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
               d={wave.d[0]}
               animate={{ d: wave.d }}
               transition={{
-                duration: 14 + (i % 7),
+                duration: 12 + (i % 10),
                 repeat: Infinity,
                 ease: 'easeInOut',
-                delay: i * 0.12,
+                delay: i * 0.1,
               }}
             />
           ))}
@@ -249,8 +237,14 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-sunken to-transparent" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.9fr] gap-12 xl:gap-16 items-center">
+      {/*
+        [重要] 幅と列比は当初のもの（max-w-7xl / 1.1fr_0.9fr）に戻しています。
+          見出しが whitespace-nowrap で「xl:9rem × 4 文字」を折り返さないため、
+          左の列にそれだけの幅が必要です。max-w-6xl や 1fr_0.9fr に狭めると
+          「扉」が右に溢れて section の overflow-hidden で切られます。
+      */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 xl:gap-20 items-center">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -265,46 +259,69 @@ const Hero: React.FC<HeroProps> = ({ setCurrentPage }) => {
             */}
 
             {/*
-              サイトの看板。
-              [重要] サイトの第一印象を決める最重要要素です。
-                プレーンな黒文字や、ただの太字ゴシックに戻さないでください。
+              ===== サイトの看板「学びの扉」 =====
 
-              書体について:
-                和文の看板書体 Zen Old Mincho（900）を使います。
-                [重要] 以前は Playfair Display を指定していましたが、
-                  Playfair には和文グリフが無いため「学びの扉」は
-                  本文と同じゴシック体で描かれてしまい、
-                  見出しがまったく引き立っていませんでした。
-                  和文書体を必ず先に指定してください
-                  （実体は index.html の .hero-title にあります）。
+              [重要] 書体・グラデーションはご本人のご指示で決まっています。
+                「もっと上品に」「明朝の方が合う」等のこちらの美観判断で
+                作り変えないでください。過去に 2 回差し戻しになっています。
 
-              「扉」を主役にしている理由:
-                [重要] 「扉」は団体名の核なので、まわりの「学びの」より
-                  淡く見えてはいけません。以前はグラデーションの上端を
-                  明るい青（#2E6FE0）にしていたため、主役が一番弱いという
-                  逆転が起きていました。いまは濃い青のまま明暗差をつけ、
-                  さらに 1.08em で少し大きく組んで主役にしています。
+              経緯:
+                1. 当初は 'Playfair Display', serif（和文は OS 依存の明朝体）。
+                2. 私の判断で明朝体（Zen Old Mincho）に差し替え → 差し戻し。
+                3. 当初の指定に復元。
+                4. 今回ご指示「扉のグラデーションは濃く、フォントも特徴的に」
+                   → 書体を Dela Gothic One、グラデーションを濃色系に変更。
 
-              可読性について:
-                「扉」のグラデーションは、白背景で「大きな文字」の基準（3:1）を
-                すべて満たす色域に収めています。
-                  #0A3D62 → 11.3:1
-                  #10528F → 8.0:1
-                  #062A47 → 14.2:1
-                明るい cyan-400（#22d3ee）は白背景で 1.8:1 しかなく
-                読めないため使いません。
-                また background-clip: text は文字を透明にする手法なので、
-                非対応ブラウザで文字が消えないよう
-                フォールバックの色を color で指定しています。
+              書体（Dela Gothic One）:
+                和文グリフが実在する極太ディスプレイ書体です。
+                以前の "'Playfair Display', serif" と違い、
+                和文が閲覧者の OS の既定明朝体に落ちる問題は解消しました。
+                [重要] ウェイトは 400 のみ存在します。
+                  そのため font-black（900）ではなく font-normal を使い、
+                  Tailwind の font-* を付けずに fontWeight 400 のままにしています。
+                  700/900 を指定すると実体が無く、ブラウザの合成ボールドで
+                  極太の輪郭がつぶれて汚くなります。上げないでください。
+                [重要] 本文には使わないでください。看板の 1 か所専用です。
+
+              グラデーション（濃色化）:
+                旧: from-blue-700 via-blue-500 to-cyan-400
+                  → 終端の cyan-400(#22d3ee) が白背景で 1.81:1 しかなく、
+                    「扉」の 34.1% のピクセルが 3:1 未満という実測値でした。
+                新: from-blue-900 via-blue-700 to-cyan-700
+                  → 実測コントラスト（白背景）
+                     blue-900 #1e3a8a = 10.36:1
+                     blue-700 #1d4ed8 =  6.70:1
+                     cyan-700 #0e7490 =  5.36:1
+                  最も淡い終端でも 5.36:1 で、WCAG AA の本文基準 4.5:1 すら
+                  上回ります。青→シアンの色相変化は残しつつ濃くしました。
+                [重要] to-cyan-400 / to-cyan-300 など明るい終端に戻すと
+                  可読性が基準未達に戻ります。薄くしないでください。
+
+              はみ出しについて:
+                whitespace-nowrap + overflow-visible + py-4 pr-12 は
+                「4 文字を絶対に折り返さず、斜体の右肩と発光を切らせない」ための
+                当初からの指定です。外すと「扉」の右側が切れます。
+
+              自動検査の限界（申し送り）:
+                [重要] この span は text-transparent（＝ color が透明）なので、
+                  計算上の文字色を見る自動コントラスト検査は素通りします。
+                  検査結果が「0 件」でも未達が無い証明にはなりません。
+                  色を変えた際は必ずピクセル実測で確認してください。
             */}
-            <h1 className="hero-title text-[52px] sm:text-[72px] lg:text-[88px] leading-[1.16] text-brand mb-4">
+            <h1
+              className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] leading-[1.3] tracking-tighter text-[#0A3D62] whitespace-nowrap py-4 pr-12 overflow-visible"
+              style={{ fontFamily: "'Dela Gothic One', 'Noto Sans JP', sans-serif", fontWeight: 400 }}
+            >
               学びの
-              <span className="hero-title-accent" style={{ color: '#0A3D62' }}>
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-blue-900 via-blue-700 to-cyan-700 pr-2">
                 扉
               </span>
             </h1>
 
-            <p className="font-brand-tagline text-[17px] sm:text-[20px] text-brand-accent mb-2">
+            <p
+              className="text-xl lg:text-2xl xl:text-3xl text-blue-600 font-black italic tracking-tight mb-4"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
               ～私たちにできることを～
             </p>
             {/* 見出し下のアクセント罫線（ブランド青から透明へ） */}
